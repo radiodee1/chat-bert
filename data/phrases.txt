@@ -1,0 +1,6 @@
+hello ; hello 
+how are you; i am fine
+what is your name; my name is jane
+do you like pizza; yes i like pizza
+bood bye; later
+
