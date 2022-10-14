@@ -50,7 +50,9 @@ class Kernel:
 
     def __init__(self):
         self.verbose = True
-        self.phrases = []
+        #self.phrases = []
+
+        self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
         self.batches = [] 
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
@@ -88,29 +90,37 @@ class Kernel:
         return logits
 
     def read_phrases_file(self, name='phrases.txt'):
-        self.phrases = []
-        num = 0
-        with open('./../data/' + name, 'r') as p:
-            phrases = p.readlines()
-            for phrase in phrases:
-                lines = phrase.split(";")
-                if len(lines) == 3 and num < NUM_PHRASES: 
-                    d = {
-                            "phrase": lines[ LINE_PHRASE ].strip(), 
-                            "response": lines[ LINE_RESPONSE ].strip(), 
-                            "number": int(lines[ LINE_NUMBER ].strip()),
-                            "index": num,
-                            "multiplier": 1.0 
-                        }
-                    if self.room == 0: 
-                        self.phrases.append(d)
-                    
-                    elif int(lines[LINE_NUMBER]) != 0: 
-                        d['number'] = self.rooms[self.room][num]
-                        d['multiplier'] = self.multipliers[self.room][num]
-                        d['response'] = self.responses[int(lines[LINE_NUMBER])]
-                        self.phrases.append(d)
-                    num += 1 
+         
+        self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
+        self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
+        self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
+        self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
+        
+        for i in range(NUMBER_ROOMS):
+            self.read_room_file("room", i + 1)
+     
+            num = 0 
+            with open('./../data/' + name, 'r') as p:
+                phrases = p.readlines()
+                for phrase in phrases:
+                    lines = phrase.split(";")
+                    if len(lines) == 3 and num < NUM_PHRASES: 
+                        d = {
+                                "phrase": lines[ LINE_PHRASE ].strip(), 
+                                "response": lines[ LINE_RESPONSE ].strip(), 
+                                "number": int(lines[ LINE_NUMBER ].strip()),
+                                "index": num,
+                                "multiplier": 1.0 
+                            }
+                        if self.room == 0: 
+                            self.phrases[i + 1].append(d)
+                        
+                        elif int(lines[LINE_NUMBER]) != 0: 
+                            d['number'] = self.rooms[self.room][num]
+                            d['multiplier'] = self.multipliers[self.room][num]
+                            d['response'] = self.responses[int(lines[LINE_NUMBER])]
+                            self.phrases[i + 1].append(d)
+                        num += 1 
         if self.verbose:
             print(self.phrases)
             print(num, "num")
@@ -118,11 +128,7 @@ class Kernel:
 
     def read_room_file(self, name, number, responses_file="responses"):
         name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
-        
-        self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
-        self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
-        self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
-        
+       
         if self.verbose: 
             print(self.rooms, "room")
             print(self.responses, "responses")
@@ -158,7 +164,7 @@ class Kernel:
         self.batches = []
         b = []
         num = 0 
-        for d in self.phrases:
+        for d in self.phrases[self.room]:
             print(d["phrase"])
             if num < BATCH_SIZE:
                 num += 1 
@@ -196,14 +202,12 @@ if __name__ == '__main__':
     p1 = []
     p2 = []
     print("phrases read")
-    for d in k.phrases:
+    for d in k.phrases[1]:
         p1.append(d["phrase"])
         p2.append(d["phrase"])
         print(d["phrase"])
     logits = k.bert_batch_compare(p1, p2)
     print(logits)
-    for i in range(NUMBER_ROOMS):
-        k.read_room_file("room", i + 1)
     k.read_phrases_file()
     k.process_phrases()
      
