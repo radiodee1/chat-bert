@@ -77,6 +77,33 @@ class Kernel:
         self.model = BertForNextSentencePrediction.from_pretrained(name[index])
         pass 
 
+    def bert_find_room(self, userstr):
+        p1 = []
+        p2 = []
+        m1 = []
+        for i in self.phrases[self.room]:
+            p1.append(i['phrase'])
+            p2.append(userstr)
+        logits = self.bert_batch_compare(p1, p2)
+
+        highest = 0 
+        for i in range(len(logits)):
+            #print(logits[i])
+            m1.append(logits[i][0] * self.phrases[self.room][i]['multiplier'])
+            m = float(m1[i])
+            if m > float(m1[highest]):
+                highest = i 
+        if self.verbose: 
+            print(m1)
+            print(float(m1[highest]), "highest")
+            print(self.room, "old room")
+        print(self.phrases, "phrases") 
+        outstr = self.phrases[self.room][highest]['response']
+        print(self.room, "room")
+        self.room = self.phrases[self.room][highest]['destination']
+        print(outstr)
+        pass 
+
     def bert_batch_compare(self, prompt1, prompt2):
         encoding = self.tokenizer(prompt1, prompt2, return_tensors='pt', padding=True, truncation=True, add_special_tokens=True, max_length=MAX_LENGTH)
         #target = torch.LongTensor(self.target)
@@ -106,23 +133,19 @@ class Kernel:
                 phrases = p.readlines()
                 for phrase in phrases:
                     lines = phrase.split(";")
-                    if len(lines) == 3 and num < NUM_PHRASES: 
+                    if len(lines) == 3 and num < NUM_PHRASES:
                         d = {
                                 "phrase": lines[ LINE_PHRASE ].strip(), 
                                 "response": lines[ LINE_RESPONSE ].strip(), 
-                                "number": int(lines[ LINE_NUMBER ].strip()),
+                                "number":  self.rooms[i+1][num], # int(lines[ LINE_NUMBER ].strip()),
                                 "index": num,
-                                "multiplier": 1.0 
+                                "destination": int(lines[ LINE_NUMBER ]), 
+                                "multiplier": self.multipliers[i+1][num]
                             }
-                        if self.room == 0: 
-                            self.phrases[i + 1].append(d)
-                        
-                        elif int(lines[LINE_NUMBER]) != 0: 
-                            d['number'] = self.rooms[self.room][num]
-                            d['multiplier'] = self.multipliers[self.room][num]
-                            if int(lines[LINE_NUMBER]) < NUMBER_ROOMS:
-                                d['response'] = self.responses[int(lines[LINE_NUMBER])]
-                            self.phrases[i + 1].append(d)
+                        if i+1 < NUMBER_ROOMS + 1:
+                            d['response'] = self.responses[i + 1]
+                            d['destination'] = self.destination[i+1]
+                        self.phrases[i + 1].append(d)
                         num += 1 
         if self.verbose:
             print(self.phrases)
@@ -147,7 +170,7 @@ class Kernel:
                 # print(lines)
                 self.rooms[int(number)].append(int(lines[0]))
                 if len(lines) > 1: 
-                    self.multipliers[int(number)].append(lines[1])
+                    self.multipliers[int(number)].append(float(lines[1]))
                 else:
                     self.multipliers[int(number)].append(1.0)
                 num += 1 
@@ -176,7 +199,7 @@ class Kernel:
         num = 0 
         for d in self.phrases[self.room]:
             if d["number"] != 0: 
-                print(d["phrase"])
+                # print(d["phrase"])
                 if num < BATCH_SIZE:
                     num += 1 
                 else: 
@@ -205,8 +228,8 @@ class Kernel:
 if __name__ == '__main__':
 
     k = Kernel()
-    p1 = ["hi there", "hi there", "hello", "this is making no sense", "go to the moon", "1 2 3 ", "4 5 6 ", "do not go."]
-    p2 = ["hello",   "hi there", "hello" , "go to the moon", "go to the moon", "4 5 6 ", "1 2 3 ", "don't go."]
+    p1 = ["hi there", "hi there", "hello", "this is making no sense", "go to the moon", "1 2 3 ", "4 5 6 ", "do not go.", "zero sum game"]
+    p2 = ["hello",   "hi there", "hello" , "go to the moon", "go to the moon", "4 5 6 ", "1 2 3 ", "don't go.", "zero"]
     logits = k.bert_batch_compare(p1, p2)
     if k.verbose: 
         print(p1)
@@ -227,4 +250,7 @@ if __name__ == '__main__':
     for i in logits:
         print(i, "logits")
         print(float(i[0]), float(i[1]))
+    k.room = 1 
+    input_string = "i like pizza"
+    k.bert_find_room(input_string);
 
