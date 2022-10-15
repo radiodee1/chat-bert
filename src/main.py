@@ -38,12 +38,11 @@ except:
 try:
     NUMBER_ROOMS = int(os.environ['NUMBER_ROOMS'])
 except:
-    NUMBER_ROOMS = 2 
+    NUMBER_ROOMS = 10 
 
 LINE_PHRASE = 0
 LINE_RESPONSE = 1 
 LINE_NUMBER = 2 
-LINE_THRESHOLD = 3 
 
 class Kernel:
 
@@ -54,7 +53,7 @@ class Kernel:
 
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
         self.batches = [] 
-        self.batch_index = [] 
+        #self.batch_index = [] 
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
@@ -97,11 +96,10 @@ class Kernel:
             print(m1)
             print(float(m1[highest]), "highest")
             print(self.room, "old room")
-        print(self.phrases, "phrases") 
-        outstr = self.phrases[self.room][highest]['response']
+            print(self.phrases, "phrases") 
         print(self.room, "room")
-        self.room = self.phrases[self.room][highest]['destination']
-        print(outstr)
+        print(self.phrases[self.room][highest]['response'])
+        self.room = self.phrases[self.room][highest]['destination']        
         pass 
 
     def bert_batch_compare(self, prompt1, prompt2):
@@ -124,46 +122,45 @@ class Kernel:
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
-        
+        self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1)]
+
         for i in range(NUMBER_ROOMS):
             self.read_room_file("room", i + 1)
-     
+        for i in range(NUMBER_ROOMS): 
             num = 0 
             with open('./../data/' + name, 'r') as p:
                 phrases = p.readlines()
                 for phrase in phrases:
                     lines = phrase.split(";")
-                    if len(lines) == 3 and num < NUM_PHRASES:
+                    if  num < NUM_PHRASES :
                         d = {
                                 "phrase": lines[ LINE_PHRASE ].strip(), 
                                 "response": lines[ LINE_RESPONSE ].strip(), 
-                                "number":  self.rooms[i+1][num], # int(lines[ LINE_NUMBER ].strip()),
+                                #"number":  self.rooms[i+1][num+1], 
                                 "index": num,
                                 "destination": int(lines[ LINE_NUMBER ]), 
-                                "multiplier": self.multipliers[i+1][num]
+                                "multiplier": self.multipliers[num + 1][i] ## <-- right??
                             }
-                        if i+1 < NUMBER_ROOMS + 1:
-                            d['response'] = self.responses[i + 1]
-                            d['destination'] = self.destination[i+1]
-                        self.phrases[i + 1].append(d)
-                        num += 1 
+                        if i < NUMBER_ROOMS + 1:
+                            d['response'] = self.responses[num + 1]
+                            d['destination'] = self.destination[num + 1]
+                        self.phrases[i+1].append(d)
+                    num += 1 
         if self.verbose:
             print(self.phrases)
             print(num, "num")
             pass
 
-    def read_room_file(self, name, number, responses_file="responses"):
+    def read_room_file(self, rooms_file, number, responses_file="responses"):
         name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
-        
-        self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1) ]
 
         if self.verbose: 
             print(self.rooms, "room")
             print(self.responses, "responses")
-            print(name + name_ending)
+            print(rooms_file + name_ending)
 
         num = 0
-        with open('./../data/' + name + name_ending, 'r') as p:
+        with open('./../data/' + rooms_file + name_ending, 'r') as p:
             newroom = p.readlines() 
             for room in newroom:
                 lines = room.split(';')
@@ -181,25 +178,30 @@ class Kernel:
         num = 0 
         with open("./../data/" + responses_file + name_ending, "r") as p:
             response = p.readlines()
+            #l = ""
             for r in response:
+                #r = r.strip()
+                #print(number, r, "response here...")
                 if num != 0: 
                     lines = r.strip()
+                    #l += lines + "\n"
                     self.responses[int(number)] += lines + "\n"
                 else:
                     self.destination[int(number)] = int(r.strip())
                 num += 1 
+            
             if self.verbose: 
                 print(self.responses[int(number)], ":responses")
                 print(self.destination[int(number)], "dest")
         
     def process_phrases(self):
         self.batches = []
-        self.batch_index = []
+        # self.batch_index = []
         b = []
         num = 0 
         for d in self.phrases[self.room]:
-            if d["number"] != 0: 
-                # print(d["phrase"])
+            if float(d["multiplier"]) != 0.0: 
+                print(d["phrase"])
                 if num < BATCH_SIZE:
                     num += 1 
                 else: 
@@ -207,7 +209,7 @@ class Kernel:
                     num = 0 
                     b = []
                 b.append(d["phrase"])
-                self.batch_index.append(int(d["number"]))
+                # self.batch_index.append(int(d["number"]))
         if self.verbose:
             print("store all phrases")
         if len(b) > 0 and len(b) < BATCH_SIZE: 
@@ -221,36 +223,17 @@ class Kernel:
             self.batches.append(b)
         if self.verbose:
             print(self.batches, 'batches')
-            print(self.batch_index, "indexes")
+            #print(self.batch_index, "indexes")
             print(b, "b")
          
 
 if __name__ == '__main__':
 
     k = Kernel()
-    p1 = ["hi there", "hi there", "hello", "this is making no sense", "go to the moon", "1 2 3 ", "4 5 6 ", "do not go.", "zero sum game"]
-    p2 = ["hello",   "hi there", "hello" , "go to the moon", "go to the moon", "4 5 6 ", "1 2 3 ", "don't go.", "zero"]
-    logits = k.bert_batch_compare(p1, p2)
-    if k.verbose: 
-        print(p1)
-        print(p2)
-        print(logits)
-    k.read_phrases_file()
-    p1 = []
-    p2 = []
-    print("phrases read")
-    for d in k.phrases[k.room]:
-        p1.append(d["phrase"])
-        p2.append("hello there")
-        print(d["phrase"])
-    logits = k.bert_batch_compare(p1, p2)
-    print(logits)
     k.read_phrases_file()
     k.process_phrases()
-    for i in logits:
-        print(i, "logits")
-        print(float(i[0]), float(i[1]))
-    k.room = 1 
-    input_string = "i like pizza"
-    k.bert_find_room(input_string);
+    k.room = 1
+    while True: 
+        input_string = input("> ")
+        k.bert_find_room(input_string);
 
