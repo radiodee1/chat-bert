@@ -58,6 +58,7 @@ class Kernel:
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
+        self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1) ]
         self.room = 1 
 
         parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -130,7 +131,9 @@ class Kernel:
 
     def read_room_file(self, name, number, responses_file="responses"):
         name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
-       
+        
+        self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1) ]
+
         if self.verbose: 
             print(self.rooms, "room")
             print(self.responses, "responses")
@@ -155,12 +158,16 @@ class Kernel:
         num = 0 
         with open("./../data/" + responses_file + name_ending, "r") as p:
             response = p.readlines()
-            for r in response: 
-                lines = r.strip()
-                self.responses[int(number)] += lines + "\n"
+            for r in response:
+                if num != 0: 
+                    lines = r.strip()
+                    self.responses[int(number)] += lines + "\n"
+                else:
+                    self.destination[int(number)] = int(r.strip())
                 num += 1 
             if self.verbose: 
                 print(self.responses[int(number)], ":responses")
+                print(self.destination[int(number)], "dest")
         
     def process_phrases(self):
         self.batches = []
@@ -209,13 +216,15 @@ if __name__ == '__main__':
     p1 = []
     p2 = []
     print("phrases read")
-    for d in k.phrases[1]:
+    for d in k.phrases[k.room]:
         p1.append(d["phrase"])
-        p2.append(d["phrase"])
+        p2.append("hello there")
         print(d["phrase"])
     logits = k.bert_batch_compare(p1, p2)
     print(logits)
     k.read_phrases_file()
     k.process_phrases()
-     
+    for i in logits:
+        print(i, "logits")
+        print(float(i[0]), float(i[1]))
 
