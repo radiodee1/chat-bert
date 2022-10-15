@@ -54,10 +54,11 @@ class Kernel:
 
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
         self.batches = [] 
+        self.batch_index = [] 
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
-        self.room = 0 
+        self.room = 1 
 
         parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument('--raw-pattern', action='store_true', help='output all raw patterns.')
@@ -118,7 +119,8 @@ class Kernel:
                         elif int(lines[LINE_NUMBER]) != 0: 
                             d['number'] = self.rooms[self.room][num]
                             d['multiplier'] = self.multipliers[self.room][num]
-                            d['response'] = self.responses[int(lines[LINE_NUMBER])]
+                            if int(lines[LINE_NUMBER]) < NUMBER_ROOMS:
+                                d['response'] = self.responses[int(lines[LINE_NUMBER])]
                             self.phrases[i + 1].append(d)
                         num += 1 
         if self.verbose:
@@ -147,7 +149,7 @@ class Kernel:
                     self.multipliers[int(number)].append(1.0)
                 num += 1 
             if self.verbose: 
-                print(self.rooms)
+                print(self.rooms, 'rooms')
                 print(self.multipliers)
 
         num = 0 
@@ -162,17 +164,20 @@ class Kernel:
         
     def process_phrases(self):
         self.batches = []
+        self.batch_index = []
         b = []
         num = 0 
         for d in self.phrases[self.room]:
-            print(d["phrase"])
-            if num < BATCH_SIZE:
-                num += 1 
-            else: 
-                self.batches.append(b)
-                num = 0 
-                b = []
-            b.append(d["phrase"])
+            if d["number"] != 0: 
+                print(d["phrase"])
+                if num < BATCH_SIZE:
+                    num += 1 
+                else: 
+                    self.batches.append(b)
+                    num = 0 
+                    b = []
+                b.append(d["phrase"])
+                self.batch_index.append(int(d["number"]))
         if self.verbose:
             print("store all phrases")
         if len(b) > 0 and len(b) < BATCH_SIZE: 
@@ -185,7 +190,9 @@ class Kernel:
             # print(b,"b")
             self.batches.append(b)
         if self.verbose:
-            print(self.batches) 
+            print(self.batches, 'batches')
+            print(self.batch_index, "indexes")
+            print(b, "b")
          
 
 if __name__ == '__main__':
