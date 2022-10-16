@@ -49,11 +49,9 @@ class Kernel:
 
     def __init__(self):
         self.verbose = True
-        #self.phrases = []
 
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
         self.batches = [] 
-        #self.batch_index = [] 
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
@@ -61,14 +59,15 @@ class Kernel:
         self.room = 1 
 
         parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-        parser.add_argument('--raw-pattern', action='store_true', help='output all raw patterns.')
-        parser.add_argument('--count', action='store_true', help='count number of responses.')
-        parser.add_argument('--name', default='calculate', help='name for "count" operation output files.')
-        parser.add_argument('--disable-ok', action='store_true', help='disable "ok" operation for BERT output.')
+        #parser.add_argument('--raw-pattern', action='store_true', help='output all raw patterns.')
+        #parser.add_argument('--count', action='store_true', help='count number of responses.')
+        #parser.add_argument('--name', default='calculate', help='name for "count" operation output files.')
+        parser.add_argument('--list', action='store_true', help='list all possible phrases.')
         parser.add_argument('--verbose', action="store_true", help="print verbose output.")
         self.args = parser.parse_args()
         
         self.verbose = self.args.verbose 
+        self.list = self.args.list 
 
         name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8' ]
         index = BERT_MODEL
@@ -196,12 +195,12 @@ class Kernel:
         
     def process_phrases(self):
         self.batches = []
-        # self.batch_index = []
         b = []
         num = 0 
         for d in self.phrases[self.room]:
             if float(d["multiplier"]) != 0.0: 
-                print(d["phrase"])
+                if self.list: 
+                    print(d["phrase"])
                 if num < BATCH_SIZE:
                     num += 1 
                 else: 
@@ -209,7 +208,6 @@ class Kernel:
                     num = 0 
                     b = []
                 b.append(d["phrase"])
-                # self.batch_index.append(int(d["number"]))
         if self.verbose:
             print("store all phrases")
         if len(b) > 0 and len(b) < BATCH_SIZE: 
@@ -219,11 +217,9 @@ class Kernel:
             if self.verbose: 
                 print("must pad batches")
             b.extend(pad)
-            # print(b,"b")
             self.batches.append(b)
         if self.verbose:
             print(self.batches, 'batches')
-            #print(self.batch_index, "indexes")
             print(b, "b")
          
 
@@ -233,7 +229,8 @@ if __name__ == '__main__':
     k.read_phrases_file()
     k.process_phrases()
     k.room = 1
-    while True: 
+    print()
+    while True:
         input_string = input("> ")
         k.bert_find_room(input_string);
 
