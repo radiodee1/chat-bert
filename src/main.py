@@ -142,7 +142,7 @@ class Kernel:
                             }
                         if i < NUMBER_ROOMS + 1:
                             d['response'] = self.responses[num + 1]
-                            d['destination'] = self.destination[num + 1]
+                            d['destination'] = self.rooms[i + 1][num] #self.destination[num + 1]
                         self.phrases[i+1].append(d)
                     num += 1 
         if self.verbose:

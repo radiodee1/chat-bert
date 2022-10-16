@@ -47,10 +47,10 @@ class Writer:
             if self.verbose: 
                 print(line_ending)
 
-            if i != 0 and self.write: 
+            if self.write: 
                 with open("./../data/room" + line_ending, "w") as rooms:
                     for ii in range(len(self.phrases) ):
-                        rooms.write(self.phrases[ii][2] + ";1.0" + "\n")
+                        rooms.write(str(i+ 1) + ";1.0" + "\n")
 
             if self.write: 
                 with open("./../data/responses" + line_ending, "w") as responses:
