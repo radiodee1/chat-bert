@@ -38,7 +38,7 @@ except:
 try:
     NUMBER_ROOMS = int(os.environ['NUMBER_ROOMS'])
 except:
-    NUMBER_ROOMS = 10 
+    NUMBER_ROOMS = 15 
 
 LINE_PHRASE = 0
 LINE_RESPONSE = 1 
@@ -125,20 +125,22 @@ class Kernel:
 
         for i in range(NUMBER_ROOMS):
             self.read_room_file("room", i + 1)
+        for i in range(NUM_PHRASES):
+            self.read_response_file(i+ 1)
         for i in range(NUMBER_ROOMS): 
             num = 0 
             with open('./../data/' + name, 'r') as p:
                 phrases = p.readlines()
                 for phrase in phrases:
                     lines = phrase.split(";")
-                    if  num < NUM_PHRASES :
+                    if  num < NUM_PHRASES  :
                         d = {
                                 "phrase": lines[ LINE_PHRASE ].strip(), 
                                 "response": lines[ LINE_RESPONSE ].strip(), 
                                 #"number":  self.rooms[i+1][num+1], 
                                 "index": num,
                                 "destination": int(lines[ LINE_NUMBER ]), 
-                                "multiplier": self.multipliers[num + 1][i] ## <-- right??
+                                "multiplier": self.multipliers[i + 1][num] ## <-- right??
                             }
                         if i < NUMBER_ROOMS + 1:
                             d['response'] = self.responses[num + 1]
@@ -173,6 +175,10 @@ class Kernel:
             if self.verbose: 
                 print(self.rooms, 'rooms')
                 print(self.multipliers)
+
+
+    def read_response_file(self, number, responses_file="responses"):
+        name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
 
         num = 0 
         with open("./../data/" + responses_file + name_ending, "r") as p:

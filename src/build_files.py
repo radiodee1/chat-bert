@@ -3,6 +3,14 @@
 import argparse 
 import os 
 import shutil 
+from dotenv import load_dotenv
+
+try:
+    NUMBER_ROOMS = int(os.environ['NUMBER_ROOMS'])
+except:
+    NUMBER_ROOMS = 15 
+
+
 
 class Writer:
 
@@ -46,16 +54,18 @@ class Writer:
             line_ending = "_" + ("000" + str(i + 1))[-3:] + ".txt"
             if self.verbose: 
                 print(line_ending)
+            if self.write: 
+                with open("./../data/responses" + line_ending, "w") as responses:
+                    responses.write("1\n" + self.phrases[i][1] + "\n")
+            
+        for i in range(NUMBER_ROOMS):
+            line_ending = "_" + ("000" + str(i + 1))[-3:] + ".txt"
 
             if self.write: 
                 with open("./../data/room" + line_ending, "w") as rooms:
                     for ii in range(len(self.phrases) ):
                         rooms.write(str(i+ 1) + ";1.0" + "\n")
 
-            if self.write: 
-                with open("./../data/responses" + line_ending, "w") as responses:
-                    responses.write("1\n" + self.phrases[i][1] + "\n")
-            pass 
 
 
 if __name__ == '__main__':
