@@ -63,7 +63,7 @@ class Kernel:
         parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         #parser.add_argument('--raw-pattern', action='store_true', help='output all raw patterns.')
         #parser.add_argument('--count', action='store_true', help='count number of responses.')
-        #parser.add_argument('--name', default='calculate', help='name for "count" operation output files.')
+        parser.add_argument('--folder', default='./../data/', help='folder name for files.')
         parser.add_argument('--list', action='store_true', help='list all possible phrases.')
         parser.add_argument('--verbose', action="store_true", help="print verbose output.")
         self.args = parser.parse_args()
@@ -135,7 +135,7 @@ class Kernel:
             self.read_response_file(i+ 1)
         for i in range(NUMBER_ROOMS): 
             num = 0 
-            with open('./../data/' + name, 'r') as p:
+            with open(self.args.folder + name, 'r') as p:
                 phrases = p.readlines()
                 for phrase in phrases:
                     lines = phrase.split(";")
@@ -169,7 +169,7 @@ class Kernel:
         num = 0
         ending = ""
         ending_found = False 
-        with open('./../data/' + rooms_file + name_ending, 'r') as p:
+        with open(self.args.folder + rooms_file + name_ending, 'r') as p:
             newroom = p.readlines() 
             for room in newroom:
                 lines = room.split(';')
@@ -199,7 +199,7 @@ class Kernel:
         name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
 
         num = 0 
-        with open("./../data/" + responses_file + name_ending, "r") as p:
+        with open(self.args.folder + responses_file + name_ending, "r") as p:
             response = p.readlines()
             #l = ""
             for r in response:

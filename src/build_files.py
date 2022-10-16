@@ -26,6 +26,7 @@ class Writer:
         self.phrases = []
         
         parser = argparse.ArgumentParser(description="Bert Chat File Maker", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        parser.add_argument('--folder', default='./../data/', help="folder for all output files.")
         parser.add_argument('--name', default='./../data/phrases.txt.orig', help='name for "phrases" input file.')
         parser.add_argument('--list', action='store_true', help='list all possible phrases.')
         parser.add_argument('--verbose', action="store_true", help="print verbose output.")
@@ -35,6 +36,9 @@ class Writer:
         self.verbose = self.args.verbose 
         self.list = self.args.list 
         self.write = self.args.write 
+
+        if not self.args.name.startswith(self.args.folder):
+            self.write = True
 
     def read_input_file(self):
         with open(self.args.name, "r") as phrases:
@@ -48,25 +52,27 @@ class Writer:
         print(self.phrases)
 
     def write_output_files(self):
+        print(self.args.folder)
         try: 
             s = os.stat(self.args.name)
         except:
+            print("stat failure")
             exit()
         if self.write: 
-            shutil.copy(self.args.name, "./../data/phrases.txt")
+            shutil.copy(self.args.name, self.args.folder + "/phrases.txt")
         for i in range(len(self.phrases) ):
             line_ending = "_" + ("000" + str(i + 1))[-3:] + ".txt"
             if self.verbose: 
                 print(line_ending)
             if self.write: 
-                with open("./../data/responses" + line_ending, "w") as responses:
+                with open(self.args.folder + "/responses" + line_ending, "w") as responses:
                     responses.write("1\n" + self.phrases[i][1] + "\n")
             
         for i in range(NUMBER_ROOMS):
             line_ending = "_" + ("000" + str(i + 1))[-3:] + ".txt"
 
             if self.write: 
-                with open("./../data/room" + line_ending, "w") as rooms:
+                with open(self.args.folder + "/room" + line_ending, "w") as rooms:
                     for ii in range(len(self.phrases) ):
                         rooms.write(str(i+ 1) + ";1.0" + "\n")
                     rooms.write(ROOM_TEXT + "\n")
