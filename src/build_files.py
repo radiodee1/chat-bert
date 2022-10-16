@@ -10,6 +10,10 @@ try:
 except:
     NUMBER_ROOMS = 15 
 
+ROOM_TEXT = '''
+# @ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.
+Text will be saved until the end of the file.
+'''
 
 
 class Writer:
@@ -65,7 +69,7 @@ class Writer:
                 with open("./../data/room" + line_ending, "w") as rooms:
                     for ii in range(len(self.phrases) ):
                         rooms.write(str(i+ 1) + ";1.0" + "\n")
-
+                    rooms.write(ROOM_TEXT + "\n")
 
 
 if __name__ == '__main__':

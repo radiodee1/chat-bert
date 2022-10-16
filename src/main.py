@@ -56,7 +56,9 @@ class Kernel:
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
         self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1) ]
-        self.room = 1 
+        self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
+        self.room = 1
+        self.oldroom = 0 
 
         parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         #parser.add_argument('--raw-pattern', action='store_true', help='output all raw patterns.')
@@ -98,7 +100,10 @@ class Kernel:
             print(self.phrases, "phrases") 
         print(self.room, "room")
         print(self.phrases[self.room][highest]['response'])
-        self.room = self.phrases[self.room][highest]['destination']        
+        self.room = self.phrases[self.room][highest]['destination']
+        if self.room != self.oldroom:
+            print(self.text[self.room])
+        self.oldroom = self.room 
         pass 
 
     def bert_batch_compare(self, prompt1, prompt2):
@@ -122,6 +127,7 @@ class Kernel:
         self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
         self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1)]
+        self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
 
         for i in range(NUMBER_ROOMS):
             self.read_room_file("room", i + 1)
@@ -161,20 +167,32 @@ class Kernel:
             print(rooms_file + name_ending)
 
         num = 0
+        ending = ""
+        ending_found = False 
         with open('./../data/' + rooms_file + name_ending, 'r') as p:
             newroom = p.readlines() 
             for room in newroom:
                 lines = room.split(';')
                 # print(lines)
-                self.rooms[int(number)].append(int(lines[0]))
-                if len(lines) > 1: 
-                    self.multipliers[int(number)].append(float(lines[1]))
+                if num < NUM_PHRASES and not ending_found: 
+                    self.rooms[int(number)].append(int(lines[0]))
+                    if len(lines) > 1: 
+                        self.multipliers[int(number)].append(float(lines[1]))
+                    else:
+                        self.multipliers[int(number)].append(1.0)
                 else:
-                    self.multipliers[int(number)].append(1.0)
+                    ending_found = True
+                if ending_found:
+                    ending += room.strip() + "\n"
+                    #print(ending, "ending")
                 num += 1 
+            if ending.strip().startswith("@"):
+                self.text[int(number)] = ending.strip() 
+            
             if self.verbose: 
                 print(self.rooms, 'rooms')
-                print(self.multipliers)
+                print(self.text,"text")
+                print(self.multipliers, "multipliers")
 
 
     def read_response_file(self, number, responses_file="responses"):
