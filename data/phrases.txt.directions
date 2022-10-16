@@ -1,0 +1,10 @@
+north ; n; 1 
+south; s; 2
+west; w;3
+east; e;4
+northeast; ne;5
+northwest; nw;6
+southeast; se;7
+southwest; sw;8
+up; u; 9
+down; d; 10
