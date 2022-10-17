@@ -15,6 +15,9 @@ ROOM_TEXT = '''
 Text will be saved until the end of the file.
 '''
 
+REACT_TEXT = '''
+# This file is to be executed when a phrase has a response. 
+'''
 
 class Writer:
 
@@ -67,6 +70,10 @@ class Writer:
             if self.write: 
                 with open(self.args.folder + "/responses" + line_ending, "w") as responses:
                     responses.write("1\n" + self.phrases[i][1] + "\n")
+                line_ending = line_ending.replace('txt','sh')
+                with open(self.args.folder + "/react" + line_ending, "w") as react:
+                    react.write(REACT_TEXT.strip() + "\n")
+                os.chmod(self.args.folder + "/react" + line_ending, 0o766)
             
         for i in range(NUMBER_ROOMS):
             line_ending = "_" + ("000" + str(i + 1))[-3:] + ".txt"
