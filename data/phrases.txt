@@ -7,4 +7,4 @@ what time is it; i don't know;1
 do you like computers; yes i like computers;1 
 how old are you; i'm twenty years old ;1 
 do you like food; no i don't like food;1 
-go outside; it's nice out here; 1
+how tall are you; i am five feet tall; 1

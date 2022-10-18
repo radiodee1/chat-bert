@@ -8,6 +8,7 @@
 3;1.0
 3;1.0
 3;1.0
+min:0.0
 
 # @ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.
 Text will be saved until the end of the file.
