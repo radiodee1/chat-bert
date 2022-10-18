@@ -44,7 +44,14 @@ LINE_PHRASE = 0
 LINE_RESPONSE = 1 
 LINE_NUMBER = 2 
 
-class Kernel:
+ROOM_TEXT = '''
+# @ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.
+Text will be saved until the end of the file.
+'''
+
+
+
+class Modify:
 
 
     def __init__(self):
@@ -61,16 +68,19 @@ class Kernel:
         self.room = 1
         self.oldroom = 0 
 
-        parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        parser = argparse.ArgumentParser(description="Room Wise Multiplier Update", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         #parser.add_argument('--raw-pattern', action='store_true', help='output all raw patterns.')
-        parser.add_argument('--multiplier', action='store_true', help='use multiplier in calculations.')
+        parser.add_argument('--room', default=1, help='count number of responses.')
+        parser.add_argument('--write', action="store_true", help="change file contents")
         parser.add_argument('--folder', default='./../data/', help='folder name for files.')
         parser.add_argument('--list', action='store_true', help='list all possible phrases.')
         parser.add_argument('--verbose', action="store_true", help="print verbose output.")
         self.args = parser.parse_args()
         
         self.verbose = self.args.verbose 
+        self.room = int(self.args.room)
         self.list = self.args.list 
+        self.write = self.args.write 
 
         name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8' ]
         index = BERT_MODEL
@@ -78,48 +88,78 @@ class Kernel:
         self.model = BertForNextSentencePrediction.from_pretrained(name[index])
         pass 
 
-    def bert_find_room(self, userstr):
+
+    def bert_stat_room(self):
         p1 = []
         p2 = []
         mult = []
         m1 = []
-
+        average = 1
+        tot = 0.0 
         for i in self.batches:
             for ii in i: 
                 p1.append(ii['phrase'])
-                p2.append(userstr)
+                p2.append(ii['phrase'])
                 mult.append(ii)
         logits = self.bert_batch_compare(p1, p2)
 
         highest = -1 
+        lowest = -1 
         for i in range(len(logits)):
-            if self.args.multiplier: 
-                m1.append(float(logits[i][0] * mult[i]['multiplier'])) 
-            else:
-                m1.append(float(logits[i][0]))
+            
+            m1.append(float(logits[i][0]))  
             m = float(m1[i])
-            if m >= float(self.min[self.room]):
-                if m >= float(m1[highest]):
-                    highest = i
-        if highest == -1:
-            if self.verbose:
-                print(self.min[self.room], "min")
-                print(logits)
-                print(m1,"after multiplier")
-            #do something here... don't change room.
-            return 
+            tot += m 
+            if m <= float(m1[lowest]):
+                lowest = i 
+            if m >= float(m1[highest]):
+                highest = i
+        if lowest != -1:
+            average = tot / float(len(logits))  
+            print(average,'average')
+            print(m1[lowest], 'lowest')
+            self.min[self.room] = float(m1[lowest]) - (average - float(m1[lowest])) / 2.0 
+        if highest != -1: 
+            for i in range(len(logits)):
+                mult[i]['multiplier'] = average / float(m1[i]) # float(m1[highest]) / float(m1[i])
+
+        # put multiplier in self.phrases!!
+        
+        for i in range(len(self.phrases[self.room])):
+            z = 1.0 
+            ii = i # self.phrases[i]['index']
+            for j in range(len(mult)):
+                if mult[j]['index'] == ii:
+                    z = mult[j]['multiplier']
+            if self.phrases[self.room][i]['multiplier'] != 0.0: 
+                self.phrases[self.room][i]['multiplier'] = z
+
+        #print some stuff
+        if self.verbose:
+            print(self.min[self.room], "min")
+            print(logits)
+            print(mult,"after multiplier")
+            print(self.phrases, "phrases")
+        #do something here... don't change room.
+             
         if self.verbose: 
             print(m1)
             print(float(m1[highest]), "highest")
             print(self.room, "old room")
             
-        print(self.room, "room")
-        response = mult[highest]["response"]
-        print(response)
-        self.room =  mult[highest]['destination'] # dest[highest]
-        if self.room != self.oldroom:
-            print(self.text[self.room])
-        self.oldroom = self.room 
+        pass 
+
+    def write_room_file(self):
+        if not self.write:
+            return 
+        number = self.room  
+        name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
+        name = 'room' 
+        with open(self.args.folder + "/" + name + name_ending, "w") as room:
+            for i in self.phrases[self.room]:
+                room.write(str(i['destination']) + ";" + str(i['multiplier']) + "\n")
+            room.write('min:' + str(self.min[self.room]) + "\n")
+            room.write(ROOM_TEXT + "\n")
         pass 
 
     def bert_batch_compare(self, prompt1, prompt2):
@@ -213,7 +253,6 @@ class Kernel:
                 print(self.multipliers, "multipliers")
                 print(self.min, "MIN")
 
-
     def read_response_file(self, number, responses_file="responses"):
         name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
 
@@ -235,12 +274,14 @@ class Kernel:
             if self.verbose: 
                 print(self.responses[int(number)], ":responses")
                 print(self.destination[int(number)], "dest")
-        
+     
     def process_phrases(self):
         self.batches = []
         b = []
         num = 0 
+        index = 0 
         for d in self.phrases[self.room]:
+            d['index'] = index 
             if float(d["multiplier"]) != 0.0: 
                 if self.list: 
                     print(d["phrase"])
@@ -251,6 +292,7 @@ class Kernel:
                     num = 0 
                     b = []
                 b.append(d)
+            index += 1 
         if self.verbose:
             print("store all phrases")
         if len(b) > 0 and len(b) < BATCH_SIZE: 
@@ -261,7 +303,7 @@ class Kernel:
                     'multiplier': 0.0,
                     'response': "",
                     'destination' : 1,
-
+                    'index': 0 
                     })
             if self.verbose: 
                 print("must pad batches")
@@ -274,14 +316,10 @@ class Kernel:
 
 if __name__ == '__main__':
 
-    k = Kernel()
+    k = Modify() 
     k.read_phrases_file()
-    
-    k.room = 1
+    k.process_phrases()
+    k.bert_stat_room()
+    k.write_room_file()
     print()
-    while True:
-
-        input_string = input("> ")
-        k.process_phrases()
-        k.bert_find_room(input_string);
-
+ 
