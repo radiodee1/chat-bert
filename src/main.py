@@ -81,16 +81,20 @@ class Kernel:
     def bert_find_room(self, userstr):
         p1 = []
         p2 = []
+        mult = []
         m1 = []
-        for i in self.phrases[self.room]:
-            p1.append(i['phrase'])
-            p2.append(userstr)
+
+        for i in self.batches:
+            for ii in i: 
+                p1.append(ii['phrase'])
+                p2.append(userstr)
+                mult.append(ii)
         logits = self.bert_batch_compare(p1, p2)
 
         highest = -1 
         for i in range(len(logits)):
             
-            m1.append(float(logits[i][0] * self.phrases[self.room][i]['multiplier']))
+            m1.append(float(logits[i][0] * mult[i]['multiplier'])) 
             m = float(m1[i])
             if m >= float(self.min[self.room]):
                 if m >= float(m1[highest]):
@@ -106,10 +110,11 @@ class Kernel:
             print(m1)
             print(float(m1[highest]), "highest")
             print(self.room, "old room")
-            print(self.phrases, "phrases") 
+            
         print(self.room, "room")
-        print(self.phrases[self.room][highest]['response'])
-        self.room = self.phrases[self.room][highest]['destination']
+        response = mult[highest]["response"]
+        print(response)
+        self.room =  mult[highest]['destination'] # dest[highest]
         if self.room != self.oldroom:
             print(self.text[self.room])
         self.oldroom = self.room 
@@ -243,13 +248,19 @@ class Kernel:
                     self.batches.append(b)
                     num = 0 
                     b = []
-                b.append(d["phrase"])
+                b.append(d)
         if self.verbose:
             print("store all phrases")
         if len(b) > 0 and len(b) < BATCH_SIZE: 
             pad = []
             for i in range(len(b), BATCH_SIZE):
-                pad.append("")
+                pad.append({
+                    'phrase': "",
+                    'multiplier': 0.0,
+                    'response': "",
+                    'destination' : 1,
+
+                    })
             if self.verbose: 
                 print("must pad batches")
             b.extend(pad)
