@@ -82,6 +82,7 @@ class Writer:
                 with open(self.args.folder + "/room" + line_ending, "w") as rooms:
                     for ii in range(len(self.phrases) ):
                         rooms.write(str(i+ 1) + ";1.0" + "\n")
+                    rooms.write("min:0.0\n")
                     rooms.write(ROOM_TEXT + "\n")
 
 

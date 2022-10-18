@@ -57,6 +57,7 @@ class Kernel:
         self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
         self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1) ]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
+        self.min = [ 0.0 for _ in range(NUMBER_ROOMS + 1) ]
         self.room = 1
         self.oldroom = 0 
 
@@ -86,13 +87,21 @@ class Kernel:
             p2.append(userstr)
         logits = self.bert_batch_compare(p1, p2)
 
-        highest = 0 
+        highest = -1 
         for i in range(len(logits)):
-            #print(logits[i])
-            m1.append(logits[i][0] * self.phrases[self.room][i]['multiplier'])
+            
+            m1.append(float(logits[i][0] * self.phrases[self.room][i]['multiplier']))
             m = float(m1[i])
-            if m > float(m1[highest]):
-                highest = i 
+            if m >= float(self.min[self.room]):
+                if m >= float(m1[highest]):
+                    highest = i
+        if highest == -1:
+            if self.verbose:
+                print(self.min[self.room], "min")
+                print(logits)
+                print(m1,"after multiplier")
+            #do something here... don't change room.
+            return 
         if self.verbose: 
             print(m1)
             print(float(m1[highest]), "highest")
@@ -182,9 +191,11 @@ class Kernel:
                         self.multipliers[int(number)].append(1.0)
                 else:
                     ending_found = True
-                if ending_found:
+                if ending_found and not room.strip().startswith("min"):
                     ending += room.strip() + "\n"
                     #print(ending, "ending")
+                elif ending_found and room.strip().startswith("min"):
+                    self.min[int(number)] = float(room.strip().split(":")[1])
                 num += 1 
             if ending.strip().startswith("@"):
                 self.text[int(number)] = ending.strip() 
@@ -193,6 +204,7 @@ class Kernel:
                 print(self.rooms, 'rooms')
                 print(self.text,"text")
                 print(self.multipliers, "multipliers")
+                print(self.min, "MIN")
 
 
     def read_response_file(self, number, responses_file="responses"):
