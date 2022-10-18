@@ -69,7 +69,7 @@ class Modify:
         self.oldroom = 0 
 
         parser = argparse.ArgumentParser(description="Room Wise Multiplier Update", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-        #parser.add_argument('--raw-pattern', action='store_true', help='output all raw patterns.')
+        parser.add_argument('--lowest', action='store_true', help='use lowest for base comparison.')
         parser.add_argument('--room', default=1, help='count number of responses.')
         parser.add_argument('--write', action="store_true", help="change file contents")
         parser.add_argument('--folder', default='./../data/', help='folder name for files.')
@@ -121,8 +121,10 @@ class Modify:
             self.min[self.room] = float(m1[lowest]) - (average - float(m1[lowest])) / 2.0 
         if highest != -1: 
             for i in range(len(logits)):
-                mult[i]['multiplier'] = average / float(m1[i]) # float(m1[highest]) / float(m1[i])
-
+                if not self.args.lowest: 
+                    mult[i]['multiplier'] = average / float(m1[i]) # float(m1[highest]) / float(m1[i])
+                else:
+                    mult[i]['multiplier'] = float(m1[lowest]) / float(m1[i])
         # put multiplier in self.phrases!!
         
         for i in range(len(self.phrases[self.room])):
