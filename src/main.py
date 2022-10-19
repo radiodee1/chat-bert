@@ -5,7 +5,8 @@ import torch
 from dotenv import load_dotenv
 import argparse
 import os 
-import transformers 
+#import transformers
+import subprocess 
 
 load_dotenv()
 
@@ -113,13 +114,16 @@ class Kernel:
             print(float(m1[highest]), "highest")
             print(self.room, "old room")
             
-        print(self.room, "room")
+        #print(self.room, "room")
         response = mult[highest]["response"]
         print(response)
-        self.room =  mult[highest]['destination'] # dest[highest]
+        self.room =  mult[highest]['destination'] 
         if self.room != self.oldroom:
             print(self.text[self.room])
         self.oldroom = self.room 
+        # launch script...
+        number = mult[highest]['index']
+        self.launch_script(number, userstr)
         pass 
 
     def bert_batch_compare(self, prompt1, prompt2):
@@ -135,6 +139,13 @@ class Kernel:
         logits = outputs.logits.detach()
         #print(outputs, '< logits')
         return logits
+
+    def launch_script(self, number, userstr):
+        name_ending = "_" + ("000" + str(number))[-3:] + ".sh"
+
+        #convert userstr to url-encoded form??
+        z = subprocess.call(["bash", self.args.folder + "react" + name_ending, str(self.room), userstr])
+        pass 
 
     def read_phrases_file(self, name='phrases.txt'):
          
@@ -239,11 +250,14 @@ class Kernel:
     def process_phrases(self):
         self.batches = []
         b = []
-        num = 0 
+        num = 0
+        index = 1 
         for d in self.phrases[self.room]:
             if float(d["multiplier"]) != 0.0: 
                 if self.list: 
                     print(d["phrase"])
+
+                d['index'] = index 
                 if num < BATCH_SIZE:
                     num += 1 
                 else: 
@@ -251,6 +265,7 @@ class Kernel:
                     num = 0 
                     b = []
                 b.append(d)
+            index += 1 
         if self.verbose:
             print("store all phrases")
         if len(b) > 0 and len(b) < BATCH_SIZE: 
@@ -280,7 +295,7 @@ if __name__ == '__main__':
     k.room = 1
     print()
     while True:
-
+        print("room", k.room)
         input_string = input("> ")
         k.process_phrases()
         k.bert_find_room(input_string);
