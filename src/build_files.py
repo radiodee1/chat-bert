@@ -2,7 +2,7 @@
 
 import argparse 
 import os 
-import shutil 
+#import shutil 
 from dotenv import load_dotenv
 
 try:
@@ -64,7 +64,12 @@ class Writer:
             print("stat failure")
             exit()
         if self.write: 
-            shutil.copy(self.args.name, self.args.folder + "/phrases.txt")
+            #shutil.copy(self.args.name, self.args.folder + "/phrases.txt")
+            with open(self.args.folder + "/phrases.txt", 'w') as phrases:
+                for ii in self.phrases:
+                    iii = ';'.join(ii)
+                    phrases.write(iii + "\n")
+
         for i in range(len(self.phrases) ):
             line_ending = "_" + ("000" + str(i + 1))[-3:] + ".txt"
             if self.verbose: 
@@ -83,7 +88,7 @@ class Writer:
             if self.write: 
                 with open(self.args.folder + "/room" + line_ending, "w") as rooms:
                     for ii in range(len(self.phrases) ):
-                        rooms.write(str(i+ 1) + ";1.0" + "\n")
+                        rooms.write(str(i+ 1) + ";1.0" + ";" + self.phrases[ii][0].upper() + "\n")
                     rooms.write("min:0.0\n")
                     rooms.write(ROOM_TEXT + "\n")
 

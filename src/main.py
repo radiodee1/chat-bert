@@ -32,11 +32,6 @@ except:
     BERT_MODEL = 0
 
 try:
-    NUM_PHRASES=int(os.environ['NUM_PHRASES'])
-except:
-    NUM_PHRASES = 10  
-
-try:
     NUMBER_ROOMS = int(os.environ['NUMBER_ROOMS'])
 except:
     NUMBER_ROOMS = 15 
@@ -77,6 +72,14 @@ class Kernel:
         index = BERT_MODEL
         self.tokenizer = BertTokenizer.from_pretrained(name[index])
         self.model = BertForNextSentencePrediction.from_pretrained(name[index])
+        
+        num = 0 
+        with open(self.args.folder + '/phrases.txt' , "r") as p:
+            for i in p.readlines():
+                if i.strip() != "":
+                    num += 1 
+            self.NUM_PHRASES = num - 1  
+            #print(NUM_PHRASES, "NUM_PHRASES")
         pass 
 
     def bert_find_room(self, userstr):
@@ -84,13 +87,18 @@ class Kernel:
         p2 = []
         mult = []
         m1 = []
-
+        logits = []
         for i in self.batches:
+            p1 = []
+            p2 = []
             for ii in i: 
                 p1.append(ii['phrase'])
                 p2.append(userstr)
                 mult.append(ii)
-        logits = self.bert_batch_compare(p1, p2)
+            log1 = self.bert_batch_compare(p1, p2)
+            logits.extend(log1)
+        print(logits)
+        print(len(logits))
 
         highest = -1 
         for i in range(len(logits)):
@@ -122,7 +130,7 @@ class Kernel:
             print(self.text[self.room])
         self.oldroom = self.room 
         # launch script...
-        number = mult[highest]['index']
+        number = mult[highest]['index'] + 1 ## <-- all index numbers start with 1 
         self.launch_script(number, userstr)
         pass 
 
@@ -151,14 +159,14 @@ class Kernel:
          
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
-        self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
+        self.responses = [ "" for _ in range(self.NUM_PHRASES + 1) ]
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
-        self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1)]
+        self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1)]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
 
         for i in range(NUMBER_ROOMS):
             self.read_room_file("room", i + 1)
-        for i in range(NUM_PHRASES):
+        for i in range(self.NUM_PHRASES):
             self.read_response_file(i+ 1)
         for i in range(NUMBER_ROOMS): 
             num = 0 
@@ -166,22 +174,22 @@ class Kernel:
                 phrases = p.readlines()
                 for phrase in phrases:
                     lines = phrase.split(";")
-                    if  num < NUM_PHRASES  :
+                    if  num < self.NUM_PHRASES  :
                         d = {
                                 "phrase": lines[ LINE_PHRASE ].strip(), 
                                 "response": lines[ LINE_RESPONSE ].strip(), 
                                 #"number":  self.rooms[i+1][num+1], 
                                 "index": num,
                                 "destination": int(lines[ LINE_NUMBER ]), 
-                                "multiplier": self.multipliers[i + 1][num] ## <-- right??
+                                "multiplier": self.multipliers[i + 1][num  ] ## <-- right??
                             }
                         if i < NUMBER_ROOMS + 1:
                             d['response'] = self.responses[num + 1]
                             d['destination'] = self.rooms[i + 1][num] #self.destination[num + 1]
                         self.phrases[i+1].append(d)
                     num += 1 
-        if self.verbose:
-            print(self.phrases)
+        if self.verbose or True:
+            print(self.phrases,'read phrases')
             print(num, "num")
             pass
 
@@ -201,7 +209,7 @@ class Kernel:
             for room in newroom:
                 lines = room.split(';')
                 # print(lines)
-                if num < NUM_PHRASES and not ending_found: 
+                if num < self.NUM_PHRASES and not ending_found: 
                     self.rooms[int(number)].append(int(lines[0]))
                     if len(lines) > 1: 
                         self.multipliers[int(number)].append(float(lines[1]))
@@ -240,6 +248,7 @@ class Kernel:
                     #l += lines + "\n"
                     self.responses[int(number)] += lines + "\n"
                 else:
+                    #print(number, 'number')
                     self.destination[int(number)] = int(r.strip())
                 num += 1 
             
@@ -251,20 +260,21 @@ class Kernel:
         self.batches = []
         b = []
         num = 0
-        index = 1 
+        index = 0 
         for d in self.phrases[self.room]:
             if float(d["multiplier"]) != 0.0: 
                 if self.list: 
                     print(d["phrase"])
 
-                d['index'] = index 
+                d['index'] = index  
+                b.append(d)
                 if num < BATCH_SIZE:
                     num += 1 
                 else: 
                     self.batches.append(b)
                     num = 0 
                     b = []
-                b.append(d)
+                #b.append(d)
             index += 1 
         if self.verbose:
             print("store all phrases")
@@ -282,7 +292,7 @@ class Kernel:
                 print("must pad batches")
             b.extend(pad)
             self.batches.append(b)
-        if self.verbose:
+        if self.verbose :
             print(self.batches, 'batches')
             print(b, "b")
          
