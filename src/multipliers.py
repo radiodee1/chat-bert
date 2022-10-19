@@ -208,7 +208,7 @@ class Modify:
                 phrases = p.readlines()
                 for phrase in phrases:
                     lines = phrase.split(";")
-                    if  num < self.NUM_PHRASES  :
+                    if  num < self.NUM_PHRASES + 1 :
                         d = {
                                 "phrase": lines[ LINE_PHRASE ].strip(), 
                                 "response": lines[ LINE_RESPONSE ].strip(), 
@@ -218,13 +218,14 @@ class Modify:
                                 "multiplier": self.multipliers[i + 1][num] ## <-- right??
                             }
                         if i < NUMBER_ROOMS + 1:
-                            d['response'] = self.responses[num + 1].strip()
+                            d['response'] = self.responses[num ].strip()
                             d['destination'] = self.rooms[i + 1][num] #self.destination[num + 1]
                         self.phrases[i+1].append(d)
                     num += 1 
-        if self.verbose:
+        if self.verbose :
             print(self.phrases)
             print(num, "num")
+            #exit()
             pass
 
     def read_room_file(self, rooms_file, number, responses_file="responses"):
@@ -243,8 +244,8 @@ class Modify:
             for room in newroom:
                 lines = room.split(';')
                 print(lines)
-                if num < self.NUM_PHRASES and not ending_found:
-                    if room.strip() == "":
+                if num < self.NUM_PHRASES + 1 and not ending_found:
+                    if room.strip() == "" or room.strip().startswith("min:"):
                         continue 
                     self.rooms[int(number)].append(int(lines[0]))
                     if len(lines) > 1: 

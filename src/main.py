@@ -166,15 +166,15 @@ class Kernel:
 
         for i in range(NUMBER_ROOMS):
             self.read_room_file("room", i + 1)
-        for i in range(self.NUM_PHRASES):
+        for i in range(1, self.NUM_PHRASES):
             self.read_response_file(i+ 1)
         for i in range(NUMBER_ROOMS): 
-            num = 0 
+            num = 1  
             with open(self.args.folder + name, 'r') as p:
                 phrases = p.readlines()
                 for phrase in phrases:
                     lines = phrase.split(";")
-                    if  num < self.NUM_PHRASES  :
+                    if  num < self.NUM_PHRASES + 1 :
                         d = {
                                 "phrase": lines[ LINE_PHRASE ].strip(), 
                                 "response": lines[ LINE_RESPONSE ].strip(), 
@@ -184,8 +184,8 @@ class Kernel:
                                 "multiplier": self.multipliers[i + 1][num  ] ## <-- right??
                             }
                         if i < NUMBER_ROOMS + 1:
-                            d['response'] = self.responses[num + 1]
-                            d['destination'] = self.rooms[i + 1][num] #self.destination[num + 1]
+                            d['response'] = self.responses[num ]
+                            d['destination'] = self.rooms[i + 1][num] 
                         self.phrases[i+1].append(d)
                     num += 1 
         if self.verbose or True:
@@ -200,8 +200,9 @@ class Kernel:
             print(self.rooms, "room")
             print(self.responses, "responses")
             print(rooms_file + name_ending)
-
-        num = 0
+        
+        self.multipliers[int(number)].append(1.0)
+        num = 0 
         ending = ""
         ending_found = False 
         with open(self.args.folder + rooms_file + name_ending, 'r') as p:
@@ -209,12 +210,16 @@ class Kernel:
             for room in newroom:
                 lines = room.split(';')
                 # print(lines)
-                if num < self.NUM_PHRASES and not ending_found: 
-                    self.rooms[int(number)].append(int(lines[0]))
-                    if len(lines) > 1: 
-                        self.multipliers[int(number)].append(float(lines[1]))
-                    else:
-                        self.multipliers[int(number)].append(1.0)
+                if num <= self.NUM_PHRASES + 1 and not ending_found:                     
+                    if room.strip() == "" or room.strip().startswith("min:"):
+                        #continue 
+                        ending_found = True
+                    else: 
+                        self.rooms[int(number)].append(int(lines[0]))
+                        if len(lines) > 1: 
+                            self.multipliers[int(number)].append(float(lines[1]))
+                        else:
+                            self.multipliers[int(number)].append(1.0)
                 else:
                     ending_found = True
                 if ending_found and not room.strip().startswith("min"):
@@ -231,6 +236,7 @@ class Kernel:
                 print(self.text,"text")
                 print(self.multipliers, "multipliers")
                 print(self.min, "MIN")
+                print(self.phrases[self.room])
 
 
     def read_response_file(self, number, responses_file="responses"):
