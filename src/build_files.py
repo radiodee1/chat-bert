@@ -47,6 +47,8 @@ class Writer:
         with open(self.args.name, "r") as phrases:
             phrase = phrases.readlines()
             for i in phrase:
+                if i.strip() == "":
+                    continue 
                 p = i.split(";")
                 p = [ x.strip() for x in p ]
                 self.phrases.append(p)
