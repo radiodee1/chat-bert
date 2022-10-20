@@ -97,8 +97,8 @@ class Kernel:
                 mult.append(ii)
             log1 = self.bert_batch_compare(p1, p2)
             logits.extend(log1)
-        print(logits)
-        print(len(logits))
+        #print(logits)
+        #print(len(logits))
 
         highest = -1 
         for i in range(len(logits)):
@@ -157,24 +157,24 @@ class Kernel:
 
     def read_phrases_file(self, name='phrases.txt'):
          
-        self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
-        self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
-        self.responses = [ "" for _ in range(self.NUM_PHRASES + 1) ]
+        self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1 ) ]
+        self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1 ) ]
+        self.responses = [ "" for _ in range(self.NUM_PHRASES + 1 + 1) ]
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
-        self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1)]
+        self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1 + 1)]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
 
         for i in range(NUMBER_ROOMS):
             self.read_room_file("room", i + 1)
-        for i in range(1, self.NUM_PHRASES):
+        for i in range(0, self.NUM_PHRASES + 1):
             self.read_response_file(i+ 1)
         for i in range(NUMBER_ROOMS): 
-            num = 1  
+            num = 0  
             with open(self.args.folder + name, 'r') as p:
                 phrases = p.readlines()
                 for phrase in phrases:
                     lines = phrase.split(";")
-                    if  num < self.NUM_PHRASES + 1 :
+                    if  num <= self.NUM_PHRASES + 1 :
                         d = {
                                 "phrase": lines[ LINE_PHRASE ].strip(), 
                                 "response": lines[ LINE_RESPONSE ].strip(), 
@@ -184,11 +184,11 @@ class Kernel:
                                 "multiplier": self.multipliers[i + 1][num  ] ## <-- right??
                             }
                         if i < NUMBER_ROOMS + 1:
-                            d['response'] = self.responses[num ]
+                            d['response'] = self.responses[num + 1]
                             d['destination'] = self.rooms[i + 1][num] 
                         self.phrases[i+1].append(d)
                     num += 1 
-        if self.verbose or True:
+        if self.verbose :
             print(self.phrases,'read phrases')
             print(num, "num")
             pass
@@ -205,6 +205,8 @@ class Kernel:
         num = 0 
         ending = ""
         ending_found = False 
+        self.rooms[int(number)].append(1)
+
         with open(self.args.folder + rooms_file + name_ending, 'r') as p:
             newroom = p.readlines() 
             for room in newroom:
