@@ -1,13 +1,13 @@
-9;1.0
-9;1.0
-9;1.0
-9;1.0
-9;1.0
-9;1.0
-9;1.0
-9;1.0
-9;1.0
-9;1.0
+9;1.0;HELLO
+9;1.0;HOW ARE YOU
+9;1.0;WHAT IS YOUR NAME
+9;1.0;DO YOU LIKE PIZZA
+9;1.0;GOOD BYE
+9;1.0;WHAT TIME IS IT
+9;1.0;DO YOU LIKE COMPUTERS
+9;1.0;HOW OLD ARE YOU
+9;1.0;DO YOU LIKE FOOD
+9;1.0;HOW TALL ARE YOU
 min:0.0
 
 # @ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.
