@@ -65,7 +65,7 @@ class Modify:
 
         parser = argparse.ArgumentParser(description="Room Wise Multiplier Update", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument('--lowest', action='store_true', help='use lowest for base comparison.')
-        parser.add_argument('--room', default=1, help='count number of responses.')
+        parser.add_argument('--room', default=1, help='room number.')
         parser.add_argument('--write', action="store_true", help="change file contents")
         parser.add_argument('--folder', default='./../data/', help='folder name for files.')
         parser.add_argument('--list', action='store_true', help='list all possible phrases.')
@@ -109,8 +109,8 @@ class Modify:
                 mult.append(ii)
             log1 = self.bert_batch_compare(p1, p2)
             logits.extend(log1)
-        print(logits)
-        print(len(logits))
+        #print(logits)
+        #print(len(logits))
         
 
         highest = -1 
@@ -119,7 +119,7 @@ class Modify:
             
             m1.append(float(logits[i][0]))  
             m = float(m1[i])
-            print(m, "mmm")
+            #print(m, "mmm")
             tot += m 
             if m <= float(m1[lowest]):
                 lowest = i 
@@ -243,7 +243,7 @@ class Modify:
             newroom = p.readlines() 
             for room in newroom:
                 lines = room.split(';')
-                print(lines)
+                #print(lines)
                 if num < self.NUM_PHRASES + 1 and not ending_found:
                     if room.strip() == "" or room.strip().startswith("min:"):
                         continue 

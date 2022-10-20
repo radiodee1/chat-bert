@@ -181,7 +181,7 @@ class Kernel:
                                 #"number":  self.rooms[i+1][num+1], 
                                 "index": num,
                                 "destination": int(lines[ LINE_NUMBER ]), 
-                                "multiplier": self.multipliers[i + 1][num  ] ## <-- right??
+                                "multiplier": self.multipliers[i + 1][num +1 ] ## <-- right??
                             }
                         if i < NUMBER_ROOMS + 1:
                             d['response'] = self.responses[num + 1]
