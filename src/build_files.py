@@ -30,7 +30,7 @@ class Writer:
         
         parser = argparse.ArgumentParser(description="Bert Chat File Maker", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument('--folder', default='./../data/', help="folder for all output files.")
-        parser.add_argument('--name', default='./../data/phrases.txt.orig', help='name for "phrases" input file.')
+        parser.add_argument('--name', default='./../data/construct.txt.orig', help='name for "construct" input file.')
         parser.add_argument('--list', action='store_true', help='list all possible phrases.')
         parser.add_argument('--verbose', action="store_true", help="print verbose output.")
         parser.add_argument('--write', action="store_true", help="change file contents")
