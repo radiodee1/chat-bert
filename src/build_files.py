@@ -44,14 +44,22 @@ class Writer:
             self.write = True
 
     def read_input_file(self):
+        room = 1
+        
         with open(self.args.name, "r") as phrases:
             phrase = phrases.readlines()
             for i in phrase:
+                skip = False 
                 if i.strip() == "":
                     continue 
-                p = i.split(";")
-                p = [ x.strip() for x in p ]
-                self.phrases.append(p)
+                if i.strip().startswith("room:"):
+                    room = int(i.strip().split(":")[1])
+                    skip = True ## do not try to save room number alone
+                if not skip:
+                    p = i.split(";")
+                    p = [ x.strip() for x in p ]
+                    p.append(str(room))
+                    self.phrases.append(p)
 
             pass 
         print(self.phrases)
@@ -84,11 +92,18 @@ class Writer:
             
         for i in range(NUMBER_ROOMS):
             line_ending = "_" + ("000" + str(i + 1))[-3:] + ".txt"
-
             if self.write: 
                 with open(self.args.folder + "/room" + line_ending, "w") as rooms:
                     for ii in range(len(self.phrases) ):
-                        rooms.write(str(i+ 1) + ";1.0" + ";" + self.phrases[ii][0].upper() + "\n")
+                        dest = int(self.phrases[ii][2]) # str(i+ 1)
+                        mult = 1.0
+                        #print(self.phrases[ii])
+                        if i + 1 != int(self.phrases[ii][3]):
+                            dest = 0 
+                            mult = 0.0
+                        if int(self.phrases[ii][2]) <= 0 and i + 1 == int(self.phrases[ii][3]):
+                            dest = str(i + 1)
+                        rooms.write(str(dest) + ";" + str(mult) + ";" + self.phrases[ii][0].upper() + "\n")
                     rooms.write("min:0.0\n")
                     rooms.write(ROOM_TEXT + "\n")
 
