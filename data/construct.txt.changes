@@ -1,28 +1,28 @@
-hello computer assistant; ok assistant; 1
-ok computer assistant; ok assistant; 1
+hello computer assistant; ok assistant; -1
+ok computer assistant; ok assistant; -1
 
-read the mail; ok mail; 1
-write a text file; ok writer; 1
-tell me about this; internet ok; 1
-search the internet for this; internet ok; 1
+read the mail; ok mail; -1
+write a text file; ok writer; -1
+tell me about this; internet ok; -1
+search the internet for this; internet ok; -1
 
-hello ; hello; 1 
-how are you; i am fine; 1 
-what is your name; my name is jane;1 
-do you like pizza; yes i like pizza;1 
-good bye; later;1 
-what time is it; i don't know;1 
-do you like computers; yes i like computers;1 
-how old are you; i'm twenty years old ;1 
-do you like food; no i don't like food;1 
-go outside; it's nice out here; 1
+hello ; hello; -1 
+how are you; i am fine; -1 
+what is your name; my name is jane; -1 
+do you like pizza; yes i like pizza; -1 
+good bye; later; -1 
+what time is it; i don't know; -1 
+do you like computers; yes i like computers; -1 
+how old are you; i'm twenty years old ; -1 
+do you like food; no i don't like food; -1 
+go outside; it's nice out here; -1
 
-try the maze; i like mazes; 1
+try the maze; i like mazes; -1
 
-go north; north; 1
-go south; south; 1
-go west; west; 1
-go east; east; 1 
-leave the maze; leave; 1
-enter the maze; enter; 1
+go north; north; -1
+go south; south; -1
+go west; west; -1
+go east; east; -1 
+leave the maze; leave; -1
+enter the maze; enter; -1
 
