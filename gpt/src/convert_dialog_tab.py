@@ -28,7 +28,7 @@ if len(sys.argv) > 1:
 parser = argparse.ArgumentParser(description='Make tab file from the movie corpus file.')
 parser.add_argument('basefile', metavar='FILE', type=str, help='Base file from movie corpus for tab output.')
 parser.add_argument("--tabname", default="questions.tsv", type=str, help="Resulting tab file name.")
-parser.add_argument('--length', default=1000, type=int, help="Length, in sentences, of output file.")
+parser.add_argument('--length', default=2000, type=int, help="Length, in sentences, of output file.")
 parser.add_argument("--do_format", action="store_true", help="Format or not format.")
 parser.add_argument("--tokens", default=50, type=int, help="Default number of tokens in sentences.")
 args = parser.parse_args()
