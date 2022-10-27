@@ -86,8 +86,11 @@ def extract_pairs(output):
 def check_pair_list(output):
     skip = False 
     for i in output:
+        #print(i[1:], ":capitalize", i )
         if i.strip() == "":
-            skip = True 
+            skip = True
+        if len(i) > 2 and i[1:].lower() != i[1:]:
+            skip = True
         for j in blacklist:
             if j in i:
                 skip = True
