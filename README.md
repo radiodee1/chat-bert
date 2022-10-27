@@ -38,3 +38,6 @@ Some of the files can be modified after the `build_files.py` python script. Room
 This allows the program to record the `min` variable and store it in the room file. This is not done by the `build_files.py` script. Without the `min` number the program always chooses the highest value for replies. It is desirable somtimes for the program not to pick any response, but to allow the user to try replying again. The `build_multipliers.py` program also constructs the multipliers for each input phrase. This option does not work very well, so it is discouraged or recomended for testing or development.
 
 4. Go to the `./data/` folder and edit the `room` and `react` files.
+
+After the `build_multipliers.py` file is done the files in the folder can be edited by hand. The `build_multipliers.py` file is the last one to edit the output files in place.
+
