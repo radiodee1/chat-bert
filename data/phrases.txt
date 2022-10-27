@@ -11,5 +11,9 @@ ow old are you;i'm twenty years old;-1;2
 do you like food;no i don't like food;-1;2
 what would you like for your birthday?;i think it will be tomorrow.;-1;2
 that means the way you think.;i do not know.;-1;2
+stop;ok;1;2
+exit;ok;1;2
 how tall are you;i am five feet tall;-1;5
 how tall;five feet tall;-1;5
+stop;ok;1;5
+exit;ok;1;5

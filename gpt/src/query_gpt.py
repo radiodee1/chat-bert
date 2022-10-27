@@ -26,7 +26,10 @@ blacklist = [
         "[",
         "]",
         "{",
-        "}"
+        "}",
+        "~",
+        '"',
+        "'"
         ]
 
 PREPEND = '''Human: Hi?
@@ -99,6 +102,7 @@ parser.add_argument("--tabname", default="./../data/questions.tsv", type=str, he
 parser.add_argument('--length', default=20, type=int, help="Length, in sentence pairs, of output file.")
 parser.add_argument("--room", default="2", help="room for entry.")
 parser.add_argument("--file", default="./../data/construct.txt.gpt", help="Default sentence output file.")
+parser.add_argument("--skip", default=0, help="Start processing at this point.")
 args = parser.parse_args()
 
 if __name__ == "__main__":
@@ -107,19 +111,29 @@ if __name__ == "__main__":
         num = 0 
         lines = r.readlines()
         for line in lines:
-            if num % 2 == 0:
-                question = line.split("\t")[0]
-            else:
-                reply = line.split("\t")[0]
-                if question.strip() != "" and reply.strip() != "":
-                    gpt_list.append(get_gpt(question, reply))
-            if num >= args.length * 2:
+            if num < int(args.skip) * 2:
+                num += 1 
+                continue 
+            try: 
+                if num % 2 == 0:
+                    question = line.split("\t")[0]
+                else:
+                    reply = line.split("\t")[0]
+                    if question.strip() != "" and reply.strip() != "":
+                        gpt_list.append(get_gpt(question, reply))
+                    print("Num:", (num // 2) + 1 )
+                if num >= args.length * 2:
+                    break
+            except: 
                 break 
             num += 1 
     if args.verbose:
         print(gpt_list)
     with open(args.file, "w") as w:
+        num = 0 
         w.write("room:" + str(args.room) + "\n")
         for line in gpt_list:
-            if check_pair_list(line):
+            if check_pair_list(line) and len(line) > 1:
                 w.write(line[0].lower() + ";" + line[1].lower() + ";" + str(-1) + "\n")
+                num += 1 
+        print("Ending:", num)

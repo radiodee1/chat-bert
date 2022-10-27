@@ -11,8 +11,12 @@
 3;0.0;DO YOU LIKE FOOD
 3;0.0;WHAT WOULD YOU LIKE FOR YOUR BIRTHDAY?
 3;0.0;THAT MEANS THE WAY YOU THINK.
+0;0.0;STOP
+0;0.0;EXIT
 3;0.0;HOW TALL ARE YOU
 3;0.0;HOW TALL
+0;0.0;STOP
+0;0.0;EXIT
 min:0.0
 
 # @ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.
