@@ -185,7 +185,7 @@ class Kernel:
                             }
                         if i < NUMBER_ROOMS + 1:
                             d['response'] = self.responses[num + 1]
-                            d['destination'] = self.rooms[i + 1][num] 
+                            d['destination'] = self.rooms[i + 1][num +1] 
                         self.phrases[i+1].append(d)
                     num += 1 
         if self.verbose :
@@ -272,7 +272,7 @@ class Kernel:
         for d in self.phrases[self.room]:
             if float(d["multiplier"]) != 0.0: 
                 if self.list: 
-                    print(d["phrase"])
+                    print(d["phrase"],d['destination'])
 
                 d['index'] = index  
                 b.append(d)

@@ -1,15 +1,20 @@
 room:1
-hello ; hello; 0  
-how are you; i am fine; 0 
-what is your name; my name is jane;0  
-do you like pizza; yes i like pizza;0  
-good bye; later;0 
-what time is it; i don't know;0 
-what is your height;  i will tell you my height. just ask;5
+computer assistant; ok assistant; 2
+ok computer assistant; ok assistant; 2
 
 room:2
-how old are you; i'm twenty years old ;0 
-do you like food; no i don't like food;0 
+hello ; hello; -1  
+how are you; i am fine; -1 
+what is your name; my name is jane; -1  
+do you like pizza; yes i like pizza; -1  
+good bye; later; -1 
+what time is it; i don't know; -1
+what is your height;  i will tell you my height. just ask;5
+ow old are you; i'm twenty years old ;-1
+do you like food; no i don't like food;-1 
+what would you like for your birthday?;i think it will be tomorrow.;-1
+that means the way you think.;i do not know.;-1
 
 room:5
-how tall are you; i am five feet tall; 5
+how tall are you; i am five feet tall; -1
+how tall; five feet tall; -1

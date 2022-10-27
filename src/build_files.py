@@ -101,7 +101,7 @@ class Writer:
                         if i + 1 != int(self.phrases[ii][3]):
                             dest = 0 
                             mult = 0.0
-                        if int(self.phrases[ii][2]) <= 0 and i + 1 == int(self.phrases[ii][3]):
+                        if int(self.phrases[ii][2]) <= 0: # and i + 1 == int(self.phrases[ii][3]):
                             dest = str(i + 1)
                         rooms.write(str(dest) + ";" + str(mult) + ";" + self.phrases[ii][0].upper() + "\n")
                     rooms.write("min:0.0\n")
