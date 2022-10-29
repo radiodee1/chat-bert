@@ -129,7 +129,7 @@ class Modify:
             average = tot / float(len(logits))  
             print(average,'average')
             print(m1[lowest], 'lowest')
-            self.min[self.room] = float(m1[lowest]) - (average - float(m1[lowest])) / 2.0 
+            self.min[self.room] = max(float(m1[lowest]) - ( float(m1[lowest])) / 4.0, 0.0 )
         if highest != -1: 
             for i in range(len(logits)):
                 if not self.args.lowest: 
