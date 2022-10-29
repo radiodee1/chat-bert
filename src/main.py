@@ -58,7 +58,7 @@ class Kernel:
         self.oldroom = 0 
 
         parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-        #parser.add_argument('--raw-pattern', action='store_true', help='output all raw patterns.')
+        parser.add_argument('--response', action='store_true', help='Use response for all calculations.')
         parser.add_argument('--multiplier', action='store_true', help='use multiplier in calculations.')
         parser.add_argument('--folder', default='./../data/', help='folder name for files.')
         parser.add_argument('--list', action='store_true', help='list all possible phrases.')
@@ -91,8 +91,12 @@ class Kernel:
         for i in self.batches:
             p1 = []
             p2 = []
-            for ii in i: 
-                p1.append(ii['phrase'])
+            for ii in i:
+                if self.args.response:
+                    p1.append(ii['response'])
+                    print("response")
+                else: 
+                    p1.append(ii['phrase'])
                 p2.append(userstr)
                 mult.append(ii)
             log1 = self.bert_batch_compare(p1, p2)
@@ -130,7 +134,9 @@ class Kernel:
             print(self.text[self.room])
         self.oldroom = self.room 
         # launch script...
-        number = mult[highest]['index'] + 1 ## <-- all index numbers start with 1 
+        number = mult[highest]['index'] + 1 ## <-- all index numbers start with 1
+        if int(number) <= 0:
+            return 
         self.launch_script(number, userstr)
         pass 
 
@@ -294,7 +300,7 @@ class Kernel:
                     'multiplier': 0.0,
                     'response': "",
                     'destination' : 1,
-
+                    'index': -1 
                     })
             if self.verbose: 
                 print("must pad batches")
