@@ -1,5 +1,14 @@
 # chat-bert
-Using bert for a chatbot
+Using bert for a chatbot.
+
+## Notes - BertForNextSentencePrediction:
+My previous chatbots have been autogenerative. I used GPT-J to generate response text on the fly. This works but the models - like GPT-J - are too large to host on my computer. For this project I am using code that allows the smaller bert model to manage the chatbot, but replies are picked from a list of replies that the model already knows.
+
+In this chatbot there is a phrase and also a response that are hard coded in a list as part of the chatbot. The bert model is responsible for picking out which phrase in the list is closest to the input from the user. After it decides which is closest, the hard coded response from the list is given as the reply. This is something like the way that AIML works, but is an improvement because the input need not match the recorded input exactly.
+
+The downsides to this approach are many. Mainly the model's list of inputs cannot be too large. If the list gets too large the input sentences would not single out a particular output well. Also, the model cannot be too small. If the list is too small then the outputs will be boring and repettitive. Finally, It is difficult to build the lists required. The process can be tedious.
+
+Experimentally, when trying to build the lists, we use a GPT-J oriented process to automatically generate questions and answers. This is only partially successfull. This process is used in the development stages of the chatbot though, so it does not effect speed.
 
 ## Steps
 
