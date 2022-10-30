@@ -54,6 +54,10 @@ class Kernel:
         self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1) ]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
         self.min = [ 0.0 for _ in range(NUMBER_ROOMS + 1) ]
+
+        self.latest_replies = []
+        self.old_userstr = ""
+
         self.room = 1
         self.oldroom = 0 
 
@@ -88,6 +92,9 @@ class Kernel:
         mult = []
         m1 = []
         logits = []
+        if self.old_userstr != userstr:
+            self.latest_replies = []
+
         for i in self.batches:
             p1 = []
             p2 = []
@@ -112,7 +119,7 @@ class Kernel:
                 m1.append(float(logits[i][0]))
             m = float(m1[i])
             if m >= float(self.min[self.room]):
-                if m >= float(m1[highest]):
+                if m >= float(m1[highest]) and i not in self.latest_replies:
                     highest = i
         if highest == -1:
             if self.verbose:
@@ -127,10 +134,14 @@ class Kernel:
             print(self.room, "old room")
             
         #print(self.room, "room")
+        self.latest_replies.append(highest)
+        self.old_userstr = userstr 
+
         response = mult[highest]["response"]
         print(response)
         self.room =  mult[highest]['destination'] 
         if self.room != self.oldroom:
+            self.latest_replies = []
             print(self.text[self.room])
         self.oldroom = self.room 
         # launch script...
