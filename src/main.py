@@ -145,7 +145,7 @@ class Kernel:
             print(self.text[self.room])
         self.oldroom = self.room 
         # launch script...
-        number = mult[highest]['index'] + 1 ## <-- all index numbers start with 1
+        number = mult[highest]['number'] + 1 ## <-- all index numbers start with 1
         if int(number) <= 0:
             return 
         self.launch_script(number, userstr)
@@ -195,7 +195,7 @@ class Kernel:
                         d = {
                                 "phrase": lines[ LINE_PHRASE ].strip(), 
                                 "response": lines[ LINE_RESPONSE ].strip(), 
-                                #"number":  self.rooms[i+1][num+1], 
+                                "number":num, #  self.rooms[i+1][num+1], 
                                 "index": num,
                                 "destination": int(lines[ LINE_NUMBER ]), 
                                 "multiplier": self.multipliers[i + 1][num +1 ] ## <-- right??
