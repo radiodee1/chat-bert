@@ -8,7 +8,7 @@ In this chatbot there is a phrase and also a response that are hard coded in a l
 
 The downsides to this approach are many. Mainly the model's list of inputs cannot be too large. If the list gets too large the input sentences would not single out a particular output well. Also, the model cannot be too small. If the list is too small then the outputs will be boring and repettitive. Finally, It is difficult to build the lists required. The process can be tedious.
 
-Experimentally, when trying to build the lists, we use a GPT-J oriented process to automatically generate questions and answers. This is only partially successfull. This process is used in the development stages of the chatbot though, so it does not effect speed.
+Experimentally, when trying to build the lists, we use a GPT-J oriented process to automatically generate questions and answers. This is only partially successfull. This process is used in the development stages of the chatbot though, so it does not effect speed. Code for the GPT-J oriented process can be found in the `./gpt/` folder.
 
 ## Steps
 
