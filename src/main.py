@@ -5,7 +5,7 @@ import torch
 from dotenv import load_dotenv
 import argparse
 import os 
-#import transformers
+import urllib.parse  
 import subprocess 
 
 load_dotenv()
@@ -169,6 +169,7 @@ class Kernel:
         name_ending = "_" + ("000" + str(number))[-3:] + ".sh"
 
         #convert userstr to url-encoded form??
+        userstr = urllib.parse.quote(userstr)
         z = subprocess.call(["bash", self.args.folder + "react" + name_ending, str(self.room), userstr])
         pass 
 
