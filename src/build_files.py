@@ -21,6 +21,7 @@ REACT_TEXT = '''
 # This text might be helpful for internet searches!!
 # google-chrome www.google.com/?q=$2
 # x-www-browser www.google.com/?q=$2
+# xdg-email
 '''
 
 class Writer:
@@ -92,6 +93,7 @@ class Writer:
                 line_ending = line_ending.replace('txt','sh')
                 with open(self.args.folder + "/react" + line_ending, "w") as react:
                     react.write(REACT_TEXT.strip() + "\n")
+                    react.write("# " + self.phrases[i][0] + " - " + self.phrases[i][1] + "\n")
                 os.chmod(self.args.folder + "/react" + line_ending, 0o766)
             
         for i in range(NUMBER_ROOMS):
