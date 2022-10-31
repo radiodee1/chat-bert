@@ -20,6 +20,7 @@ REACT_TEXT = '''
 
 # This text might be helpful for internet searches!!
 # google-chrome www.google.com/?q=$2
+# x-www-browser www.google.com/?q=$2
 '''
 
 class Writer:
