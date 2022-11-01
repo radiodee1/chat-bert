@@ -33,24 +33,11 @@ blacklist = [
         #"'"
         ]
 
-PREPEND = '''Human: Hi?
-Jane: Hello there.
-
-Human: Do you like candy?
-Jane: Yes I like candy.
-
-Human: What is your favorite color?
-Jane: My favorite color is blue.
-
-Human: How old are you?
-Jane: I am 21 years old.'''
-
-
 def get_gpt(question, reply):
     prompt = PREPEND + "\n\nHuman: " + question.strip() + "\nJane: " + reply.strip() + "\n\nHuman: "
     if args.short:
         prompt = PREPEND + "\n\nHuman: " + question.strip() + "\nJane: "
-
+    prompt = prompt.replace("Human", args.ident_ques).replace("Jane", args.ident_answ)
     if args.verbose: 
         print("--")
         print(prompt)
@@ -82,10 +69,10 @@ def extract_pairs(output):
     output = output.split("\n")[0:2]
     out_list = []
     for i in output:
-        if i.startswith("Human:"):
-            i = i[len("Human:"):]
-        if i.startswith("Jane:"):
-            i = i[len("Jane:"):]
+        if i.startswith(args.ident_ques + ":"):
+            i = i[len(args.ident_ques + ":"):]
+        if i.startswith(args.ident_answ + ":"):
+            i = i[len(args.ident_answ + ":"):]
         out_list.append(i.strip())
     return out_list 
 
@@ -119,7 +106,21 @@ parser.add_argument("--file", default="./../data/construct.txt.gpt", help="Defau
 parser.add_argument("--skip", default=0, help="Start processing at this point.")
 parser.add_argument("--short", action="store_true", help="Use shortened input prompt.")
 parser.add_argument("--temperature", default=0.2, help="Temperature for gpt-j call.")
+parser.add_argument("--ident_ques", default="Human", help="Identity string for question.")
+parser.add_argument("--ident_answ", default="Jane", help="Identity string for answer.")
 args = parser.parse_args()
+
+PREPEND = '''{human}: Hi?
+{jane}: Hello there.
+
+{human}: Do you like candy?
+{jane}: Yes I like candy.
+
+{human}: What is your favorite color?
+{jane}: My favorite color is blue.
+
+{human}: How old are you?
+{jane}: I am 21 years old.'''.format(human=args.ident_ques, jane=args.ident_answ)
 
 if __name__ == "__main__":
     gpt_list = []
