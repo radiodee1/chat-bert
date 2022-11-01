@@ -102,7 +102,8 @@ def check_pair_list(output, saved = []):
         if len(i.split(" ")) <= 1:
             skip = True 
     for i in saved:
-        print(output[0].strip()[:-1], i[0].strip()[:-1])
+        if args.verbose: 
+            print(output[0].strip()[:-1], i[0].strip()[:-1])
         if output[0].strip()[:-1] == i[0].strip()[:-1]:
             skip = True 
     return not skip
