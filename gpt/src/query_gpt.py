@@ -29,7 +29,8 @@ blacklist = [
         "}",
         "~",
         '"',
-        "'"
+        "''"
+        #"'"
         ]
 
 PREPEND = '''Human: Hi?
@@ -138,6 +139,8 @@ if __name__ == "__main__":
                         gpt_response = get_gpt( question, reply )
                         if check_pair_list(gpt_response, gpt_list):
                             gpt_list.append(gpt_response)
+                        else:
+                            print(gpt_response)
                     print("Num:", (num // 2) + 1 ,len(gpt_list))
                 if num >= args.length * 2:
                     break
