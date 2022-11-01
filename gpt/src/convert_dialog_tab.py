@@ -25,7 +25,7 @@ if len(sys.argv) > 1:
     print(txtname)
     print('This first arg should be the path to the movie corpus file.')
 
-parser = argparse.ArgumentParser(description='Make tab file from the movie corpus file.')
+parser = argparse.ArgumentParser(description='Make tab file from the movie corpus file.',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('basefile', metavar='FILE', type=str, help='Base file from movie corpus for tab output.')
 parser.add_argument("--tabname", default="questions.tsv", type=str, help="Resulting tab file name.")
 parser.add_argument('--length', default=2000, type=int, help="Length, in sentences, of output file.")
