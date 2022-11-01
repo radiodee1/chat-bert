@@ -135,7 +135,9 @@ if __name__ == "__main__":
                 else:
                     reply = line.split("\t")[0]
                     if question.strip() != "" and reply.strip() != "":
-                        gpt_list.append(get_gpt(question, reply))
+                        gpt_response = get_gpt( question, reply )
+                        if check_pair_list(gpt_response, gpt_list):
+                            gpt_list.append(gpt_response)
                     print("Num:", (num // 2) + 1 ,len(gpt_list))
                 if num >= args.length * 2:
                     break
@@ -148,7 +150,7 @@ if __name__ == "__main__":
         num = 0 
         w.write("room:" + str(args.room) + "\n")
         for line in gpt_list:
-            if check_pair_list(line, gpt_list) and len(line) > 1:
+            if len(line) > 1:
                 w.write(line[0].lower() + ";" + line[1].lower() + ";" + str(-1) + "\n")
                 num += 1 
         print("Ending:", num)
