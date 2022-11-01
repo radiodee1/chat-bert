@@ -88,7 +88,7 @@ def extract_pairs(output):
         out_list.append(i.strip())
     return out_list 
 
-def check_pair_list(output):
+def check_pair_list(output, saved = []):
     skip = False 
     for i in output:
         #print(i[1:], ":capitalize", i )
@@ -100,6 +100,10 @@ def check_pair_list(output):
             if j in i:
                 skip = True
         if len(i.split(" ")) <= 1:
+            skip = True 
+    for i in saved:
+        print(output[0].strip()[:-1], i[0].strip()[:-1])
+        if output[0].strip()[:-1] == i[0].strip()[:-1]:
             skip = True 
     return not skip
 
@@ -143,7 +147,7 @@ if __name__ == "__main__":
         num = 0 
         w.write("room:" + str(args.room) + "\n")
         for line in gpt_list:
-            if check_pair_list(line) and len(line) > 1:
+            if check_pair_list(line, gpt_list) and len(line) > 1:
                 w.write(line[0].lower() + ";" + line[1].lower() + ";" + str(-1) + "\n")
                 num += 1 
         print("Ending:", num)
