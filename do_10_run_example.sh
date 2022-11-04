@@ -1,0 +1,3 @@
+cd ./src/ 
+
+./main.py

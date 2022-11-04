@@ -1,5 +1,5 @@
-computer assistant;ok assistant;2;1
-use computer assistant;ok assistant;2;1
+chat bert;ok assistant;2;1
+bert;ok assistant;2;1
 hello;hello;-1;2
 how are you;i am fine;-1;2
 what is your name;my name is jane;-1;2

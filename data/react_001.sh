@@ -4,4 +4,4 @@
 # google-chrome www.google.com/?q=$2
 # x-www-browser www.google.com/?q=$2
 # xdg-email
-# computer assistant - ok assistant
+# chat bert - ok assistant
