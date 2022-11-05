@@ -339,6 +339,7 @@ class Kernel:
 
     def set_room(self, room):
         self.room = int(room)
+        self.oldroom = int(room)
 
     def get_bert_internet(self, room, userstr):
         self.process_phrases()
