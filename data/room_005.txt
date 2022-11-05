@@ -19,6 +19,6 @@
 1;0.8763172343330372;EXIT
 min:3.302121877670288
 
-# @ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.
+@ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.
 Text will be saved until the end of the file.
 

@@ -45,6 +45,7 @@ class Kernel:
 
     def __init__(self):
         self.verbose = True
+        self.print_to_screen = True 
 
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
         self.batches = [] 
@@ -59,7 +60,8 @@ class Kernel:
         self.old_userstr = ""
 
         self.room = 1
-        self.oldroom = 0 
+        self.oldroom = 0
+        self.output_text = ""
 
         parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument('--response', action='store_true', help='Use response for all calculations.')
@@ -122,6 +124,7 @@ class Kernel:
                 if m >= float(m1[highest]) and i not in self.latest_replies:
                     highest = i
         if highest == -1:
+            self.output_text = ""
             if self.verbose:
                 print(self.min[self.room], "min")
                 print(logits)
@@ -138,11 +141,17 @@ class Kernel:
         self.old_userstr = userstr 
 
         response = mult[highest]["response"]
-        print(response)
+        self.output_text = response.strip()
+        
+        if self.print_to_screen:
+            print(response.strip())
         self.room =  mult[highest]['destination'] 
         if self.room != self.oldroom:
             self.latest_replies = []
-            print(self.text[self.room])
+            if self.print_to_screen: 
+                print(self.text[self.room])
+            
+            self.output_text += "\n" + self.text[self.room].strip()
         self.oldroom = self.room 
         # launch script...
         number = mult[highest]['number'] + 1 ## <-- all index numbers start with 1
@@ -321,18 +330,40 @@ class Kernel:
         if self.verbose :
             print(self.batches, 'batches')
             print(b, "b")
-         
+    
+    def get_output_text(self):
+        return self.output_text 
+
+    def get_room(self):
+        return self.room
+
+    def set_room(self, room):
+        self.room = int(room)
+
+    def get_bert_internet(self, room, userstr):
+        self.process_phrases()
+        self.set_room(room)
+        self.latest_replies = []
+        self.bert_find_room(userstr)
+        return self.room, self.output_text
+    
+    def set_print_to_screen(self, pr):
+        self.print_to_screen = pr 
 
 if __name__ == '__main__':
 
     k = Kernel()
     k.read_phrases_file()
-    
-    k.room = 1
+    saved_room = 1 
+    k.set_room( saved_room )
+    k.set_print_to_screen(False)
     print()
     while True:
-        print("room", k.room)
+        text = ""
+        print("room", saved_room)
         input_string = input("> ")
-        k.process_phrases()
-        k.bert_find_room(input_string);
+        saved_room, text = k.get_bert_internet(saved_room, input_string);
+        if len(text.strip()) > 0: 
+            print(text.strip())
+
 
