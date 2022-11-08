@@ -1,3 +1,3 @@
 cd ./src/ 
 
-./query_gpt.py --length 10 
+./query_gpt.py --length 300 
