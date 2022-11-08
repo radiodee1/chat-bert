@@ -120,7 +120,6 @@ class Modify:
         highest = -1 
         lowest = -1 
         for i in range( len(logits)):
-            #if num < self.list_len:
             m1.append(float(logits[i][0]))  
             if num < self.list_len: 
                 m = float(m1[i])
