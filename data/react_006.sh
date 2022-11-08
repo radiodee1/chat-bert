@@ -4,7 +4,7 @@
 # google-chrome www.google.com/?q=$2
 # x-www-browser www.google.com/?q=$2
 # xdg-email
-
-echo $@
-echo $0
+# libreoffice
+# echo $@
+# echo $0
 # do you like pizza - yes i like pizza
