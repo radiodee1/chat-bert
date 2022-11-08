@@ -4,4 +4,7 @@
 # google-chrome www.google.com/?q=$2
 # x-www-browser www.google.com/?q=$2
 # xdg-email
+
+echo $@
+echo $0
 # what is your height - i will tell you my height. just ask

@@ -13,12 +13,12 @@
 5;0.0;THAT MEANS THE WAY YOU THINK.
 0;0.0;STOP
 0;0.0;EXIT
-5;0.8398674326166746;HOW TALL ARE YOU
-5;0.8493450573744065;HOW TALL
-1;0.9015402618268048;STOP
-1;0.8763172343330372;EXIT
-min:3.302121877670288
+5;0.48485483296717324;HOW TALL ARE YOU
+5;0.49032625856408996;HOW TALL
+1;0.5204585105763019;STOP
+1;0.5058972759010686;EXIT
+min:4.332563638687134
 
-@ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.
+# @ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.
 Text will be saved until the end of the file.
 

@@ -61,7 +61,9 @@ class Modify:
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
         self.min = [ 0.0 for _ in range(NUMBER_ROOMS + 1) ]
         self.room = 1
-        self.oldroom = 0 
+        self.oldroom = 0
+
+        self.list_len = 0 
 
         parser = argparse.ArgumentParser(description="Room Wise Multiplier Update", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument('--lowest', action='store_true', help='use lowest for base comparison.')
@@ -100,6 +102,7 @@ class Modify:
         mult = []
         m1 = []
         logits = []
+        
         for i in self.batches:
             p1 = []
             p2 = []
@@ -107,33 +110,37 @@ class Modify:
                 p1.append(ii['phrase'])
                 p2.append(ii['phrase'])
                 mult.append(ii)
+                
             log1 = self.bert_batch_compare(p1, p2)
             logits.extend(log1)
         #print(logits)
         #print(len(logits))
         
-
+        num = 0 
         highest = -1 
         lowest = -1 
-        for i in range(len(logits)):
-            
+        for i in range( len(logits)):
+            #if num < self.list_len:
             m1.append(float(logits[i][0]))  
-            m = float(m1[i])
-            #print(m, "mmm")
-            tot += m 
-            if m <= float(m1[lowest]):
-                lowest = i 
-            if m >= float(m1[highest]):
-                highest = i
+            if num < self.list_len: 
+                m = float(m1[i])
+                print(m, "mmm", i, self.list_len)
+                tot += m 
+                if m <= float(m1[lowest]):
+                    lowest = i 
+                if m >= float(m1[highest]):
+                    highest = i
+            num += 1 
         if lowest != -1:
             average = tot / float(len(logits))  
             print(average,'average')
-            print(m1[lowest], 'lowest')
+            print(m1[lowest], 'lowest', lowest, mult[lowest]['phrase'])
             self.min[self.room] = max(float(m1[lowest]) - ( float(m1[lowest])) / 4.0, 0.0 )
+            print("min", self.min[self.room])
         if highest != -1: 
             for i in range(len(logits)):
                 if not self.args.lowest: 
-                    mult[i]['multiplier'] = average / float(m1[i]) # float(m1[highest]) / float(m1[i])
+                    mult[i]['multiplier'] = average / float(m1[i]) 
                 else:
                     mult[i]['multiplier'] = float(m1[lowest]) / float(m1[i])
         # put multiplier in self.phrases!!
@@ -300,7 +307,7 @@ class Modify:
             d['index'] = index 
             if float(d["multiplier"]) != 0.0: 
                 if self.list: 
-                    print(d["phrase"])
+                    print(d["phrase"], index)
                 b.append(d)
                 if num < BATCH_SIZE:
                     num += 1 
@@ -310,6 +317,7 @@ class Modify:
                     b = []
                 #b.append(d)
             index += 1 
+        self.list_len = len(b)
         if self.verbose:
             print("store all phrases")
         if len(b) > 0 and len(b) < BATCH_SIZE: 
