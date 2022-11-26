@@ -127,7 +127,8 @@ class Kernel:
             if m >= float(self.min[self.room]):
                 if ((m >= float(m1[highest]) and i not in self.latest_replies and "*" not in mult[i]['phrase']) 
                         or self.is_exact(userstr, mult[i]['phrase'])):
-                    highest = i
+                    if "*" not in mult[highest]['phrase']:
+                        highest = i
         if highest == -1:
             self.output_text = ""
             if self.verbose:
