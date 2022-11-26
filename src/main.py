@@ -53,7 +53,7 @@ class Kernel:
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
-        self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1) ]
+        #self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1) ]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
         self.min = [ 0.0 for _ in range(NUMBER_ROOMS + 1) ]
 
@@ -213,7 +213,7 @@ class Kernel:
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1 ) ]
         self.responses = [ "" for _ in range(self.NUM_PHRASES + 1 + 1) ]
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
-        self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1 + 1)]
+        #self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1 + 1)]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
 
         for i in range(NUMBER_ROOMS):
@@ -315,7 +315,7 @@ class Kernel:
             
             if self.verbose: 
                 print(self.responses[int(number)], ":responses")
-                print(self.destination[int(number)], "dest")
+                #print(self.destination[int(number)], "dest")
         
     def process_phrases(self):
         self.batches = []
