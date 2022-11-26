@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.10 
 
+from re import S
 from transformers import BertTokenizer, BertForNextSentencePrediction
 import torch
 from dotenv import load_dotenv
@@ -69,10 +70,13 @@ class Kernel:
         parser.add_argument('--folder', default='./../data/', help='folder name for files.')
         parser.add_argument('--list', action='store_true', help='list all possible phrases.')
         parser.add_argument('--verbose', action="store_true", help="print verbose output.")
+        parser.add_argument('--no_room', action="store_true", help="do not display room number")
+
         self.args = parser.parse_args()
         
         self.verbose = self.args.verbose 
         self.list = self.args.list 
+        self.no_room = self.args.no_room
 
         name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8' ]
         index = BERT_MODEL
@@ -121,7 +125,8 @@ class Kernel:
                 m1.append(float(logits[i][0]))
             m = float(m1[i])
             if m >= float(self.min[self.room]):
-                if m >= float(m1[highest]) and i not in self.latest_replies:
+                if ((m >= float(m1[highest]) and i not in self.latest_replies and "*" not in mult[i]['phrase']) 
+                        or self.is_exact(userstr, mult[i]['phrase'])):
                     highest = i
         if highest == -1:
             self.output_text = ""
@@ -181,6 +186,25 @@ class Kernel:
         userstr = urllib.parse.quote(userstr)
         z = subprocess.call(["bash", self.args.folder + "react" + name_ending, str(self.room), userstr])
         pass 
+
+    def is_exact(self, phrase, saved):
+        exact = True
+        if "*" not in saved:
+            exact = False
+        else:
+            saved = saved.replace("*", " ")
+            saved = saved.strip().split(" ")
+            phrase = phrase.strip().split(" ")
+            if len(saved) != len(phrase):
+                exact = False
+                #return exact
+            else:
+                for i in range(len(saved)):
+                    if saved[i] != phrase[i]:
+                        exact = False
+
+        return exact 
+        
 
     def read_phrases_file(self, name='phrases.txt'):
          
@@ -361,7 +385,8 @@ if __name__ == '__main__':
     print()
     while True:
         text = ""
-        print("room", saved_room)
+        if not k.no_room:
+            print("room", saved_room)
         input_string = input("> ")
         saved_room, text = k.get_bert_internet(saved_room, input_string);
         if len(text.strip()) > 0: 

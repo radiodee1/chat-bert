@@ -1,6 +1,6 @@
 room:1
-chat bert; ok assistant; 2
-bert; ok assistant; 2
+*chat*bert*; ok assistant; 2
+*bert*; ok assistant; 2
 
 room:2
 hello ; hello; -1  
