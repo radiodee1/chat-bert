@@ -308,8 +308,9 @@ class Kernel:
                     #l += lines + "\n"
                     self.responses[int(number)] += lines + "\n"
                 else:
-                    #print(number, 'number')
-                    self.destination[int(number)] = int(r.strip())
+                    pass
+                    # this is set in the 'read_phrases_file' method 
+                    #self.destination[int(number)] = int(r.strip())
                 num += 1 
             
             if self.verbose: 
