@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.10 
 
-from re import S
+#from re import S
 from transformers import BertTokenizer, BertForNextSentencePrediction
 import torch
 from dotenv import load_dotenv
@@ -64,34 +64,20 @@ class Kernel:
         self.oldroom = 0
         self.output_text = ""
 
-        parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-        parser.add_argument('--response', action='store_true', help='Use response for all calculations.')
-        parser.add_argument('--multiplier', action='store_true', help='use multiplier in calculations.')
-        parser.add_argument('--folder', default='./../data/', help='folder name for files.')
-        parser.add_argument('--list', action='store_true', help='list all possible phrases.')
-        parser.add_argument('--verbose', action="store_true", help="print verbose output.")
-        parser.add_argument('--no_room', action="store_true", help="do not display room number")
+        self.verbose = False #.args.verbose 
+        self.list = False # self.args.list 
+        self.no_room = False #.args.no_room
 
-        self.args = parser.parse_args()
-        
-        self.verbose = self.args.verbose 
-        self.list = self.args.list 
-        self.no_room = self.args.no_room
+        self.folder = "./../data" #self.args.folder
+        self.response = False #.args.response
+        self.multiplier = False #.args.multiplier
+
 
         name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8' ]
         index = BERT_MODEL
         self.tokenizer = BertTokenizer.from_pretrained(name[index])
         self.model = BertForNextSentencePrediction.from_pretrained(name[index])
-        
-        num = 0 
-        with open(self.args.folder + '/phrases.txt' , "r") as p:
-            for i in p.readlines():
-                if i.strip() != "":
-                    num += 1 
-            self.NUM_PHRASES = num - 1  
-            #print(NUM_PHRASES, "NUM_PHRASES")
-        pass 
-
+ 
     def bert_find_room(self, userstr):
         p1 = []
         p2 = []
@@ -105,7 +91,7 @@ class Kernel:
             p1 = []
             p2 = []
             for ii in i:
-                if self.args.response:
+                if self.response:
                     p1.append(ii['response'])
                     print("response")
                 else: 
@@ -119,7 +105,7 @@ class Kernel:
 
         highest = -1 
         for i in range(len(logits)):
-            if self.args.multiplier: 
+            if self.multiplier: 
                 m1.append(float(logits[i][0] * mult[i]['multiplier'])) 
             else:
                 m1.append(float(logits[i][0]))
@@ -185,7 +171,7 @@ class Kernel:
 
         #convert userstr to url-encoded form??
         userstr = urllib.parse.quote(userstr)
-        z = subprocess.call(["bash", self.args.folder + "react" + name_ending, str(self.room), userstr])
+        z = subprocess.call(["bash", self.folder + "react" + name_ending, str(self.room), userstr])
         pass 
 
     def is_exact(self, phrase, saved):
@@ -209,6 +195,16 @@ class Kernel:
 
     def read_phrases_file(self, name='phrases.txt'):
          
+        num = 0 
+        with open(self.folder + '/phrases.txt' , "r") as p:
+            for i in p.readlines():
+                if i.strip() != "":
+                    num += 1 
+            self.NUM_PHRASES = num - 1  
+            #print(NUM_PHRASES, "NUM_PHRASES")
+        pass 
+
+        
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1 ) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1 ) ]
         self.responses = [ "" for _ in range(self.NUM_PHRASES + 1 + 1) ]
@@ -222,7 +218,7 @@ class Kernel:
             self.read_response_file(i+ 1)
         for i in range(NUMBER_ROOMS): 
             num = 0  
-            with open(self.args.folder + name, 'r') as p:
+            with open(self.folder + name, 'r') as p:
                 phrases = p.readlines()
                 for phrase in phrases:
                     lines = phrase.split(";")
@@ -236,8 +232,10 @@ class Kernel:
                                 "multiplier": self.multipliers[i + 1][num +1 ] ## <-- right??
                             }
                         if i < NUMBER_ROOMS + 1:
+                            #pass     
                             d['response'] = self.responses[num + 1]
-                            d['destination'] = self.rooms[i + 1][num +1] 
+                            d['destination'] = self.rooms[i + 1][num +1]
+                            print(d)
                         self.phrases[i+1].append(d)
                     num += 1 
         if self.verbose :
@@ -259,7 +257,7 @@ class Kernel:
         ending_found = False 
         self.rooms[int(number)].append(1)
 
-        with open(self.args.folder + rooms_file + name_ending, 'r') as p:
+        with open(self.folder + rooms_file + name_ending, 'r') as p:
             newroom = p.readlines() 
             for room in newroom:
                 lines = room.split(';')
@@ -297,7 +295,7 @@ class Kernel:
         name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
 
         num = 0 
-        with open(self.args.folder + responses_file + name_ending, "r") as p:
+        with open(self.folder + responses_file + name_ending, "r") as p:
             response = p.readlines()
             #l = ""
             for r in response:
@@ -378,8 +376,27 @@ class Kernel:
         self.print_to_screen = pr 
 
 if __name__ == '__main__':
-
     k = Kernel()
+    parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--response', action='store_true', help='Use response for all calculations.')
+    parser.add_argument('--multiplier', action='store_true', help='use multiplier in calculations.')
+    parser.add_argument('--folder', default='./../data/', help='folder name for files.')
+    parser.add_argument('--list', action='store_true', help='list all possible phrases.')
+    parser.add_argument('--verbose', action="store_true", help="print verbose output.")
+    parser.add_argument('--no_room', action="store_true", help="do not display room number")
+    
+    args = parser.parse_args()
+    
+    k.verbose = args.verbose 
+    k.list = args.list 
+    k.no_room = args.no_room
+
+    k.folder = args.folder
+    k.response = args.response
+    k.multiplier = args.multiplier
+
+
+    #k = Kernel()
     k.read_phrases_file()
     saved_room = 1 
     k.set_room( saved_room )

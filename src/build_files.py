@@ -59,7 +59,8 @@ class Writer:
             for i in phrase:
                 skip = False 
                 if i.strip() == "" or i.strip().startswith("#"):
-                    continue 
+                    skip = True
+                    #continue 
                 if i.strip().startswith("room:"):
                     room = int(i.strip().split(":")[1])
                     skip = True ## do not try to save room number alone
