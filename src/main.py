@@ -235,7 +235,7 @@ class Kernel:
                             #pass     
                             d['response'] = self.responses[num + 1]
                             d['destination'] = self.rooms[i + 1][num +1]
-                            print(d)
+                            
                         self.phrases[i+1].append(d)
                     num += 1 
         if self.verbose :
