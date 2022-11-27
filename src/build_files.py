@@ -58,7 +58,7 @@ class Writer:
             phrase = phrases.readlines()
             for i in phrase:
                 skip = False 
-                if i.strip() == "":
+                if i.strip() == "" or i.strip().startswith("#"):
                     continue 
                 if i.strip().startswith("room:"):
                     room = int(i.strip().split(":")[1])

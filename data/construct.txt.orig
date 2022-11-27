@@ -1,7 +1,9 @@
+# these lines are strictly literal
 room:1
 *chat*bert*; ok assistant; 2
 *bert*; ok assistant; 2
 
+# these lines are like conversational
 room:2
 hello ; hello; -1  
 how are you; i am fine; -1 
@@ -17,6 +19,7 @@ that means the way you think.;i do not know.;-1
 stop; ok; 1
 exit; ok; 1
 
+# these lines are non-sensical
 room:5
 how tall are you; i am five feet tall; -1
 how tall; five feet tall; -1
