@@ -15,10 +15,13 @@ Experimentally, when trying to build the lists, we use a GPT-J oriented process 
 1. Write a file in `./data/construct.txt.orig` for defining your chatbot. Include all rooms and all phrases and replies. A sample file is below.
 
 ```
+# comments here!!
+
 room:1
 computer assistant; ok assistant; 2
 ok computer assistant; ok assistant; 2
 
+# more comments!!
 room:2
 hello ; hello; -1  
 how are you; i am fine; -1 
