@@ -1,10 +1,12 @@
 # these lines are strictly literal
 room:1
+mixin:5 
 *chat*bert*; ok assistant; 2
 *bert*; ok assistant; 2
 
 # these lines are like conversational
 room:2
+mixin: 5,1,5,5  
 hello ; hello; -1  
 how are you; i am fine; -1 
 what is your name; my name is jane; -1  
@@ -21,6 +23,7 @@ exit; ok; 1
 
 # these lines are non-sensical
 room:5
+mixin:0 
 how tall are you; i am five feet tall; -1
 how tall; five feet tall; -1
 stop; ok; 1

@@ -35,6 +35,7 @@ class Writer:
         
         self.verbose = True
         self.phrases = []
+        self.mixins = [ [ '0' ] for _ in range(NUMBER_ROOMS) ]
         
         parser = argparse.ArgumentParser(description="Bert Chat File Maker", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument('--folder', default='./../data/', help="folder for all output files.")
@@ -53,7 +54,7 @@ class Writer:
 
     def read_input_file(self):
         room = 1
-        
+        mixin = ['0']
         with open(self.args.name, "r") as phrases:
             phrase = phrases.readlines()
             for i in phrase:
@@ -64,12 +65,18 @@ class Writer:
                 if i.strip().startswith("room:"):
                     room = int(i.strip().split(":")[1])
                     skip = True ## do not try to save room number alone
+                if i.strip().startswith("mixin:"):
+                    mixin = [str(x) for x in i.strip()[len("mixin:"):].strip().split(",")]
+                    self.mixins[room] = mixin
+                    #print(self.mixins)
+                    skip = True
                 if not skip:
                     p = i.split(";")
                     p = [ x.strip() for x in p ]
                     p.append(str(room))
+                    p.append(','.join(self.mixins[room]))
                     self.phrases.append(p)
-
+                
             pass 
         print(self.phrases)
 
@@ -102,6 +109,7 @@ class Writer:
             
         for i in range(NUMBER_ROOMS):
             line_ending = "_" + ("000" + str(i + 1))[-3:] + ".txt"
+            #print(line_ending)
             if self.write: 
                 with open(self.args.folder + "/room" + line_ending, "w") as rooms:
                     for ii in range(len(self.phrases) ):
@@ -115,6 +123,7 @@ class Writer:
                             dest = str(i + 1)
                         rooms.write(str(dest) + ";" + str(mult) + ";" + self.phrases[ii][0].upper() + "\n")
                     rooms.write("min:0.0\n")
+                    rooms.write("mixin:" + ','.join(self.mixins[i]) + "\n")
                     rooms.write(ROOM_TEXT + "\n")
 
 

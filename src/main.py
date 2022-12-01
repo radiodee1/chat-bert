@@ -40,6 +40,8 @@ except:
 LINE_PHRASE = 0
 LINE_RESPONSE = 1 
 LINE_NUMBER = 2 
+LINE_ROOM = 3 
+LINE_MIXINS = 4 
 
 class Kernel:
 
@@ -72,7 +74,8 @@ class Kernel:
         self.response = False #.args.response
         self.multiplier = False #.args.multiplier
 
-
+        self.mixin_str = ["mixin:0" for _ in range(NUMBER_ROOMS + 1)]
+         
         name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8' ]
         index = BERT_MODEL
         self.tokenizer = BertTokenizer.from_pretrained(name[index])
@@ -211,6 +214,8 @@ class Kernel:
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
         #self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1 + 1)]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
+        self.mixin_array = ["" for _ in range(self.NUM_PHRASES)]
+
 
         for i in range(NUMBER_ROOMS):
             self.read_room_file("room", i + 1)
@@ -229,8 +234,12 @@ class Kernel:
                                 "number":num, #  self.rooms[i+1][num+1], 
                                 "index": num,
                                 "destination": int(lines[ LINE_NUMBER ]), 
-                                "multiplier": self.multipliers[i + 1][num +1 ] ## <-- right??
+                                "multiplier": self.multipliers[i + 1][num +1 ], ## <-- right??
+                                'mixins': str( lines[ LINE_MIXINS ].strip() )
                             }
+                        
+                        #self.mixin_array[i + 1] += "," + lines[ LINE_MIXINS ].strip()
+                        #print(self.mixin_array[i+1] )
                         if i < NUMBER_ROOMS + 1:
                             #pass     
                             d['response'] = self.responses[num + 1]
@@ -275,7 +284,13 @@ class Kernel:
                 else:
                     ending_found = True
                 if ending_found and not room.strip().startswith("min"):
-                    ending += room.strip() + "\n"
+                    if room.strip().startswith("mixin:"):
+                        self.mixin_str[int(number)] = str(room.strip())
+                        #print(self.mixin_str)
+                    else:
+                        ending += room.strip() + "\n"
+ 
+                    #ending += room.strip() + "\n"
                     #print(ending, "ending")
                 elif ending_found and room.strip().startswith("min"):
                     self.min[int(number)] = float(room.strip().split(":")[1])
@@ -316,6 +331,20 @@ class Kernel:
                 #print(self.destination[int(number)], "dest")
         
     def process_phrases(self):
+        #print(self.room)
+        z = []
+        new_mixin = [] 
+        mixin = [ x  for x in self.phrases[self.room] ]
+        for i in range(len(mixin) ):
+            if mixin[i]['multiplier'] != 0.0 :
+                z.extend([x.strip() for x in mixin[i]['mixins'].split(",") ])
+        #print(z, 'z')
+        new_mixin.append(z[0])
+        for x in range(1, len(z) - 1):
+            if z[x] not in z[x+1:]:
+                new_mixin.append(z[x])
+        print(new_mixin)
+
         self.batches = []
         b = []
         num = 0

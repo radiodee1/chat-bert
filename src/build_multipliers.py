@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.10 
 
+
 from transformers import BertTokenizer, BertForNextSentencePrediction
 import torch
 from dotenv import load_dotenv
@@ -62,6 +63,7 @@ class Modify:
         self.min = [ 0.0 for _ in range(NUMBER_ROOMS + 1) ]
         self.room = 1
         self.oldroom = 0
+        self.mixin_str = ["mixin:0" for _ in range(NUMBER_ROOMS + 1)]
 
         self.list_len = 0 
 
@@ -178,6 +180,7 @@ class Modify:
             for i in self.phrases[self.room]:
                 room.write(str(i['destination']) + ";" + str(i['multiplier']) + ';' + str(i['phrase'].upper()) + "\n")
             room.write('min:' + str(self.min[self.room]) + "\n")
+            room.write(self.mixin_str[self.room] + "\n")
             room.write(ROOM_TEXT + "\n")
         pass 
 
@@ -261,7 +264,11 @@ class Modify:
                 else:
                     ending_found = True
                 if ending_found and not room.strip().startswith("min"):
-                    ending += room.strip() + "\n"
+                    if room.strip().startswith("mixin:"):
+                        self.mixin_str[int(number)] = str(room.strip())
+                        #print(self.mixin_str)
+                    else:
+                        ending += room.strip() + "\n"
                     #print(ending, "ending")
                 elif ending_found and room.strip().startswith("min"):
                     self.min[int(number)] = float(room.strip().split(":")[1])
