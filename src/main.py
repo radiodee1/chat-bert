@@ -140,6 +140,7 @@ class Kernel:
         
         if self.print_to_screen:
             print(response.strip())
+        print(mult[highest]['destination'], "destination")
         self.room =  mult[highest]['destination'] 
         if self.room != self.oldroom:
             self.latest_replies = []
@@ -214,7 +215,6 @@ class Kernel:
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
         #self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1 + 1)]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
-        self.mixin_array = ["" for _ in range(self.NUM_PHRASES)]
 
 
         for i in range(NUMBER_ROOMS):
@@ -238,8 +238,6 @@ class Kernel:
                                 'mixins': str( lines[ LINE_MIXINS ].strip() )
                             }
                         
-                        #self.mixin_array[i + 1] += "," + lines[ LINE_MIXINS ].strip()
-                        #print(self.mixin_array[i+1] )
                         if i < NUMBER_ROOMS + 1:
                             #pass     
                             d['response'] = self.responses[num + 1]
