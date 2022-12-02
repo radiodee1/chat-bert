@@ -345,12 +345,16 @@ class Kernel:
             if z[x] not in new_mixin:
                 new_mixin.append(z[x])
         #print(new_mixin,'new mixin')
+        combined = []
+        for x in new_mixin:
+            if int(x) > 0:
+                combined.extend(self.phrases[int(x)])
 
         self.batches = []
         b = []
         num = 0
         index = 0 
-        for d in self.phrases[self.room]:
+        for d in combined: #self.phrases[self.room]:
             if float(d["multiplier"]) != 0.0: 
                 if self.list: 
                     print(d["phrase"],d['destination'])
