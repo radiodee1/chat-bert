@@ -332,18 +332,19 @@ class Kernel:
         
     def process_phrases(self):
         #print(self.room)
-        z = []
+        z = [str(self.room)]
         new_mixin = [] 
         mixin = [ x  for x in self.phrases[self.room] ]
         for i in range(len(mixin) ):
             if mixin[i]['multiplier'] != 0.0 :
                 z.extend([x.strip() for x in mixin[i]['mixins'].split(",") ])
         #print(z, 'z')
+        #z.append(str(self.room))
         new_mixin.append(z[0])
         for x in range(1, len(z) - 1):
-            if z[x] not in z[x+1:]:
+            if z[x] not in new_mixin:
                 new_mixin.append(z[x])
-        print(new_mixin)
+        #print(new_mixin,'new mixin')
 
         self.batches = []
         b = []
