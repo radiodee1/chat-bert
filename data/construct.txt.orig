@@ -23,7 +23,6 @@ exit; ok; 1
 
 # these lines are non-sensical
 room:5
-mixin:0 
 how tall are you; i am five feet tall; -1
 how tall; five feet tall; -1
 stop; ok; 1

@@ -55,6 +55,7 @@ class Writer:
     def read_input_file(self):
         room = 1
         mixin = ['0']
+        
         with open(self.args.name, "r") as phrases:
             phrase = phrases.readlines()
             for i in phrase:
@@ -76,8 +77,9 @@ class Writer:
                     p.append(str(room))
                     p.append(','.join(self.mixins[room]))
                     self.phrases.append(p)
-                
-            pass 
+        if len(self.mixins[room]) == 0:
+            self.mixins[room] = ['0']
+            pass
         print(self.phrases)
 
     def write_output_files(self):
