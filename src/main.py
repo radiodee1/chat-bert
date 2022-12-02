@@ -140,7 +140,7 @@ class Kernel:
         
         if self.print_to_screen:
             print(response.strip())
-        print(mult[highest]['destination'], "destination")
+        #print(mult[highest]['destination'], "destination")
         self.room =  mult[highest]['destination'] 
         if self.room != self.oldroom:
             self.latest_replies = []
