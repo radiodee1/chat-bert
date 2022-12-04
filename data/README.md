@@ -1,4 +1,4 @@
-# Sample `construct.txt.orig` File
+# Sample `construct.txt.orig` File Explained:
 
 ```
 # these lines are strictly literal
@@ -49,3 +49,9 @@ exit; ok; 2
 5. If the number at the end of the question/answer pair is -1 or 0 and the question matches the user input question, there will be no room number change at the end of the turn. If the room is higher than 0, then the room number changes when and if the user input is matched.
 6. White-space between rooms is ignored.
 7. Full-line comments are allowed. They follow the '#' symbol.
+
+# Additional Notes:
+
+* The default number of rooms allowed span from '1' to '15'. This can be changed in the `.env` file.
+
+* There is, for every sentence pair, a `react_***.sh` file. When the sentence pair is chosen the react file is run in the bash shell. This react file can be used for any shell scripting. You can start desktop programs. You can also, for example, run a 'curl' command that interacts with a distant server. You might use this for services like ITTT. Though it has not been tested, you might use the file to turn on or off household lights.
