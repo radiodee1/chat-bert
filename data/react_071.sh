@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you're so annoying! - you're so annoying!
+# what was that about? - human, can we switch places at the counter? i'm doing your work.

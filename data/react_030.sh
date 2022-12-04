@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you have a nice accent! - thank you, where are you from?
+# i know how to read and write. - what is your name?

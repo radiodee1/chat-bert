@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# pinzon, what are you doing? - the name pinzon means pin, and pin means head
+# i want to leave. - do you? i can take you in my ship!

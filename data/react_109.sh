@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i’m your teacher today. - oh, really? so i’m not a monster?
+# is it snowing? - yes it is.

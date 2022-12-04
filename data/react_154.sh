@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what's with the big face, kid? - he's my brother.
+# so how are things going? - things are going well.

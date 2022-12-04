@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i don't like girls. - do you like guys?
+# oh, that was nice - i don't hate him. i just don't like him like that so much

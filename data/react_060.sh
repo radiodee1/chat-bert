@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# my name is joe. - i know.
+# you're welcome to eat this candy. - thank you.

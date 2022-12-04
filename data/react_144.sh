@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i'm just going to give you one orange. - i like orange.
+# how old are you? - i'm 20 years of age today.

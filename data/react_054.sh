@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what are you thinking about right now? - about what?
+# you talk to the dead? - only what they let me know. just not much.

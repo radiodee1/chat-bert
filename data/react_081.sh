@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# we made a mistake, i don't know why. - yeah, but then we made up again.
+# i wish i had a pet. - i like animals too.

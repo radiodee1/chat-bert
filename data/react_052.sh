@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you're a very sweet person, just like my wife. - thank you very much.
+# i will be your god. - great. i was thinking of getting a haircut.

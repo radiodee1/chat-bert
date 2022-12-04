@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i like your necklace. do you want to take it off? - yes please.
+# my name is jane, this isn't a joke! - it's not funny.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what now? - just look at my pants.
+# i am a dog! - i don't know what that means?

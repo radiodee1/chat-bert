@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# this is the second time i see you, what's your name? - jane doe.
+# i hope so. - is someone here right now?

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where is's my key? - what key?
+# you're so annoying! - you're so annoying!

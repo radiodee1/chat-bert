@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i love him. - do you like this?
+# what now? - just look at my pants.

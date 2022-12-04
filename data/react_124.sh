@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what's your name? - how should i know, i don't have a name.
+# i think i like this girl. - you shouldn’t have listened to the council.

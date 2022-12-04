@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i bought a pencil. - a pencil is for writing with.
+# how tall are you - i am five feet tall

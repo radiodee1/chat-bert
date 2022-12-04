@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i will be your god. - great. i was thinking of getting a haircut.
+# what are you thinking about right now? - about what?

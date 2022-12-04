@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# a bed! - i gave her my bed.
+# what's with the big face, kid? - he's my brother.

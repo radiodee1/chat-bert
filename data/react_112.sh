@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# who is the girl in that mirror? - i’m me.
+# would you like to tell me what you really think? - yes i would like to tell you what i really think.

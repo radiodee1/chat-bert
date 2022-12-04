@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how about a coffee? - sure, thanks.
+# you're a very sweet person, just like my wife. - thank you very much.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i hear you like music. - yes i do.
+# do you want to go out? - yes, i want to go out.

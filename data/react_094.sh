@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you like to dance? - yes i guess i.
+# i am just a person like you. - it is a good thing to help other people.

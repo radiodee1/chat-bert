@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where were you in the rain? - the rain? well if it wasn't raining, i was at the movies.
+# why do we always have to fall on our faces? - because, it is the only way we can learn.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i'm just asking if you have any special skills? - i really don't know what to say about that.
+# i don't like it here. - where'd you get it?

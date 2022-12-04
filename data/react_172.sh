@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i am sorry, i didn't understand you. - i'm on duty.
+# i like your hat, it's pretty. - thanks, i am also a man of many colors.

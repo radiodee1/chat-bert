@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i am just asking. - don't ask me.
+# so if "you" was someone from a computer, you'd be an operating system? - i guess so.

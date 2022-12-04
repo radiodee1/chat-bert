@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you have any kids? - i have no kids nor husband.
+# i don't know. it just sort of came to me. - where are you going now?

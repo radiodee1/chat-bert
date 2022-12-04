@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what? why? - forget the french.
+# how do you like the new haircut? - it’s okay.

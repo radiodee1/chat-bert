@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# if you like animals, you should get a cat. - but i don't like cats.
+# i can do anything i wanted to if i tried hard enough. - all men can do are things they really want to do.

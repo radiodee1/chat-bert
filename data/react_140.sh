@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# hello.  do you like candy? - yes i like candy.
+# do you like me? - yes i like you.

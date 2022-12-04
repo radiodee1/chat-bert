@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where are you going? - going to a school.
+# this is the second time i see you, what's your name? - jane doe.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i'm a human. i want to talk to a human - you're human!
+# jane, we don't go to such stupid things any - more. please, you are an old friend.

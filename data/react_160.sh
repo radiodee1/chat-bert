@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# is it me you're looking at? - yes it's me you're looking at.
+# do you like to read? - yes i like to read.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i want to see. - no i am not.
+# if you like animals, you should get a cat. - but i don't like cats.

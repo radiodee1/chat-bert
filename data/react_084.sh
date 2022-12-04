@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what kind of music do you like? - classical music.
+# where were you in the rain? - the rain? well if it wasn't raining, i was at the movies.

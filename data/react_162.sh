@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# he was really annoying today. - thank goodness he was gone!
+# do you have any kids? - i have no kids nor husband.

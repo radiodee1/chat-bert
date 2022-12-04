@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i like you - do you like me?
+# i think that you are very lucky to be so beautiful. - thanks human

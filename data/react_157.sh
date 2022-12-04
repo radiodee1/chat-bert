@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i can't find my gun! - it's right there.
+# do you have a pet? - no, my pet left us to get eaten by a shark two years ago.

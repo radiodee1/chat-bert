@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how do you like the new haircut? - it’s okay.
+# do you like me? - yes i do.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i think i like this girl. - you shouldn’t have listened to the council.
+# no we want to help. - then why did you send me that video?

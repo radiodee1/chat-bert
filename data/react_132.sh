@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# that is terrible. - i know.
+# do you have a girlfriend? - yes, i think so.

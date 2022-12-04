@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what do you mean? - we've become friends.
+# i have many questions. - for a thousand years, the world has seen no end to people's curiosity.

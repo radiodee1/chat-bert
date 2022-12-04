@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where did you come from? - from the stars.
+# your feet stink! - okay! i'll wear tennis shoes.

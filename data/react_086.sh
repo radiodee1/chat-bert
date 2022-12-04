@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# why do we always have to fall on our faces? - because, it is the only way we can learn.
+# do you guys want pizza? - yes i do want pizza.

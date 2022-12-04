@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# is it snowing? - yes it is.
+# do you want to see some people who are as crazy as you? - yes i do.

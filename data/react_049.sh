@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what would you like? - a banana
+# i bet you can't get any real milk. - i think i could.

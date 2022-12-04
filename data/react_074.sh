@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# your feet stink! - okay! i'll wear tennis shoes.
+# i hear you like music. - yes i do.

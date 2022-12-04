@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i bet you can't get any real milk. - i think i could.
+# how about a coffee? - sure, thanks.

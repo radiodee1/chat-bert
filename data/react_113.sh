@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# would you like to tell me what you really think? - yes i would like to tell you what i really think.
+# your father can't be dead? - well, i'll call my sister later.

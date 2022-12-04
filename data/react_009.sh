@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you like food - no i don't like food
+# what would you like for your birthday? - i think it will be tomorrow.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how tall - five feet tall
+# what is your height - five feet tall

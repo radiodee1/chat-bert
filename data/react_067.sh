@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# so if "you" was someone from a computer, you'd be an operating system? - i guess so.
+# i'm just asking if you have any special skills? - i really don't know what to say about that.

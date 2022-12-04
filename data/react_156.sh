@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you know what, this is boring. - excuse me.
+# i can't find my gun! - it's right there.

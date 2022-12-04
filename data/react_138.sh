@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i'm human. - you're jane.
+# you have a pen. - yes, i do.

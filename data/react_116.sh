@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# it's not too hard to understand the english language. - are you speaking the truth? i don't understand any words.
+# what size shoe do you wear? - my shoe is 12.

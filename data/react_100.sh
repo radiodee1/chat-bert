@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what's your best memory? - my best memory is being at school when i was a kid.
+# you're fine with me. - i think so

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i want to leave. - do you? i can take you in my ship!
+# how do you feel? - feeling a little sad and lonely right now.

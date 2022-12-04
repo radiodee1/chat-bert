@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where are they? - here, next to me.
+# i have something to tell you. - can it wait till tomorrow?

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# hi honey  how are you? - hi there, i'm okay. what's new with you today?
+# what is your favorite smell? - i don’t really like them, i’ve never smelled any.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i found a book on my shelf by you. - wow, it is very flattering.
+# the sky is so beautiful. - let s go get some ice cream

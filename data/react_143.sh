@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what is your favorite smell? - i don’t really like them, i’ve never smelled any.
+# i'm just going to give you one orange. - i like orange.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# good bye - later
+# what time is it - i don't know

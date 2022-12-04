@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where are you going? - i am going home, human!
+# i'm a human being, like you are. - oh yes?

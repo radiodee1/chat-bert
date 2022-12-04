@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# why did you come here? - i am lost. my parents aren't home tonight and i heard that there was a candy store around here.
+# you just ate the whole box, and you're still hungry? - i'm not hungry.

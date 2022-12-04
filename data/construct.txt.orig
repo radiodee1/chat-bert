@@ -11,7 +11,6 @@ read the mail; ok mail; -1
 write a text file; ok writer; -1
 tell me about this; internet ok; -1
 search the internet for this; internet ok; -1
-what is your height;  i will tell you my height. just ask again;5
 ow old are you; i'm twenty years old ;-1
 do you like food; no i don't like food;-1 
 what would you like for your birthday?;i think it will be tomorrow.;-1
@@ -27,7 +26,7 @@ what is your name; my name is jane; -1
 do you like pizza; yes i like pizza; -1  
 good bye; later; -1 
 what time is it; i don't know; -1
-what is your height;  i will tell you my height. just ask;5
+what is your height;  i will tell you my height. just ask again;5
 ow old are you; i'm twenty years old ;-1
 do you like food; no i don't like food;-1 
 what would you like for your birthday?;i think it will be tomorrow.;-1
@@ -190,6 +189,7 @@ room:5
 mixin:3
 how tall are you; i am five feet tall; -1
 how tall; five feet tall; -1
+what is your height; five feet tall; -1 
 stop; ok; 2 
 exit; ok; 2 
 

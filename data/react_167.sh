@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i'm not sure if i know what that means. - your savior. i think you call it that. do you know what that is?
+# i am a human. - i know.

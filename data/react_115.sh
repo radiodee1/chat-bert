@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# my name is thomas jefferson. do you know me? - i haven't seen you before.
+# it's not too hard to understand the english language. - are you speaking the truth? i don't understand any words.

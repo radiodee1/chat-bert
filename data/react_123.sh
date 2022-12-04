@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how much is that? - it's twenty seven dollars.
+# what's your name? - how should i know, i don't have a name.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how do you like your coffee? - nice and hot.
+# what is your favorite color? - my favorite color is blue.

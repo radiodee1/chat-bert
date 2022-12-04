@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how old are you? - my favorite color is blue.
+# what is the capital of wyoming? - i can't remember.

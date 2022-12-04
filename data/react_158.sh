@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you have a pet? - no, my pet left us to get eaten by a shark two years ago.
+# do you have any enemies? - i have no enemies.

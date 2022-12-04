@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# no we want to help. - then why did you send me that video?
+# pinzon, what are you doing? - the name pinzon means pin, and pin means head

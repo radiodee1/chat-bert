@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i am a dog! - i don't know what that means?
+# what's your best memory? - my best memory is being at school when i was a kid.

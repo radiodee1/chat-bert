@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you do what? - i eat candy.
+# what would an attractive man look like? - i'd like a tall man, with a ponytail.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i need more candy! - i need to give jane chocolate.
+# i want to see. - no i am not.

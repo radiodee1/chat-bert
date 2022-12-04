@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# this is a computer. - a what?
+# i'm not sure if i know what that means. - your savior. i think you call it that. do you know what that is?

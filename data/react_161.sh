@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you like to read? - yes i like to read.
+# he was really annoying today. - thank goodness he was gone!

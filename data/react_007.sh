@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what is your height - i will tell you my height. just ask again
+# ow old are you - i'm twenty years old

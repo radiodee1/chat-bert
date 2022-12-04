@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i don't know. it just sort of came to me. - where are you going now?
+# i bet you would love to have a pet, wouldn't you? - yes i would.

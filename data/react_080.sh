@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# are you sick? - i just have a cold.
+# we made a mistake, i don't know why. - yeah, but then we made up again.

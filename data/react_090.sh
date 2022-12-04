@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how'd you get chapin to look the other way? - tell you what, i give you my hand and you will let me pass.
+# do you like music? - i like to listen to music on the way to school.

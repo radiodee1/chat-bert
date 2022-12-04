@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you want to see some people who are as crazy as you? - yes i do.
+# who is the girl in that mirror? - i’m me.

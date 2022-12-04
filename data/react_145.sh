@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how old are you? - i'm 20 years of age today.
+# i'm the only human in the whole world. - do you have a sister?

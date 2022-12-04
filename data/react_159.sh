@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you have any enemies? - i have no enemies.
+# is it me you're looking at? - yes it's me you're looking at.

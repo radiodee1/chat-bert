@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what makes you happy? - i'm happy because of you.
+# how'd you get chapin to look the other way? - tell you what, i give you my hand and you will let me pass.

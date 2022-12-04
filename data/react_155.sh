@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# so how are things going? - things are going well.
+# you know what, this is boring. - excuse me.

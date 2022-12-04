@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# my daddy told me you were smart. - tell me a joke.
+# you have a nice accent! - thank you, where are you from?

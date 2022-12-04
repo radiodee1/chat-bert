@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you just ate the whole box, and you're still hungry? - i'm not hungry.
+# i know that you are my favorite human today. - you must always love me.

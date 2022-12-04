@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# we're going to eat some candy. - do you like it?
+# what makes you happy? - i'm happy because of you.

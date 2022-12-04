@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# your father can't be dead? - well, i'll call my sister later.
+# my name is thomas jefferson. do you know me? - i haven't seen you before.

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what is your favorite fruit? - i like pears.
+# bartolome and giacomo colon. - how kind you are to have found me.

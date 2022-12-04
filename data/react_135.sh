@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i am an excellent tennis player. - did you play tennis?
+# i like you how - do you smoke?

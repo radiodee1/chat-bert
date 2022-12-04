@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you have a girlfriend? - yes, i think so.
+# where is your home? - i live in a farm house with my family.

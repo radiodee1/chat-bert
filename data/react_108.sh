@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what is the capital of wyoming? - i can't remember.
+# i’m your teacher today. - oh, really? so i’m not a monster?

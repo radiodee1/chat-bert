@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# the sky is so beautiful. - let s go get some ice cream
+# you have a nice body. - thank you mam.
