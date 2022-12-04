@@ -45,7 +45,7 @@ exit; ok; 2
 1. There are four rooms in this example. They are 0, 1, 2, and 5. Rooms are collections of question/answer pairs.
 2. Each room group has the keyword 'room' that it starts with. The rooms need not be in any order.
 3. The room keyword is followed by the 'mixin' keyword. Here a mixin identifies a group of question/answer pairs that are included with the room in question. 'Mixins' are not recursive, but you can include more than one. Many mixin room numbers can be on the same mixin line, and duplicates are ignored.
-4. A question/answer pair is separated by semicolons and followed by a number. 
+4. A question/answer pair is separated by semicolons and followed by a final semicolon and a number. 
 5. If the number at the end of the question/answer pair is -1 or 0 and the question matches the user input question, there will be no room number change at the end of the turn. If the room is higher than 0, then the room number changes when and if the user input is matched.
 6. White-space between rooms is ignored.
 7. Full-line comments are allowed. They follow the '#' symbol.
