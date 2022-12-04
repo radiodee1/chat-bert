@@ -1,13 +1,18 @@
 # Sample `construct.txt.orig` File Explained:
 
 ```
-# these lines are strictly literal
+# these lines are strictly literal. Notice that
+# asterisks replace empty spaces in the question
+# string. 
+
 room:1
 mixin:0 
 *chat*bert*; ok assistant; 2
 *bert*; ok assistant; 2
 
-# these lines are like conversational
+# these lines are conversational. They
+# are at the center of this bot.
+
 room:2
 mixin:3 
 read the mail; ok mail; -1
@@ -21,9 +26,9 @@ that means the way you think.;i do not know.;-1
 stop; ok; 1
 exit; ok; 1
 
-# this is the 'mixin' room listing...
+# this, below, is the 'mixin' room listing...
 # in the example implementation this room is populated by the 
-# gpt-j content.
+# gpt-j content. In the example the room is comprised of many pairs.
 
 room:3
 mixin:0
@@ -35,7 +40,7 @@ what time is it; i don't know; -1
 what is your height;  i will tell you my height. just ask again;5
 ow old are you; i'm twenty years old ;-1
 
-# these lines are non-sensical
+# below, these lines are non-sensical
 # but the content of this room shows how a topic
 # might be isolated to any given room.
 
