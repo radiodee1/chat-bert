@@ -75,7 +75,8 @@ class Kernel:
         self.multiplier = False #.args.multiplier
 
         self.mixin_str = ["mixin:0" for _ in range(NUMBER_ROOMS + 1)]
-         
+        self.mixin_min = [0.0 for _ in range(NUMBER_ROOMS + 1)] 
+
         name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8' ]
         index = BERT_MODEL
         self.tokenizer = BertTokenizer.from_pretrained(name[index])
@@ -113,7 +114,7 @@ class Kernel:
             else:
                 m1.append(float(logits[i][0]))
             m = float(m1[i])
-            if m >= float(self.min[self.room]):
+            if m >= float(self.mixin_min[self.room]):
                 if ((m >= float(m1[highest]) and i not in self.latest_replies and "*" not in mult[i]['phrase']) 
                         or self.is_exact(userstr, mult[i]['phrase'])):
                     if "*" not in mult[highest]['phrase']:
@@ -121,7 +122,7 @@ class Kernel:
         if highest == -1:
             self.output_text = ""
             if self.verbose:
-                print(self.min[self.room], "min")
+                print(self.mixin_min[self.room], "min")
                 print(logits)
                 print(m1,"after multiplier")
             #do something here... don't change room.
@@ -344,10 +345,15 @@ class Kernel:
                 new_mixin.append(z[x])
         #print(new_mixin,'new mixin')
         combined = []
+        mixin_min = []
         for x in new_mixin:
             if int(x) > 0:
                 combined.extend(self.phrases[int(x)])
+                mixin_min.append(self.min[int(x)])
+        self.mixin_min[self.room] = min(mixin_min)
 
+        #print(str(mixin_min), self.min[self.room], self.mixin_min[self.room])
+        
         self.batches = []
         b = []
         num = 0
