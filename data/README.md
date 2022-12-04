@@ -55,7 +55,7 @@ exit; ok; 2
 4. A question/answer pair is separated by semicolons and followed by a final semicolon and a number. 
 5. If the number at the end of the question/answer pair is -1 or 0 and the question matches the user input question, there will be no room number change at the end of the turn. If the room is higher than 0, then the room number changes when and if the user input is matched.
 6. White-space between rooms is ignored.
-7. Full-line comments are allowed. They follow the '#' symbol.
+7. Full-line comments are allowed. They follow the '#' symbol. Partial-line comments are not supported.
 8. The first question/answer pair is an example of a literal input. In that case the program will look for a user input that is _exactly_ the same as the supplied string. A literal input is denoted by replacing spaces in the phrase with asterisks. If there is at least one asterisk on the line with the input, the string or phrase will match that string only in the user input. In this example, if the user is in room 1 and types 'chat bert' the user is dropped in room 2. The input from the user must match exactly.
 
 # Additional Notes:
