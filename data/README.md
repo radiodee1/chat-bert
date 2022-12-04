@@ -49,7 +49,7 @@ stop; ok; 2
 exit; ok; 2 
 ```
 
-1. There are four rooms in this example. They are 0, 1, 2, and 5. Rooms are collections of question/answer pairs.
+1. There are four rooms in this example. They are 1, 2, 3, and 5. Rooms are collections of question/answer pairs.
 2. Each room group has the keyword 'room' that it starts with. The rooms need not be in any order.
 3. The room keyword is followed by the 'mixin' keyword. Here a mixin identifies a group of question/answer pairs that are included with the room in question. 'Mixins' are not recursive, but you can include more than one. Many mixin room numbers can be on the same mixin line, and duplicates are ignored.
 4. A question/answer pair is separated by semicolons and followed by a final semicolon and a number. 
