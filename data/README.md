@@ -60,6 +60,10 @@ exit; ok; 2
 
 # Additional Notes:
 
+* There are two keywords. They are 'room' and 'mixin'. They are separated from their values by a colon.
+
+* Sentence pairs are separated by a semicolon, and followed by a semicolon and a number. The number is the room number to branch to when or if the first sentence in the pair matches the input sentence.
+
 * The default number of rooms allowed span from '1' to '15'. This can be changed in the `.env` file.
 
 * There is, for every sentence pair, a `react_***.sh` file. When the sentence pair is chosen the react file is run in the bash shell. This react file can be used for any shell scripting. You can start desktop programs. You can also, for example, run a 'curl' command that interacts with a distant server. You might use this for services like ITTT. Though it has not been tested, you might use the file to turn on or off household lights or appliances.
