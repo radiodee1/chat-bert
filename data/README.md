@@ -19,10 +19,6 @@ read the mail; ok mail; -1
 write a text file; ok writer; -1
 tell me about this; internet ok; -1
 search the internet for this; internet ok; -1
-ow old are you; i'm twenty years old ;-1
-do you like food; no i don't like food;-1 
-what would you like for your birthday?;i think it will be tomorrow.;-1
-that means the way you think.;i do not know.;-1
 stop; ok; 1
 exit; ok; 1
 
