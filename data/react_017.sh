@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how tall - five feet tall
+# good bye - later

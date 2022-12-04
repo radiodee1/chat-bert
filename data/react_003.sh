@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# hello - hello
+# read the mail - ok mail

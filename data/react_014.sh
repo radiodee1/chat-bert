@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# stop - ok
+# how are you - i am fine

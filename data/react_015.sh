@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# exit - ok
+# what is your name - my name is jane

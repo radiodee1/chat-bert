@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# good bye - later
+# what is your height - i will tell you my height. just ask again

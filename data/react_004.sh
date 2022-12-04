@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how are you - i am fine
+# write a text file - ok writer

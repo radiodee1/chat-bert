@@ -1,19 +1,178 @@
-*chat*bert*;ok assistant;2;1;5
-*bert*;ok assistant;2;1;5
-hello;hello;-1;2;5,1,5,5
-how are you;i am fine;-1;2;5,1,5,5
-what is your name;my name is jane;-1;2;5,1,5,5
-do you like pizza;yes i like pizza;-1;2;5,1,5,5
-good bye;later;-1;2;5,1,5,5
-what time is it;i don't know;-1;2;5,1,5,5
-what is your height;i will tell you my height. just ask;5;2;5,1,5,5
-ow old are you;i'm twenty years old;-1;2;5,1,5,5
-do you like food;no i don't like food;-1;2;5,1,5,5
-what would you like for your birthday?;i think it will be tomorrow.;-1;2;5,1,5,5
-that means the way you think.;i do not know.;-1;2;5,1,5,5
-stop;ok;1;2;5,1,5,5
-exit;ok;1;2;5,1,5,5
-how tall are you;i am five feet tall;-1;5;0
-how tall;five feet tall;-1;5;0
-stop;ok;1;5;0
-exit;ok;1;5;0
+*chat*bert*;ok assistant;2;1;0
+*bert*;ok assistant;2;1;0
+read the mail;ok mail;-1;2;3
+write a text file;ok writer;-1;2;3
+tell me about this;internet ok;-1;2;3
+search the internet for this;internet ok;-1;2;3
+what is your height;i will tell you my height. just ask again;5;2;3
+ow old are you;i'm twenty years old;-1;2;3
+do you like food;no i don't like food;-1;2;3
+what would you like for your birthday?;i think it will be tomorrow.;-1;2;3
+that means the way you think.;i do not know.;-1;2;3
+stop;ok;1;2;3
+exit;ok;1;2;3
+how are you;i am fine;-1;3;0
+what is your name;my name is jane;-1;3;0
+do you like pizza;yes i like pizza;-1;3;0
+good bye;later;-1;3;0
+what time is it;i don't know;-1;3;0
+what is your height;i will tell you my height. just ask;5;3;0
+ow old are you;i'm twenty years old;-1;3;0
+do you like food;no i don't like food;-1;3;0
+what would you like for your birthday?;i think it will be tomorrow.;-1;3;0
+that means the way you think.;i do not know.;-1;3;0
+i like you.;why do you like me?;-1;3;0
+i found a book on my shelf by you.;wow, it is very flattering.;-1;3;0
+the sky is so beautiful.;let s go get some ice cream;-1;3;0
+you have a nice body.;thank you mam.;-1;3;0
+you are very beautiful.;thank you.;-1;3;0
+my daddy told me you were smart.;tell me a joke.;-1;3;0
+you have a nice accent!;thank you, where are you from?;-1;3;0
+i know how to read and write.;what is your name?;-1;3;0
+where are you going?;going to a school.;-1;3;0
+this is the second time i see you, what's your name?;jane doe.;-1;3;0
+i hope so.;is someone here right now?;-1;3;0
+yes i can't believe it!;oh yeah, she is a good artist too. well she's got a really great portfolio. you know what, you should ask her out.;-1;3;0
+what do you mean?;we've become friends.;-1;3;0
+i have many questions.;for a thousand years, the world has seen no end to people's curiosity.;-1;3;0
+how old are you?;21 years old.;-1;3;0
+what? why?;forget the french.;-1;3;0
+how do you like the new haircut?;it’s okay.;-1;3;0
+do you like me?;yes i do.;-1;3;0
+i'll go get the door. what about your purse?;i'll go get it.;-1;3;0
+i don't like girls.;do you like guys?;-1;3;0
+oh, that was nice;i don't hate him. i just don't like him like that so much;-1;3;0
+where are they?;here, next to me.;-1;3;0
+i have something to tell you.;can it wait till tomorrow?;-1;3;0
+she looks like a man.;you're just jealous.;-1;3;0
+the time spent on an airplane is wasted time. why should we spend time flying when we can do more meaningful things with that time, like meet women?;there has got to be more to life than that. why should everything we do in life have to lead to the same end? do you really;-1;3;0
+what would you like?;a banana;-1;3;0
+i bet you can't get any real milk.;i think i could.;-1;3;0
+how about a coffee?;sure, thanks.;-1;3;0
+you're a very sweet person, just like my wife.;thank you very much.;-1;3;0
+i will be your god.;great. i was thinking of getting a haircut.;-1;3;0
+what are you thinking about right now?;about what?;-1;3;0
+you talk to the dead?;only what they let me know. just not much.;-1;3;0
+how do you like your coffee?;nice and hot.;-1;3;0
+what is your favorite color?;my favorite color is blue.;-1;3;0
+you do what?;i eat candy.;-1;3;0
+what would an attractive man look like?;i'd like a tall man, with a ponytail.;-1;3;0
+my name is joe.;i know.;-1;3;0
+you're welcome to eat this candy.;thank you.;-1;3;0
+do you like pizza?;no, i hate pizza.;-1;3;0
+it would take the world seven point five billion years to get from the center of the universe to the center of the galaxy.;it is pretty hard to find our world in a galaxy that is that big.;-1;3;0
+i like you;do you like me?;-1;3;0
+i think that you are very lucky to be so beautiful.;thanks human;-1;3;0
+i am just asking.;don't ask me.;-1;3;0
+so if "you" was someone from a computer, you'd be an operating system?;i guess so.;-1;3;0
+i'm just asking if you have any special skills?;i really don't know what to say about that.;-1;3;0
+i don't like it here.;where'd you get it?;-1;3;0
+where is's my key?;what key?;-1;3;0
+you're so annoying!;you're so annoying!;-1;3;0
+what was that about?;human, can we switch places at the counter? i'm doing your work.;-1;3;0
+where did you come from?;from the stars.;-1;3;0
+your feet stink!;okay! i'll wear tennis shoes.;-1;3;0
+i hear you like music.;yes i do.;-1;3;0
+do you want to go out?;yes, i want to go out.;-1;3;0
+i'm a human. i want to talk to a human;you're human!;-1;3;0
+jane, we don't go to such stupid things any;more. please, you are an old friend.;-1;3;0
+what is all this?;it is a house.;-1;3;0
+are you sick?;i just have a cold.;-1;3;0
+we made a mistake, i don't know why.;yeah, but then we made up again.;-1;3;0
+i wish i had a pet.;i like animals too.;-1;3;0
+i don't want to go with you;oh! i am not gonna take you to bed, i am going to sleep with my boyfriend.;-1;3;0
+what kind of music do you like?;classical music.;-1;3;0
+where were you in the rain?;the rain? well if it wasn't raining, i was at the movies.;-1;3;0
+why do we always have to fall on our faces?;because, it is the only way we can learn.;-1;3;0
+do you guys want pizza?;yes i do want pizza.;-1;3;0
+we're going to eat some candy.;do you like it?;-1;3;0
+what makes you happy?;i'm happy because of you.;-1;3;0
+how'd you get chapin to look the other way?;tell you what, i give you my hand and you will let me pass.;-1;3;0
+do you like music?;i like to listen to music on the way to school.;-1;3;0
+where are you going?;i am going home, human!;-1;3;0
+i'm a human being, like you are.;oh yes?;-1;3;0
+do you like to dance?;yes i guess i.;-1;3;0
+i am just a person like you.;it is a good thing to help other people.;-1;3;0
+hey. what is up?;i like you.;-1;3;0
+i love him.;do you like this?;-1;3;0
+what now?;just look at my pants.;-1;3;0
+i am a dog!;i don't know what that means?;-1;3;0
+what's your best memory?;my best memory is being at school when i was a kid.;-1;3;0
+you're fine with me.;i think so;-1;3;0
+my husband and i will not be able to have children.;i am sorry to hear that.;-1;3;0
+is he?;are you a boy or a girl?;-1;3;0
+what is your favorite fruit?;i like pears.;-1;3;0
+bartolome and giacomo colon.;how kind you are to have found me.;-1;3;0
+my name is human.  as soon as you arrived, i recognized your voice.  i recognized who you are, because i know who you are to me too. your name is jane.  is it not?;yes, your name is human.;-1;3;0
+how old are you?;my favorite color is blue.;-1;3;0
+what is the capital of wyoming?;i can't remember.;-1;3;0
+i’m your teacher today.;oh, really? so i’m not a monster?;-1;3;0
+is it snowing?;yes it is.;-1;3;0
+do you want to see some people who are as crazy as you?;yes i do.;-1;3;0
+who is the girl in that mirror?;i’m me.;-1;3;0
+would you like to tell me what you really think?;yes i would like to tell you what i really think.;-1;3;0
+your father can't be dead?;well, i'll call my sister later.;-1;3;0
+my name is thomas jefferson. do you know me?;i haven't seen you before.;-1;3;0
+it's not too hard to understand the english language.;are you speaking the truth? i don't understand any words.;-1;3;0
+what size shoe do you wear?;my shoe is 12.;-1;3;0
+how are you today?;i'm doing fine.;-1;3;0
+i need more candy!;i need to give jane chocolate.;-1;3;0
+i want to see.;no i am not.;-1;3;0
+if you like animals, you should get a cat.;but i don't like cats.;-1;3;0
+i can do anything i wanted to if i tried hard enough.;all men can do are things they really want to do.;-1;3;0
+how much is that?;it's twenty seven dollars.;-1;3;0
+what's your name?;how should i know, i don't have a name.;-1;3;0
+i think i like this girl.;you shouldn’t have listened to the council.;-1;3;0
+no we want to help.;then why did you send me that video?;-1;3;0
+pinzon, what are you doing?;the name pinzon means pin, and pin means head;-1;3;0
+i want to leave.;do you? i can take you in my ship!;-1;3;0
+how do you feel?;feeling a little sad and lonely right now.;-1;3;0
+well then, i suppose you should go practice your violin while i review the last issue of the paper.;ok, your majesty.;-1;3;0
+i like a sweet wine as a drink.;i love to go drinking with friends.;-1;3;0
+that is terrible.;i know.;-1;3;0
+do you have a girlfriend?;yes, i think so.;-1;3;0
+where is your home?;i live in a farm house with my family.;-1;3;0
+i am an excellent tennis player.;did you play tennis?;-1;3;0
+i like you how;do you smoke?;-1;3;0
+how many?;one for each person in this house.;-1;3;0
+i'm human.;you're jane.;-1;3;0
+you have a pen.;yes, i do.;-1;3;0
+hello.  do you like candy?;yes i like candy.;-1;3;0
+do you like me?;yes i like you.;-1;3;0
+hi honey  how are you?;hi there, i'm okay. what's new with you today?;-1;3;0
+what is your favorite smell?;i don’t really like them, i’ve never smelled any.;-1;3;0
+i'm just going to give you one orange.;i like orange.;-1;3;0
+how old are you?;i'm 20 years of age today.;-1;3;0
+i'm the only human in the whole world.;do you have a sister?;-1;3;0
+i have a friend of the family i'm visiting for the weekend,;and i'm giving him a ride.  i need someone to sit in the back and talk;-1;3;0
+i like your necklace. do you want to take it off?;yes please.;-1;3;0
+my name is jane, this isn't a joke!;it's not funny.;-1;3;0
+my name is paul. how old are you?;i'm 27. why?;-1;3;0
+i'm the deputy chief fire marshal and need a key to inspect your store during a fire alarm response.;i'm sure if you check my record, you’ll see i have a clean record.;-1;3;0
+we need to track him down, this guy is a pervert.;do you have any last words?;-1;3;0
+a bed!;i gave her my bed.;-1;3;0
+what's with the big face, kid?;he's my brother.;-1;3;0
+so how are things going?;things are going well.;-1;3;0
+you know what, this is boring.;excuse me.;-1;3;0
+i can't find my gun!;it's right there.;-1;3;0
+do you have a pet?;no, my pet left us to get eaten by a shark two years ago.;-1;3;0
+do you have any enemies?;i have no enemies.;-1;3;0
+is it me you're looking at?;yes it's me you're looking at.;-1;3;0
+do you like to read?;yes i like to read.;-1;3;0
+he was really annoying today.;thank goodness he was gone!;-1;3;0
+do you have any kids?;i have no kids nor husband.;-1;3;0
+i don't know. it just sort of came to me.;where are you going now?;-1;3;0
+i bet you would love to have a pet, wouldn't you?;yes i would.;-1;3;0
+this is a computer.;a what?;-1;3;0
+i'm not sure if i know what that means.;your savior. i think you call it that. do you know what that is?;-1;3;0
+i am a human.;i know.;-1;3;0
+why did you come here?;i am lost. my parents aren't home tonight and i heard that there was a candy store around here.;-1;3;0
+you just ate the whole box, and you're still hungry?;i'm not hungry.;-1;3;0
+i know that you are my favorite human today.;you must always love me.;-1;3;0
+i am sorry, i didn't understand you.;i'm on duty.;-1;3;0
+i like your hat, it's pretty.;thanks, i am also a man of many colors.;-1;3;0
+i bought a pencil.;a pencil is for writing with.;-1;3;0
+how tall are you;i am five feet tall;-1;5;3
+how tall;five feet tall;-1;5;3
+stop;ok;2;5;3
+exit;ok;2;5;3

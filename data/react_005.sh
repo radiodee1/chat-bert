@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what is your name - my name is jane
+# tell me about this - internet ok

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you like pizza - yes i like pizza
+# search the internet for this - internet ok
