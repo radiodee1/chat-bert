@@ -22,6 +22,9 @@ stop; ok; 1
 exit; ok; 1
 
 # this is the 'mixin' room listing...
+# in the example implementation this room is populated by the 
+# gpt-j content.
+
 room:3
 mixin:0
 how are you; i am fine; -1 
@@ -33,6 +36,9 @@ what is your height;  i will tell you my height. just ask again;5
 ow old are you; i'm twenty years old ;-1
 
 # these lines are non-sensical
+# but the content of this room shows how a topic
+# might be isolated to any given room.
+
 room:5
 mixin:3
 how tall are you; i am five feet tall; -1
