@@ -69,6 +69,7 @@ class Kernel:
         self.verbose = False #.args.verbose 
         self.list = False # self.args.list 
         self.no_room = False #.args.no_room
+        self.no_repeats = False 
 
         self.folder = "./../data" #self.args.folder
         self.response = False #.args.response
@@ -407,7 +408,8 @@ class Kernel:
     def get_bert_internet(self, room, userstr):
         self.process_phrases()
         self.set_room(room)
-        self.latest_replies = []
+        if not self.no_repeats:
+            self.latest_replies = []
         self.bert_find_room(userstr)
         return self.room, self.output_text
     
@@ -423,6 +425,7 @@ if __name__ == '__main__':
     parser.add_argument('--list', action='store_true', help='list all possible phrases.')
     parser.add_argument('--verbose', action="store_true", help="print verbose output.")
     parser.add_argument('--no_room', action="store_true", help="do not display room number")
+    parser.add_argument('--no_repeats', action="store_true", help="monitor and disable repeated outputs.")
     
     args = parser.parse_args()
     
@@ -433,6 +436,8 @@ if __name__ == '__main__':
     k.folder = args.folder
     k.response = args.response
     k.multiplier = args.multiplier
+
+    k.no_repeats = args.no_repeats
 
 
     #k = Kernel()

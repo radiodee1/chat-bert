@@ -1,3 +1,3 @@
 cd ./src/ 
 
-./main.py
+./main.py --no_repeats
