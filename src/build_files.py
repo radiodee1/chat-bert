@@ -101,8 +101,8 @@ class Writer:
             if self.verbose: 
                 print(line_ending)
             if self.write: 
-                with open(self.args.folder + "/responses" + line_ending, "w") as responses:
-                    responses.write("1\n" + self.phrases[i][1] + "\n")
+                #with open(self.args.folder + "/responses" + line_ending, "w") as responses:
+                #    responses.write("1\n" + self.phrases[i][1] + "\n")
                 line_ending = line_ending.replace('txt','sh')
                 with open(self.args.folder + "/react" + line_ending, "w") as react:
                     react.write(REACT_TEXT.strip() + "\n")

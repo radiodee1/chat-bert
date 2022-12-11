@@ -54,7 +54,7 @@ class Kernel:
         self.batches = [] 
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
-        self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
+        #self.responses = [ "" for _ in range(NUMBER_ROOMS + 1) ]
         #self.destination = [ 1 for _ in range(NUMBER_ROOMS + 1) ]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
         self.min = [ 0.0 for _ in range(NUMBER_ROOMS + 1) ]
@@ -72,8 +72,10 @@ class Kernel:
         self.no_repeats = False 
 
         self.folder = "./../data" #self.args.folder
+        self.folders = []
         self.response = False #.args.response
         self.multiplier = False #.args.multiplier
+        self.NUM_PHRASES = 0 
 
         self.mixin_str = ["mixin:0" for _ in range(NUMBER_ROOMS + 1)]
         self.mixin_min = [0.0 for _ in range(NUMBER_ROOMS + 1)] 
@@ -152,11 +154,13 @@ class Kernel:
             
             self.output_text += "\n" + self.text[self.room].strip()
         self.oldroom = self.room 
+        print(mult[highest])
         # launch script...
         number = mult[highest]['number'] + 1 ## <-- all index numbers start with 1
         if int(number) <= 0:
             return 
-        self.launch_script(number, userstr)
+        folder = mult[highest]['folder']
+        self.launch_script(number, userstr, folder)
         pass 
 
     def bert_batch_compare(self, prompt1, prompt2):
@@ -173,12 +177,12 @@ class Kernel:
         #print(outputs, '< logits')
         return logits
 
-    def launch_script(self, number, userstr):
+    def launch_script(self, number, userstr, folder):
         name_ending = "_" + ("000" + str(number))[-3:] + ".sh"
 
         #convert userstr to url-encoded form??
         userstr = urllib.parse.quote(userstr)
-        z = subprocess.call(["bash", self.folder + "react" + name_ending, str(self.room), userstr])
+        z = subprocess.call(["bash", folder + "react" + name_ending, str(self.room), userstr])
         pass 
 
     def is_exact(self, phrase, saved):
@@ -202,63 +206,61 @@ class Kernel:
 
     def read_phrases_file(self, name='phrases.txt'):
          
-        num = 0 
-        with open(self.folder + '/phrases.txt' , "r") as p:
-            for i in p.readlines():
-                if i.strip() != "":
-                    num += 1 
-            self.NUM_PHRASES = num - 1  
-            #print(NUM_PHRASES, "NUM_PHRASES")
-        pass 
-
         
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1 ) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1 ) ]
-        self.responses = [ "" for _ in range(self.NUM_PHRASES + 1 + 1) ]
+        #self.responses = [ "" for _ in range(self.NUM_PHRASES + 1 + 1) ]
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
         #self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1 + 1)]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
 
+        folders = self.folders.split(',')
+        for f in folders:
+            self.folder = f 
 
-        for i in range(NUMBER_ROOMS):
-            self.read_room_file("room", i + 1)
-        for i in range(0, self.NUM_PHRASES + 1):
-            self.read_response_file(i+ 1)
-        for i in range(NUMBER_ROOMS): 
-            num = 0  
-            with open(self.folder + name, 'r') as p:
-                phrases = p.readlines()
-                for phrase in phrases:
-                    lines = phrase.split(";")
-                    if  num <= self.NUM_PHRASES + 1 :
-                        d = {
-                                "phrase": lines[ LINE_PHRASE ].strip(), 
-                                "response": lines[ LINE_RESPONSE ].strip(), 
-                                "number":num, #  self.rooms[i+1][num+1], 
-                                "index": num,
-                                "destination": int(lines[ LINE_NUMBER ]), 
-                                "multiplier": self.multipliers[i + 1][num +1 ], ## <-- right??
-                                'mixins': str( lines[ LINE_MIXINS ].strip() )
-                            }
-                        
-                        if i < NUMBER_ROOMS + 1:
-                            #pass     
-                            d['response'] = self.responses[num + 1]
-                            d['destination'] = self.rooms[i + 1][num +1]
+            num = 0 
+            with open(self.folder + '/phrases.txt' , "r") as p:
+                for i in p.readlines():
+                    if i.strip() != "":
+                        num += 1 
+                self.NUM_PHRASES += num - 1  
+
+            for i in range(NUMBER_ROOMS):
+                self.read_room_file("room", i + 1)
+            #for i in range(0, self.NUM_PHRASES + 1):
+            #    self.read_response_file(i+ 1)
+            for i in range(NUMBER_ROOMS): 
+                num = 0  
+                with open(self.folder + name, 'r') as p:
+                    phrases = p.readlines()
+                    for phrase in phrases:
+                        lines = phrase.split(";")
+                        if  num <= self.NUM_PHRASES + 1 :
+                            d = {
+                                    "phrase": lines[ LINE_PHRASE ].strip(), 
+                                    "response": lines[ LINE_RESPONSE ].strip(), 
+                                    "number":num, #  self.rooms[i+1][num+1], 
+                                    "index": num,
+                                    "destination": int(lines[ LINE_NUMBER ]), 
+                                    "multiplier": self.multipliers[i + 1][num +1 ], ## <-- right??
+                                    'mixins': str( lines[ LINE_MIXINS ].strip() ),
+                                    "folder": str(self.folder )
+                                }
                             
-                        self.phrases[i+1].append(d)
-                    num += 1 
-        if self.verbose :
-            print(self.phrases,'read phrases')
-            print(num, "num")
-            pass
-
+                            if i < NUMBER_ROOMS + 1:
+                                #pass     
+                                #d['response'] = self.responses[num + 1]
+                                d['destination'] = self.rooms[i + 1][num +1]
+                                
+                            self.phrases[i+1].append(d)
+                        num += 1 
+            
     def read_room_file(self, rooms_file, number, responses_file="responses"):
         name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
 
         if self.verbose: 
             print(self.rooms, "room")
-            print(self.responses, "responses")
+            #print(self.responses, "responses")
             print(rooms_file + name_ending)
         
         self.multipliers[int(number)].append(1.0)
@@ -307,30 +309,6 @@ class Kernel:
                 print(self.phrases[self.room])
 
 
-    def read_response_file(self, number, responses_file="responses"):
-        name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
-
-        num = 0 
-        with open(self.folder + responses_file + name_ending, "r") as p:
-            response = p.readlines()
-            #l = ""
-            for r in response:
-                #r = r.strip()
-                #print(number, r, "response here...")
-                if num != 0: 
-                    lines = r.strip()
-                    #l += lines + "\n"
-                    self.responses[int(number)] += lines + "\n"
-                else:
-                    pass
-                    # this is set in the 'read_phrases_file' method 
-                    #self.destination[int(number)] = int(r.strip())
-                num += 1 
-            
-            if self.verbose: 
-                print(self.responses[int(number)], ":responses")
-                #print(self.destination[int(number)], "dest")
-        
     def process_phrases(self):
         #print(self.room)
         z = [str(self.room)]
@@ -363,7 +341,7 @@ class Kernel:
         for d in combined: #self.phrases[self.room]:
             if float(d["multiplier"]) != 0.0: 
                 if self.list: 
-                    print(d["phrase"],d['destination'])
+                    print(d["phrase"],d['destination'], index)
 
                 d['index'] = index  
                 b.append(d)
@@ -385,7 +363,9 @@ class Kernel:
                     'multiplier': 0.0,
                     'response': "",
                     'destination' : 1,
-                    'index': -1 
+                    'index': -1,
+                    'number': -1,
+                    'folder': ""
                     })
             if self.verbose: 
                 print("must pad batches")
@@ -421,7 +401,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--response', action='store_true', help='Use response for all calculations.')
     parser.add_argument('--multiplier', action='store_true', help='use multiplier in calculations.')
-    parser.add_argument('--folder', default='./../data/', help='folder name for files.')
+    parser.add_argument('--folders', default='./../data/', help='folder names for files, comma seperated.')
     parser.add_argument('--list', action='store_true', help='list all possible phrases.')
     parser.add_argument('--verbose', action="store_true", help="print verbose output.")
     parser.add_argument('--no_room', action="store_true", help="do not display room number")
@@ -433,7 +413,8 @@ if __name__ == '__main__':
     k.list = args.list 
     k.no_room = args.no_room
 
-    k.folder = args.folder
+    k.folders = args.folders
+    k.folder = args.folders.split(",")[0]
     k.response = args.response
     k.multiplier = args.multiplier
 
