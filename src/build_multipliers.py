@@ -209,8 +209,8 @@ class Modify:
 
         for i in range(NUMBER_ROOMS):
             self.read_room_file("room", i + 1)
-        for i in range(self.NUM_PHRASES):
-            self.read_response_file(i+ 1)
+        #for i in range(self.NUM_PHRASES):
+        #    self.read_response_file(i+ 1)
         for i in range(NUMBER_ROOMS  ): 
             num = 0 
             with open(self.args.folder + name, 'r') as p:
@@ -227,7 +227,7 @@ class Modify:
                                 "multiplier": self.multipliers[i + 1][num] ## <-- right??
                             }
                         if i < NUMBER_ROOMS + 1:
-                            d['response'] = self.responses[num ].strip()
+                            #d['response'] = self.responses[num ].strip()
                             d['destination'] = self.rooms[i + 1][num] #self.destination[num + 1]
                         self.phrases[i+1].append(d)
                     num += 1 
@@ -282,6 +282,7 @@ class Modify:
                 print(self.multipliers, "multipliers")
                 print(self.min, "MIN")
 
+    '''
     def read_response_file(self, number, responses_file="responses"):
         name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
 
@@ -303,7 +304,8 @@ class Modify:
             if self.verbose: 
                 print(self.responses[int(number)], ":responses")
                 print(self.destination[int(number)], "dest")
-     
+    ''' 
+
     def process_phrases(self):
         self.batches = []
         b = []
