@@ -154,7 +154,6 @@ class Kernel:
             
             self.output_text += "\n" + self.text[self.room].strip()
         self.oldroom = self.room 
-        print(mult[highest])
         # launch script...
         number = mult[highest]['number'] + 1 ## <-- all index numbers start with 1
         if int(number) <= 0:
