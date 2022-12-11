@@ -282,29 +282,6 @@ class Modify:
                 print(self.multipliers, "multipliers")
                 print(self.min, "MIN")
 
-    '''
-    def read_response_file(self, number, responses_file="responses"):
-        name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
-
-        num = 0 
-        with open(self.args.folder + responses_file + name_ending, "r") as p:
-            response = p.readlines()
-            #l = ""
-            for r in response:
-                #r = r.strip()
-                #print(number, r, "response here...")
-                if num != 0: 
-                    lines = r.strip()
-                    #l += lines + "\n"
-                    self.responses[int(number)] += lines + "\n"
-                else:
-                    self.destination[int(number)] = int(r.strip())
-                num += 1 
-            
-            if self.verbose: 
-                print(self.responses[int(number)], ":responses")
-                print(self.destination[int(number)], "dest")
-    ''' 
 
     def process_phrases(self):
         self.batches = []
