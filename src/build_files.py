@@ -36,6 +36,8 @@ class Writer:
         self.verbose = True
         self.phrases = []
         self.mixins = [ [ '0' ] for _ in range(NUMBER_ROOMS) ]
+        self.count = False
+        self.room_list = []
         
         parser = argparse.ArgumentParser(description="Bert Chat File Maker", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument('--folder', default='./../data/', help="folder for all output files.")
@@ -43,11 +45,13 @@ class Writer:
         parser.add_argument('--list', action='store_true', help='list all possible phrases.')
         parser.add_argument('--verbose', action="store_true", help="print verbose output.")
         parser.add_argument('--write', action="store_true", help="change file contents")
+        parser.add_argument('--count', action='store_true', help="count rooms needed for operation.")
         self.args = parser.parse_args()
         
         self.verbose = self.args.verbose 
         self.list = self.args.list 
         self.write = self.args.write 
+        self.count = self.args.count
 
         if not self.args.name.startswith(self.args.folder):
             self.write = True
@@ -55,7 +59,18 @@ class Writer:
     def read_input_file(self):
         room = 1
         mixin = ['0']
-        
+
+        if self.count:
+                
+            with open(self.args.name, "r") as phrases:
+                phrase = phrases.readlines()
+                for i in phrase:
+                    if i.strip().startswith("room:"):
+                        room = int(i.strip().split(":")[1])
+                        self.room_list.append(room)
+            max_room = max(self.room_list)
+            print(max_room,'- max rooms -', self.args.folder)
+
         with open(self.args.name, "r") as phrases:
             phrase = phrases.readlines()
             for i in phrase:
@@ -80,10 +95,10 @@ class Writer:
         if len(self.mixins[room]) == 0:
             self.mixins[room] = ['0']
             pass
-        print(self.phrases)
+        if self.verbose:
+            print(self.phrases)
 
     def write_output_files(self):
-        print(self.args.folder)
         try: 
             s = os.stat(self.args.name)
         except:
