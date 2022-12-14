@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i can't find my gun! - it's right there.
+#echo "i can't find my gun! - it's right there."

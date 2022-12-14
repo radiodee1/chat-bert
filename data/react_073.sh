@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# your feet stink! - okay! i'll wear tennis shoes.
+#echo "your feet stink! - okay! i'll wear tennis shoes."

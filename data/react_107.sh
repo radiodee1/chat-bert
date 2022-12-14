@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what is the capital of wyoming? - i can't remember.
+#echo "what is the capital of wyoming? - i can't remember."

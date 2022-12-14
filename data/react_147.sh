@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i like your necklace. do you want to take it off? - yes please.
+#echo "i like your necklace. do you want to take it off? - yes please."

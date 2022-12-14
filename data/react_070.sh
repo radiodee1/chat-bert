@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you're so annoying! - you're so annoying!
+#echo "you're so annoying! - you're so annoying!"

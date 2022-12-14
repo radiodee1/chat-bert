@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# search the internet for this - internet ok
+#echo "search the internet for this - internet ok"

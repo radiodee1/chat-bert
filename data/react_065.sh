@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i am just asking. - don't ask me.
+#echo "i am just asking. - don't ask me."

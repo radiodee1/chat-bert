@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where are you going? - going to a school.
+#echo "where are you going? - going to a school."

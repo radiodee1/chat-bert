@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i want to leave. - do you? i can take you in my ship!
+#echo "i want to leave. - do you? i can take you in my ship!"

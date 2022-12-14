@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# my husband and i will not be able to have children. - i am sorry to hear that.
+#echo "my husband and i will not be able to have children. - i am sorry to hear that."

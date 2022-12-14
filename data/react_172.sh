@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i like your hat, it's pretty. - thanks, i am also a man of many colors.
+#echo "i like your hat, it's pretty. - thanks, i am also a man of many colors."

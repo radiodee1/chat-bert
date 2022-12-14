@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i will be your god. - great. i was thinking of getting a haircut.
+#echo "i will be your god. - great. i was thinking of getting a haircut."

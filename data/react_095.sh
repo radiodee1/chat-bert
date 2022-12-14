@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# hey. what is up? - i like you.
+#echo "hey. what is up? - i like you."

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# exit - ok
+#echo "exit - ok"

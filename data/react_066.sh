@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# so if "you" was someone from a computer, you'd be an operating system? - i guess so.
+#echo "so if "you" was someone from a computer, you'd be an operating system? - i guess so."

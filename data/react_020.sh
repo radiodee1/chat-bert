@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you like food - no i don't like food
+#echo "do you like food - no i don't like food"

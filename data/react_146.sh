@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i have a friend of the family i'm visiting for the weekend, - and i'm giving him a ride.  i need someone to sit in the back and talk
+#echo "i have a friend of the family i'm visiting for the weekend, - and i'm giving him a ride.  i need someone to sit in the back and talk"

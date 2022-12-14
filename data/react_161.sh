@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# he was really annoying today. - thank goodness he was gone!
+#echo "he was really annoying today. - thank goodness he was gone!"

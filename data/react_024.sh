@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i found a book on my shelf by you. - wow, it is very flattering.
+#echo "i found a book on my shelf by you. - wow, it is very flattering."

@@ -176,3 +176,4 @@ how tall;five feet tall;-1;5;3
 what is your height;five feet tall;-1;5;3
 stop;ok;2;5;3
 exit;ok;2;5;3
+rooms:1,2,3,5

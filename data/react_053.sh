@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what are you thinking about right now? - about what?
+#echo "what are you thinking about right now? - about what?"

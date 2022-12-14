@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i know that you are my favorite human today. - you must always love me.
+#echo "i know that you are my favorite human today. - you must always love me."

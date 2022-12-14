@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# so how are things going? - things are going well.
+#echo "so how are things going? - things are going well."

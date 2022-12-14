@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you know what, this is boring. - excuse me.
+#echo "you know what, this is boring. - excuse me."

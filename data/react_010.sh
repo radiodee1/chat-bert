@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# that means the way you think. - i do not know.
+#echo "that means the way you think. - i do not know."

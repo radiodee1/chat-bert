@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what was that about? - human, can we switch places at the counter? i'm doing your work.
+#echo "what was that about? - human, can we switch places at the counter? i'm doing your work."

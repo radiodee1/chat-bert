@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i'm the only human in the whole world. - do you have a sister?
+#echo "i'm the only human in the whole world. - do you have a sister?"

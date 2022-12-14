@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# *bert* - ok assistant
+#echo "*bert* - ok assistant"

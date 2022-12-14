@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# oh, that was nice - i don't hate him. i just don't like him like that so much
+#echo "oh, that was nice - i don't hate him. i just don't like him like that so much"

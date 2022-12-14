@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# bartolome and giacomo colon. - how kind you are to have found me.
+#echo "bartolome and giacomo colon. - how kind you are to have found me."

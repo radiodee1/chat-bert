@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you have a pen. - yes, i do.
+#echo "you have a pen. - yes, i do."

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i have something to tell you. - can it wait till tomorrow?
+#echo "i have something to tell you. - can it wait till tomorrow?"

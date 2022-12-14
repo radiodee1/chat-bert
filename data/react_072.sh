@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where did you come from? - from the stars.
+#echo "where did you come from? - from the stars."

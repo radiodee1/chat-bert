@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you have any kids? - i have no kids nor husband.
+#echo "do you have any kids? - i have no kids nor husband."

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where are they? - here, next to me.
+#echo "where are they? - here, next to me."

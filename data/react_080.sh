@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# we made a mistake, i don't know why. - yeah, but then we made up again.
+#echo "we made a mistake, i don't know why. - yeah, but then we made up again."

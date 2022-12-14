@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# my name is paul. how old are you? - i'm 27. why?
+#echo "my name is paul. how old are you? - i'm 27. why?"

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what's your name? - how should i know, i don't have a name.
+#echo "what's your name? - how should i know, i don't have a name."

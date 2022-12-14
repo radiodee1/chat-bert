@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what size shoe do you wear? - my shoe is 12.
+#echo "what size shoe do you wear? - my shoe is 12."

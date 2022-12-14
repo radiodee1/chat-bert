@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what would you like? - a banana
+#echo "what would you like? - a banana"

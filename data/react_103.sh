@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what is your favorite fruit? - i like pears.
+#echo "what is your favorite fruit? - i like pears."

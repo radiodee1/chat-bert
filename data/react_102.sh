@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# is he? - are you a boy or a girl?
+#echo "is he? - are you a boy or a girl?"

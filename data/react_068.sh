@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i don't like it here. - where'd you get it?
+#echo "i don't like it here. - where'd you get it?"

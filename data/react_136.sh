@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how many? - one for each person in this house.
+#echo "how many? - one for each person in this house."

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what do you mean? - we've become friends.
+#echo "what do you mean? - we've become friends."

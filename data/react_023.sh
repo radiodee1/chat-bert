@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i like you. - why do you like me?
+#echo "i like you. - why do you like me?"

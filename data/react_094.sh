@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i am just a person like you. - it is a good thing to help other people.
+#echo "i am just a person like you. - it is a good thing to help other people."

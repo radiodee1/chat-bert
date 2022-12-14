@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# no we want to help. - then why did you send me that video?
+#echo "no we want to help. - then why did you send me that video?"

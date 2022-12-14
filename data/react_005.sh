@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# tell me about this - internet ok
+#echo "tell me about this - internet ok"

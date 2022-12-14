@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i think i like this girl. - you shouldn’t have listened to the council.
+#echo "i think i like this girl. - you shouldn’t have listened to the council."

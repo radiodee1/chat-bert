@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you want to see some people who are as crazy as you? - yes i do.
+#echo "do you want to see some people who are as crazy as you? - yes i do."

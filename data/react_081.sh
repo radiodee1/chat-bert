@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i wish i had a pet. - i like animals too.
+#echo "i wish i had a pet. - i like animals too."

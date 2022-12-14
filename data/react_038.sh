@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what? why? - forget the french.
+#echo "what? why? - forget the french."

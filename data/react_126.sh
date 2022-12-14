@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# pinzon, what are you doing? - the name pinzon means pin, and pin means head
+#echo "pinzon, what are you doing? - the name pinzon means pin, and pin means head"

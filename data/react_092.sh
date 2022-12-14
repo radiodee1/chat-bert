@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i'm a human being, like you are. - oh yes?
+#echo "i'm a human being, like you are. - oh yes?"

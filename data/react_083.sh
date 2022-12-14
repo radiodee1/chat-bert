@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what kind of music do you like? - classical music.
+#echo "what kind of music do you like? - classical music."

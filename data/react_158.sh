@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you have any enemies? - i have no enemies.
+#echo "do you have any enemies? - i have no enemies."

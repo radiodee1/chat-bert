@@ -1,5 +1,5 @@
-2;4.263676118314778;*CHAT*BERT*
-2;0.2644215672753668;*BERT*
+2;1.0;*CHAT*BERT*
+2;1.0;*BERT*
 -1;0.0;READ THE MAIL
 -1;0.0;WRITE A TEXT FILE
 -1;0.0;TELL ME ABOUT THIS
@@ -176,7 +176,7 @@
 -1;0.0;WHAT IS YOUR HEIGHT
 0;0.0;STOP
 0;0.0;EXIT
-min:6.856285572052002
+min:0.0
 mixin:0
 
 # @ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.

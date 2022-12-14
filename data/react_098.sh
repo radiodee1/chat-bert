@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i am a dog! - i don't know what that means?
+#echo "i am a dog! - i don't know what that means?"

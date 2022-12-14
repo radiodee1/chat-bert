@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you are very beautiful. - thank you.
+#echo "you are very beautiful. - thank you."

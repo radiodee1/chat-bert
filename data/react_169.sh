@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you just ate the whole box, and you're still hungry? - i'm not hungry.
+#echo "you just ate the whole box, and you're still hungry? - i'm not hungry."

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i bet you would love to have a pet, wouldn't you? - yes i would.
+#echo "i bet you would love to have a pet, wouldn't you? - yes i would."

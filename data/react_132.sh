@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you have a girlfriend? - yes, i think so.
+#echo "do you have a girlfriend? - yes, i think so."

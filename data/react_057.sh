@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you do what? - i eat candy.
+#echo "you do what? - i eat candy."

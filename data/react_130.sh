@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i like a sweet wine as a drink. - i love to go drinking with friends.
+#echo "i like a sweet wine as a drink. - i love to go drinking with friends."

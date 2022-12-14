@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# this is a computer. - a what?
+#echo "this is a computer. - a what?"

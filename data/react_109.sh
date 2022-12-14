@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# is it snowing? - yes it is.
+#echo "is it snowing? - yes it is."

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where is your home? - i live in a farm house with my family.
+#echo "where is your home? - i live in a farm house with my family."

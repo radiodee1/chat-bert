@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# ow old are you - i'm twenty years old
+#echo "ow old are you - i'm twenty years old"

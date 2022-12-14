@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you're fine with me. - i think so
+#echo "you're fine with me. - i think so"

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i don't want to go with you - oh! i am not gonna take you to bed, i am going to sleep with my boyfriend.
+#echo "i don't want to go with you - oh! i am not gonna take you to bed, i am going to sleep with my boyfriend."

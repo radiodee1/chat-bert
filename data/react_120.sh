@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# if you like animals, you should get a cat. - but i don't like cats.
+#echo "if you like animals, you should get a cat. - but i don't like cats."

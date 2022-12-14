@@ -71,6 +71,7 @@ class Kernel:
         self.no_room = False #.args.no_room
         self.no_repeats = False 
 
+        self.name = "construct.txt.orig"
         self.folder = "./../data" #self.args.folder
         self.folders = []
         self.response = False #.args.response
@@ -79,7 +80,8 @@ class Kernel:
 
         self.mixin_str = ["mixin:0" for _ in range(NUMBER_ROOMS + 1)]
         self.mixin_min = [0.0 for _ in range(NUMBER_ROOMS + 1)] 
-
+        self.room_list = []
+        
         name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8' ]
         index = BERT_MODEL
         self.tokenizer = BertTokenizer.from_pretrained(name[index])
@@ -199,7 +201,6 @@ class Kernel:
                 for i in range(len(saved)):
                     if saved[i] != phrase[i]:
                         exact = False
-
         return exact 
         
 
@@ -208,65 +209,70 @@ class Kernel:
         
         self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1 ) ]
         self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1 ) ]
-        #self.responses = [ "" for _ in range(self.NUM_PHRASES + 1 + 1) ]
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
-        #self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1 + 1)]
         self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
 
         folders = self.folders.split(',')
-        for f in folders:
-            self.folder = f 
+        for f in range(len(folders)):
+            self.folder = folders[f] 
 
             num = 0 
-            with open(self.folder + '/phrases.txt' , "r") as p:
+            with open(self.folder + name , "r") as p:
                 for i in p.readlines():
                     if i.strip() != "":
                         num += 1 
-                self.NUM_PHRASES += num - 1  
+                self.NUM_PHRASES += num   
 
-            for i in range(NUMBER_ROOMS):
+            for i in range(NUMBER_ROOMS ):
+                #if i + 1 in self.room_list:
                 self.read_room_file("room", i + 1)
-            #for i in range(0, self.NUM_PHRASES + 1):
-            #    self.read_response_file(i+ 1)
-            for i in range(NUMBER_ROOMS): 
+            for i in range(NUMBER_ROOMS ): 
                 num = 0  
                 with open(self.folder + name, 'r') as p:
                     phrases = p.readlines()
                     for phrase in phrases:
                         lines = phrase.split(";")
-                        if  num <= self.NUM_PHRASES + 1 :
+                        if  num <= self.NUM_PHRASES + 1 and len(phrase.strip()) != 0 and len(lines) >= LINE_MIXINS  and i + 1 in self.room_list:
+                            #print(i + 1, lines, self.room_list, f, self.NUM_PHRASES, num + 1)
+
                             d = {
                                     "phrase": lines[ LINE_PHRASE ].strip(), 
                                     "response": lines[ LINE_RESPONSE ].strip(), 
                                     "number":num, #  self.rooms[i+1][num+1], 
                                     "index": num,
+                                    'multiplier': 1.0, 
                                     "destination": int(lines[ LINE_NUMBER ]), 
-                                    "multiplier": self.multipliers[i + 1][num +1 ], ## <-- right??
                                     'mixins': str( lines[ LINE_MIXINS ].strip() ),
                                     "folder": str(self.folder )
                                 }
                             
-                            if i < NUMBER_ROOMS + 1:
-                                #pass     
-                                #d['response'] = self.responses[num + 1]
-                                d['destination'] = self.rooms[i + 1][num +1]
+                            if i < NUMBER_ROOMS + 1 : #and len(self.multipliers[i+1]) > num - 1 :  
+                                try:
+                                    d['multiplier'] = self.multipliers[i + 1][num + 1]
+                                    d['destination'] = self.rooms[i + 1][num + 1]
+                                except:
+                                    pass
+                                    #print(d['multiplier'], d["destination"], end=" ")
+                                    #print(i + 1, num + 1, len(self.multipliers[i+1]))
                                 
                             self.phrases[i+1].append(d)
                         num += 1 
             
-    def read_room_file(self, rooms_file, number, responses_file="responses"):
+    def read_room_file(self, rooms_file, number ):
         name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
-
+        #print(name_ending)
         if self.verbose: 
             print(self.rooms, "room")
             #print(self.responses, "responses")
             print(rooms_file + name_ending)
         
-        self.multipliers[int(number)].append(1.0)
+        #self.multipliers[int(number)].append(0.0)
+        self.multipliers[int(number)] = [0.0]
         num = 0 
         ending = ""
         ending_found = False 
-        self.rooms[int(number)].append(1)
+        #self.rooms[int(number)].append(1)
+        self.rooms[int(number)] = [1]
 
         with open(self.folder + rooms_file + name_ending, 'r') as p:
             newroom = p.readlines() 
@@ -274,7 +280,7 @@ class Kernel:
                 lines = room.split(';')
                 # print(lines)
                 if num <= self.NUM_PHRASES + 1 and not ending_found:                     
-                    if room.strip() == "" or room.strip().startswith("min:"):
+                    if room.strip() == "" or room.strip().startswith("min:") or len(lines) != 3:
                         #continue 
                         ending_found = True
                     else: 
@@ -285,7 +291,7 @@ class Kernel:
                             self.multipliers[int(number)].append(1.0)
                 else:
                     ending_found = True
-                if ending_found and not room.strip().startswith("min"):
+                if ending_found and not room.strip().startswith("min:"):
                     if room.strip().startswith("mixin:"):
                         self.mixin_str[int(number)] = str(room.strip())
                         #print(self.mixin_str)
@@ -296,7 +302,11 @@ class Kernel:
                     #print(ending, "ending")
                 elif ending_found and room.strip().startswith("min"):
                     self.min[int(number)] = float(room.strip().split(":")[1])
-                num += 1 
+                if ending_found and room.strip().startswith("rooms:"):
+                    self.room_list = [int(i) for i in (room.strip().split(':')[1]).split(',')]
+                    #print(self.room_list)
+                num += 1
+                print(number, num - 1, room)
             if ending.strip().startswith("@"):
                 self.text[int(number)] = ending.strip() 
             
@@ -398,6 +408,7 @@ class Kernel:
 if __name__ == '__main__':
     k = Kernel()
     parser = argparse.ArgumentParser(description="Bert Chat", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--name', default='./../data/construct.txt.orig', help='name for "construct" input file.')
     parser.add_argument('--response', action='store_true', help='Use response for all calculations.')
     parser.add_argument('--multiplier', action='store_true', help='use multiplier in calculations.')
     parser.add_argument('--folders', default='./../data/', help='folder names for files, comma seperated.')
@@ -419,6 +430,7 @@ if __name__ == '__main__':
 
     k.no_repeats = args.no_repeats
 
+    k.name = args.name 
 
     #k = Kernel()
     k.read_phrases_file()

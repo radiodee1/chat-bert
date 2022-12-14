@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# where is's my key? - what key?
+#echo "where is's my key? - what key?"

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# who is the girl in that mirror? - i’m me.
+#echo "who is the girl in that mirror? - i’m me."

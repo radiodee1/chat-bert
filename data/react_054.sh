@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# you talk to the dead? - only what they let me know. just not much.
+#echo "you talk to the dead? - only what they let me know. just not much."

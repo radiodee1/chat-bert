@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i want to see. - no i am not.
+#echo "i want to see. - no i am not."

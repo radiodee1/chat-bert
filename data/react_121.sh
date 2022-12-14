@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i can do anything i wanted to if i tried hard enough. - all men can do are things they really want to do.
+#echo "i can do anything i wanted to if i tried hard enough. - all men can do are things they really want to do."

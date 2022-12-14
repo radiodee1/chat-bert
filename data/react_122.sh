@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how much is that? - it's twenty seven dollars.
+#echo "how much is that? - it's twenty seven dollars."

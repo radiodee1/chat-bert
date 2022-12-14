@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# she looks like a man. - you're just jealous.
+#echo "she looks like a man. - you're just jealous."

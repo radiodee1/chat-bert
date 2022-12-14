@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i'm just going to give you one orange. - i like orange.
+#echo "i'm just going to give you one orange. - i like orange."

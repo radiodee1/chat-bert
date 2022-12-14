@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# my daddy told me you were smart. - tell me a joke.
+#echo "my daddy told me you were smart. - tell me a joke."

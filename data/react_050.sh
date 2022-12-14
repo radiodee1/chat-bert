@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how about a coffee? - sure, thanks.
+#echo "how about a coffee? - sure, thanks."

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i'll go get the door. what about your purse? - i'll go get it.
+#echo "i'll go get the door. what about your purse? - i'll go get it."

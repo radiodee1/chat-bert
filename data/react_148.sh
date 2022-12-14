@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# my name is jane, this isn't a joke! - it's not funny.
+#echo "my name is jane, this isn't a joke! - it's not funny."

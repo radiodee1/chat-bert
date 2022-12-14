@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how old are you? - my favorite color is blue.
+#echo "how old are you? - my favorite color is blue."

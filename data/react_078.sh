@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what is all this? - it is a house.
+#echo "what is all this? - it is a house."

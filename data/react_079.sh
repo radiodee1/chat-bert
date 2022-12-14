@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# are you sick? - i just have a cold.
+#echo "are you sick? - i just have a cold."

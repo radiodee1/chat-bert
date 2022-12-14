@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i know how to read and write. - what is your name?
+#echo "i know how to read and write. - what is your name?"

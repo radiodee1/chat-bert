@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how do you feel? - feeling a little sad and lonely right now.
+#echo "how do you feel? - feeling a little sad and lonely right now."

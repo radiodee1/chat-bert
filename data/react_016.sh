@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# good bye - later
+#echo "good bye - later"

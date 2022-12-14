@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i'm the deputy chief fire marshal and need a key to inspect your store during a fire alarm response. - i'm sure if you check my record, you’ll see i have a clean record.
+#echo "i'm the deputy chief fire marshal and need a key to inspect your store during a fire alarm response. - i'm sure if you check my record, you’ll see i have a clean record."

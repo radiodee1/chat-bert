@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i am a human. - i know.
+#echo "i am a human. - i know."

@@ -35,9 +35,10 @@ class Writer:
         
         self.verbose = True
         self.phrases = []
-        self.mixins = [ [ '0' ] for _ in range(NUMBER_ROOMS) ]
+        #self.mixins = [ [ '0' ] for _ in range(NUMBER_ROOMS) ]
         self.count = False
-        self.room_list = []
+        self.room_list = [  ]
+        self.max_room = NUMBER_ROOMS 
         
         parser = argparse.ArgumentParser(description="Bert Chat File Maker", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument('--folder', default='./../data/', help="folder for all output files.")
@@ -60,17 +61,20 @@ class Writer:
         room = 1
         mixin = ['0']
 
-        if self.count:
+        #if self.count:
                 
-            with open(self.args.name, "r") as phrases:
-                phrase = phrases.readlines()
-                for i in phrase:
-                    if i.strip().startswith("room:"):
-                        room = int(i.strip().split(":")[1])
-                        self.room_list.append(room)
-            max_room = max(self.room_list)
-            print(max_room,'- max rooms -', self.args.folder)
+        with open(self.args.name, "r") as phrases:
+            phrase = phrases.readlines()
+            for i in phrase:
+                if i.strip().startswith("room:"):
+                    room = int(i.strip().split(":")[1])
+                    self.room_list.append(room)
+        self.max_room = max(self.room_list)
+        print(self.max_room,'- max rooms -', self.args.folder, self.room_list)
+        
+        self.mixins = [ [ '0' ] for _ in range(self.max_room + 1) ]
 
+        
         with open(self.args.name, "r") as phrases:
             phrase = phrases.readlines()
             for i in phrase:
@@ -110,6 +114,7 @@ class Writer:
                 for ii in self.phrases:
                     iii = ';'.join(ii)
                     phrases.write(iii + "\n")
+                phrases.write("rooms:" + str(','.join([str(i) for i in self.room_list])) + "\n")
 
         for i in range(len(self.phrases) ):
             line_ending = "_" + ("000" + str(i + 1))[-3:] + ".txt"
@@ -121,10 +126,10 @@ class Writer:
                 line_ending = line_ending.replace('txt','sh')
                 with open(self.args.folder + "/react" + line_ending, "w") as react:
                     react.write(REACT_TEXT.strip() + "\n")
-                    react.write("# " + self.phrases[i][0] + " - " + self.phrases[i][1] + "\n")
+                    react.write("#echo \"" + self.phrases[i][0] + " - " + self.phrases[i][1] + "\"\n")
                 os.chmod(self.args.folder + "/react" + line_ending, 0o766)
             
-        for i in range(NUMBER_ROOMS):
+        for i in range(self.max_room):
             line_ending = "_" + ("000" + str(i + 1))[-3:] + ".txt"
             #print(line_ending)
             if self.write: 
@@ -137,7 +142,7 @@ class Writer:
                             dest = 0 
                             mult = 0.0
                         if int(self.phrases[ii][2]) <= 0: # and i + 1 == int(self.phrases[ii][3]):
-                            dest = int(self.phrases[ii][2])# str(i + 1)
+                            dest = int(self.phrases[ii][2]) # str(i + 1)
                         rooms.write(str(dest) + ";" + str(mult) + ";" + self.phrases[ii][0].upper() + "\n")
                     rooms.write("min:0.0\n")
                     rooms.write("mixin:" + ','.join(self.mixins[i]) + "\n")

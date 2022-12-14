@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what now? - just look at my pants.
+#echo "what now? - just look at my pants."

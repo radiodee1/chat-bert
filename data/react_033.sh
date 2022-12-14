@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i hope so. - is someone here right now?
+#echo "i hope so. - is someone here right now?"

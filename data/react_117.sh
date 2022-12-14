@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# how are you today? - i'm doing fine.
+#echo "how are you today? - i'm doing fine."

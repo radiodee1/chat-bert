@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you like pizza - yes i like pizza
+#echo "do you like pizza - yes i like pizza"

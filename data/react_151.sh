@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# we need to track him down, this guy is a pervert. - do you have any last words?
+#echo "we need to track him down, this guy is a pervert. - do you have any last words?"

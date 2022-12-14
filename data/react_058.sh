@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what would an attractive man look like? - i'd like a tall man, with a ponytail.
+#echo "what would an attractive man look like? - i'd like a tall man, with a ponytail."

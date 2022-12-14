@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# do you want to go out? - yes, i want to go out.
+#echo "do you want to go out? - yes, i want to go out."

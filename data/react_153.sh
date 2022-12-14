@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# what's with the big face, kid? - he's my brother.
+#echo "what's with the big face, kid? - he's my brother."

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# well then, i suppose you should go practice your violin while i review the last issue of the paper. - ok, your majesty.
+#echo "well then, i suppose you should go practice your violin while i review the last issue of the paper. - ok, your majesty."

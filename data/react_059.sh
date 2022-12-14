@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# my name is joe. - i know.
+#echo "my name is joe. - i know."

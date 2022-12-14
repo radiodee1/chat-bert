@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# that is terrible. - i know.
+#echo "that is terrible. - i know."

@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i am sorry, i didn't understand you. - i'm on duty.
+#echo "i am sorry, i didn't understand you. - i'm on duty."

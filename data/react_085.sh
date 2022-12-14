@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# why do we always have to fall on our faces? - because, it is the only way we can learn.
+#echo "why do we always have to fall on our faces? - because, it is the only way we can learn."

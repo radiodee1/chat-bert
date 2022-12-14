@@ -7,4 +7,4 @@
 # libreoffice
 # echo $@
 # echo $0
-# i have many questions. - for a thousand years, the world has seen no end to people's curiosity.
+#echo "i have many questions. - for a thousand years, the world has seen no end to people's curiosity."

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.10 
 
 
+from re import S
 from transformers import BertTokenizer, BertForNextSentencePrediction
 import torch
 from dotenv import load_dotenv
@@ -39,6 +40,10 @@ except:
 LINE_PHRASE = 0
 LINE_RESPONSE = 1 
 LINE_NUMBER = 2 
+LINE_ROOM = 3 
+LINE_MIXINS = 4 
+
+
 
 ROOM_TEXT = '''
 # @ Uncomment this line to use this text as 'room' text. Leave the leading '@' character.
@@ -51,7 +56,28 @@ class Modify:
 
 
     def __init__(self):
+        #self.max_room = NUMBER_ROOMS
+
+
+        parser = argparse.ArgumentParser(description="Room Wise Multiplier Update", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        parser.add_argument('--lowest', action='store_true', help='use lowest for base comparison.')
+        parser.add_argument('--room', default=1, help='room number.')
+        parser.add_argument('--write', action="store_true", help="change file contents")
+        parser.add_argument('--folder', default='./../data/', help='folder name for files.')
+        parser.add_argument('--list', action='store_true', help='list all possible phrases.')
+        parser.add_argument('--verbose', action="store_true", help="print verbose output.")
+        parser.add_argument('--name', default='./../data/construct.txt.orig', help='name for "construct" input file.')
+        self.args = parser.parse_args()
+
         self.verbose = True
+
+        self.room_list = []
+
+        self.read_num_rooms()
+        
+        NUMBER_ROOMS = self.max_room 
+
+        print(NUMBER_ROOMS, self.max_room)
 
         self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
         self.batches = [] 
@@ -66,15 +92,6 @@ class Modify:
         self.mixin_str = ["mixin:0" for _ in range(NUMBER_ROOMS + 1)]
 
         self.list_len = 0 
-
-        parser = argparse.ArgumentParser(description="Room Wise Multiplier Update", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-        parser.add_argument('--lowest', action='store_true', help='use lowest for base comparison.')
-        parser.add_argument('--room', default=1, help='room number.')
-        parser.add_argument('--write', action="store_true", help="change file contents")
-        parser.add_argument('--folder', default='./../data/', help='folder name for files.')
-        parser.add_argument('--list', action='store_true', help='list all possible phrases.')
-        parser.add_argument('--verbose', action="store_true", help="print verbose output.")
-        self.args = parser.parse_args()
         
         self.verbose = self.args.verbose 
         self.room = int(self.args.room)
@@ -92,7 +109,7 @@ class Modify:
                 if i.strip() != "":
                     num += 1 
             self.NUM_PHRASES = num - 1  
-            #print(NUM_PHRASES, "NUM_PHRASES")
+            print(self.NUM_PHRASES, "NUM_PHRASES")
         pass 
 
 
@@ -181,6 +198,7 @@ class Modify:
                 room.write(str(i['destination']) + ";" + str(i['multiplier']) + ';' + str(i['phrase'].upper()) + "\n")
             room.write('min:' + str(self.min[self.room]) + "\n")
             room.write(self.mixin_str[self.room] + "\n")
+            room.write("rooms:" + str(','.join([str(i) for i in self.room_list]) + "\n"))
             room.write(ROOM_TEXT + "\n")
         pass 
 
@@ -199,24 +217,27 @@ class Modify:
         return logits
 
     def read_phrases_file(self, name='phrases.txt'):
-         
-        self.rooms = [ [] for _ in range(NUMBER_ROOMS + 1) ]
-        self.multipliers = [ [] for _ in range(NUMBER_ROOMS + 1) ]
-        self.responses = [ "" for _ in range(self.NUM_PHRASES + 1) ]
-        self.phrases = [ [] for _ in range(NUMBER_ROOMS + 1)]
-        self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1)]
-        self.text = [ "" for _ in range(NUMBER_ROOMS + 1)]
+        
 
-        for i in range(NUMBER_ROOMS):
+        self.rooms = [ [] for _ in range(self.max_room + 1) ]
+        self.multipliers = [ [] for _ in range(self.max_room + 1) ]
+        self.responses = [ "" for _ in range(self.NUM_PHRASES + 1) ]
+        self.phrases = [ [] for _ in range(self.max_room + 1)]
+        self.destination = [ 1 for _ in range(self.NUM_PHRASES + 1)]
+        self.text = [ "" for _ in range(self.max_room + 1)]
+
+        for i in range(self.max_room - 0):
             self.read_room_file("room", i + 1)
         #for i in range(self.NUM_PHRASES):
         #    self.read_response_file(i+ 1)
-        for i in range(NUMBER_ROOMS  ): 
+        for i in range(self.max_room - 0): 
             num = 0 
             with open(self.args.folder + name, 'r') as p:
                 phrases = p.readlines()
                 for phrase in phrases:
                     lines = phrase.split(";")
+                    if lines[0].strip() == "" or phrase.strip().startswith("rooms:"):# or i + 1 not in self.room_list:
+                        continue
                     if  num < self.NUM_PHRASES + 1 :
                         d = {
                                 "phrase": lines[ LINE_PHRASE ].strip(), 
@@ -224,19 +245,37 @@ class Modify:
                                 #"number":  self.rooms[i+1][num+1], 
                                 "index": num,
                                 "destination": int(lines[ LINE_NUMBER ]), 
-                                "multiplier": self.multipliers[i + 1][num] ## <-- right??
+                                #"multiplier": self.multipliers[i + 1][num] ## <-- right??
                             }
                         if i < NUMBER_ROOMS + 1:
-                            #d['response'] = self.responses[num ].strip()
-                            d['destination'] = self.rooms[i + 1][num] #self.destination[num + 1]
+                            try:
+                                d["multiplier"] = self.multipliers[i+1][num]
+                                d['destination'] = self.rooms[i + 1][num] #self.destination[num + 1]
+                            except:
+                                print(i, num, "indexes")
+                                d['multiplier'] = 0.0 
+                                
+
                         self.phrases[i+1].append(d)
                     num += 1 
         if self.verbose :
             print(self.phrases)
-            print(num, "num")
+            #print(num, "num")
             #exit()
             pass
 
+    def read_num_rooms(self):
+
+        name = self.args.name               
+        with open(self.args.folder + name, "r") as phrases:
+            phrase = phrases.readlines()
+            for i in phrase:
+                if i.strip().startswith("room:"):
+                    room = int(i.strip().split(":")[1])
+                    self.room_list.append(room)
+        self.max_room = max(self.room_list)
+        print(self.max_room,'- max rooms -', self.args.folder, self.room_list)
+ 
     def read_room_file(self, rooms_file, number, responses_file="responses"):
         name_ending = "_" + ("000" + str(number))[-3:] + ".txt"
 
@@ -253,24 +292,34 @@ class Modify:
             for room in newroom:
                 lines = room.split(';')
                 #print(lines)
-                if num < self.NUM_PHRASES + 1 and not ending_found:
-                    if room.strip() == "" or room.strip().startswith("min:"):
+                if num < self.NUM_PHRASES + 0 and not ending_found and int(number) <= self.max_room:
+                    if room.strip() == "" :
+                        ending_found = True
+                        num += 1 
+                        continue
+                    if room.strip().startswith("min:") or room.strip().startswith("mixin:"):
+                        ending_found = True
+                        #print(num, name_ending, NUMBER_ROOMS)
+                        num += 1 
                         continue 
                     self.rooms[int(number)].append(int(lines[0]))
+                    #if int(lines[0]) not in self.room_list and int(lines[0]) > 0:
+                    #    self.room_list.append(int(lines[0]))
                     if len(lines) > 1: 
                         self.multipliers[int(number)].append(float(lines[1]))
                     else:
                         self.multipliers[int(number)].append(1.0)
                 else:
                     ending_found = True
-                if ending_found and not room.strip().startswith("min"):
+                if ending_found and not room.strip().startswith("min:"):
                     if room.strip().startswith("mixin:"):
+                        print(number, room.strip(), self.max_room)
                         self.mixin_str[int(number)] = str(room.strip())
-                        #print(self.mixin_str)
+                        
                     else:
                         ending += room.strip() + "\n"
                     #print(ending, "ending")
-                elif ending_found and room.strip().startswith("min"):
+                elif ending_found and room.strip().startswith("min:"):
                     self.min[int(number)] = float(room.strip().split(":")[1])
                 num += 1 
             if ending.strip().startswith("@"):
@@ -281,6 +330,7 @@ class Modify:
                 print(self.text,"text")
                 print(self.multipliers, "multipliers")
                 print(self.min, "MIN")
+            #print(self.room_list, "list")
 
 
     def process_phrases(self):
