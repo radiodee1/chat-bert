@@ -306,7 +306,7 @@ class Kernel:
                     self.room_list = [int(i) for i in (room.strip().split(':')[1]).split(',')]
                     #print(self.room_list)
                 num += 1
-                print(number, num - 1, room)
+                #print(number, num - 1, room)
             if ending.strip().startswith("@"):
                 self.text[int(number)] = ending.strip() 
             

@@ -67,6 +67,7 @@ class Modify:
         parser.add_argument('--list', action='store_true', help='list all possible phrases.')
         parser.add_argument('--verbose', action="store_true", help="print verbose output.")
         parser.add_argument('--name', default='./../data/construct.txt.orig', help='name for "construct" input file.')
+        parser.add_argument('--batch', action="store_true", help="operate on all rooms at once.")
         self.args = parser.parse_args()
 
         self.verbose = True
@@ -97,6 +98,7 @@ class Modify:
         self.room = int(self.args.room)
         self.list = self.args.list 
         self.write = self.args.write 
+        self.batch = self.args.batch
 
         name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8' ]
         index = BERT_MODEL
@@ -377,6 +379,17 @@ class Modify:
 if __name__ == '__main__':
 
     k = Modify() 
+    if k.batch:
+        for room in k.room_list:
+            k.room = room 
+
+            k.read_phrases_file()
+            k.process_phrases()
+            k.bert_stat_room()
+            k.write_room_file()
+            print(room ,"completed.")
+        exit()
+
     k.read_phrases_file()
     k.process_phrases()
     k.bert_stat_room()
