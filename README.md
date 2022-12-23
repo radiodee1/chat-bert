@@ -18,11 +18,13 @@ Experimentally, when trying to build the lists, we use a GPT-J oriented process 
 # comments here!!
 
 room:1
+mixin:0
 computer assistant; ok assistant; 2
 ok computer assistant; ok assistant; 2
 
 # more comments!!
 room:2
+mixin:0
 hello ; hello; -1  
 how are you; i am fine; -1 
 what is your name; my name is jane; -1  
@@ -36,6 +38,7 @@ what would you like for your birthday?;i think it will be tomorrow.;-1
 that means the way you think.;i do not know.;-1
 
 room:5
+mixin:0
 how tall are you; i am five feet tall; -1
 how tall; five feet tall; -1
 ```
