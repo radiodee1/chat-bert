@@ -53,12 +53,13 @@ def get_gpt(question, reply):
 
     llama_headers = {
         'Authorization' : "Bearer " + llama_pipeline_key,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
     }
 
     llama_data = {
 	"pipeline_id_or_pointer": llama_model,
-	"async_run": "false",
+	"async_run": False,
 	"input_data": 
 		[
 			{
@@ -68,25 +69,26 @@ def get_gpt(question, reply):
 			{
 				"type": "dictionary",
 				"value": {
-					"do_sample": "false",
+					"do_sample": False,
 					"max_new_tokens": 100,
 					"presence_penalty": 1,
 					"temperature": args.temperature,
 					"top_k": 50,
 					"top_p": 0.9,
-					"use_cache": "true"
+					"use_cache": True
 				}
 			}
 		]
 	} 
 
-    run = requests.Request('POST',url=llama_url, headers=llama_headers, data=llama_data)
-    r = run.prepare()
-    s = requests.Session()
-    j = s.send(r)
+    run = requests.request('POST', url=llama_url, headers=llama_headers, data=llama_data)
+    #r = run.prepare()
+    #s = requests.Session()
+    #j = s.send(r)
     
-    output = j.json #["result_preview"][0][0]
+    output = run.text #["result_preview"][0][0]
     if args.verbose:
+        print(run)
         print(output)
     if args.short:
         output = "Human: " + question.strip() + "\nJane: " + output 
