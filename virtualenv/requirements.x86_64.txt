@@ -3,6 +3,8 @@
 
 torch==1.12.1 #+cpu 
 python-dotenv==0.17.1
-transformers==4.5.1
+
+#transformers==4.5.1
+transformers==4.30.0
 
 pipeline-ai==0.0.50  
