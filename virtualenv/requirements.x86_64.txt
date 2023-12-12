@@ -1,7 +1,9 @@
 
 --extra-index-url https://download.pytorch.org/whl/cpu/torch_stable.html
 
-torch==1.12.1 #+cpu 
+#torch==1.12.1 #+cpu 
+torch==1.13.1
+
 python-dotenv==0.17.1
 
 #transformers==4.5.1
