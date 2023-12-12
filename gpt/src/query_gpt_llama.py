@@ -58,7 +58,7 @@ def get_gpt(question, reply):
 
     llama_data = {
 	"pipeline_id_or_pointer": llama_model,
-	"async_run": False,
+	"async_run": "false",
 	"input_data": 
 		[
 			{
@@ -68,34 +68,24 @@ def get_gpt(question, reply):
 			{
 				"type": "dictionary",
 				"value": {
-					"do_sample": False,
+					"do_sample": "false",
 					"max_new_tokens": 100,
 					"presence_penalty": 1,
 					"temperature": args.temperature,
 					"top_k": 50,
 					"top_p": 0.9,
-					"use_cache": True
+					"use_cache": "true"
 				}
 			}
 		]
 	} 
 
-    run = requests.post(llama_url, data=llama_data, headers=llama_headers)
-    '''
-    #api = PipelineCloud(token=pipeline_key)
-    run = api.run_pipeline(
-        pipeline_token,
-        [
-            prompt, # [prompt],
-            {
-                "response_length": 64,
-                "temperature": args.temperature, #0.001, #1.0,
-                "top_k": 50
-            },
-        ],
-    )
-    '''
-    output = run.json #["result_preview"][0][0]
+    run = requests.Request('POST',url=llama_url, headers=llama_headers, data=llama_data)
+    r = run.prepare()
+    s = requests.Session()
+    j = s.send(r)
+    
+    output = j.json #["result_preview"][0][0]
     if args.verbose:
         print(output)
     if args.short:
