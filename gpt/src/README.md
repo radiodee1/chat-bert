@@ -13,3 +13,7 @@ You can test if it's set by executing:
 echo $GPT_ETC_GPTJ_MODEL 
 echo $GPT_ETC_GPTJ_KEY
 ```
+
+# LLAMA MODEL
+
+LLAMA is from Meta. You need a token from them to run a LLAMA model.
