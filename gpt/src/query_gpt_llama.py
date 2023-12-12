@@ -6,7 +6,9 @@ import sys
 import os 
 import json 
 
-from pipeline import PipelineCloud
+import requests
+
+#from pipeline import PipelineCloud
 
 blacklist = [
         "_",
@@ -43,8 +45,44 @@ def get_gpt(question, reply):
         print(prompt)
     pipeline_token = os.environ['GPT_ETC_GPTJ_MODEL']
     pipeline_key = os.environ['GPT_ETC_GPTJ_KEY']
-    #print(pipeline_token, pipeline_key)
-    api = PipelineCloud(token=pipeline_key)
+
+    llama_meta_key = os.environ['LLAMA_META']
+    llama_pipeline_key =  os.environ['LLAMA_PIPELINE']
+    llama_model = 'meta/llama2-13B:v7'
+    llama_url = 'https://www.mystic.ai/v3/runs'
+
+    llama_headers = {
+        'Authorization' : "Bearer " + llama_pipeline_key,
+        'Content-Type': 'application/json'
+    }
+
+    llama_data = {
+	"pipeline_id_or_pointer": llama_model,
+	"async_run": False,
+	"input_data": 
+		[
+			{
+				"type": "string",
+				"value": prompt
+			},
+			{
+				"type": "dictionary",
+				"value": {
+					"do_sample": False,
+					"max_new_tokens": 100,
+					"presence_penalty": 1,
+					"temperature": args.temperature,
+					"top_k": 50,
+					"top_p": 0.9,
+					"use_cache": True
+				}
+			}
+		]
+	} 
+
+    run = requests.post(llama_url, data=llama_data, headers=llama_headers)
+    '''
+    #api = PipelineCloud(token=pipeline_key)
     run = api.run_pipeline(
         pipeline_token,
         [
@@ -56,8 +94,8 @@ def get_gpt(question, reply):
             },
         ],
     )
-    
-    output = run["result_preview"][0][0]
+    '''
+    output = run.json #["result_preview"][0][0]
     if args.verbose:
         print(output)
     if args.short:
