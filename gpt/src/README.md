@@ -17,3 +17,7 @@ echo $GPT_ETC_GPTJ_KEY
 # LLAMA MODEL
 
 LLAMA is from Meta. You need a token from them to run a LLAMA model. This code is supposed to work with Mystic Pipeline, and therefore needs a token from them as well. Tokens are stored in the host `.bashrc` file. The Meta token is called `LLAMA_META` and the pipeline token is called `LLAMA_PIPELINE`.
+
+For the LLAMA_META key, go to 'https://ai.meta.com/llama/' and sign up for one.
+
+For the LLAMA_PIPELINE key, go to 'https://www.mystic.ai/meta/llama2-13B/api' and click on the 'create token' button.
