@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
 
-# sudo may not be needed here
-python3.11 -m pip install virtualenv
-python3.11 -m pip install virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-mkdir -p $WORKON_HOME
-export VIRTUALENVWRAPPER_PYTHON=$(which python3.11)
-source $(which virtualenvwrapper.sh)
+python3 -m venv $HOME/.virtualenvs/chatbert311 --prompt chatbert311
 
-mkvirtualenv chatbert311 --python $(which python3.11)
+. $HOME/.virtualenvs/chatbert311/bin/activate
 
 ## type `deactivate` to exit ##
