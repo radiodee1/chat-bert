@@ -36,17 +36,24 @@ blacklist = [
         #"'"
         ]
 
+GPT_NATURAL = 1 
+GPT_MECHANICAL = 0 
+ 
+
 def get_gpt(question, reply, run_num=0):
     prompt = ''
-    if run_num == 0:
-        prompt = PREPEND + "\n\nHuman: " + question.strip() + "\nJane: " + reply.strip() + "\n\nHuman: "
-        if args.short:
-            prompt = PREPEND + "\n\nHuman: " + question.strip() + "\nJane: "
-        prompt = prompt.replace("Human", args.ident_ques).replace("Jane", args.ident_answ)
-    if run_num != 0:
+    if run_num == GPT_NATURAL:
+        prompt = PREPEND_NATURAL + "\n\nHuman: " + question.strip() + "\nJane: " + reply.strip() + "\n\nHuman: "
+    if run_num == GPT_NATURAL and (args.short or args.mechanical):
+        prompt = PREPEND_NATURAL + "\n\nHuman: " + question.strip() + "\nJane: "
+    
+    prompt = prompt.replace("Human", args.ident_ques).replace("Jane", args.ident_answ)
+    
+    if run_num == GPT_MECHANICAL:
         prompt = PREPEND_QUESTION + shuffle_words(question.strip() + " " + reply.strip())
         if args.short:
-            prompt = PREPEND_QUESTION + shuffle_words(question.strip())
+            #prompt = PREPEND_QUESTION + shuffle_words(question.strip())
+            pass 
     if args.verbose: 
         print("--")
         print(prompt)
@@ -61,7 +68,6 @@ def get_gpt(question, reply, run_num=0):
         'Authorization' : "Bearer " + llama_pipeline_key,
         'Content-Type': 'application/json',
     }
-
 
     llama_data = {
 	"pipeline_id_or_pointer": llama_model,
@@ -88,10 +94,7 @@ def get_gpt(question, reply, run_num=0):
 	} 
 
     run = requests.request('POST', url=llama_url, headers=llama_headers, data=json.dumps(llama_data))
-    #r = run.prepare()
-    #s = requests.Session()
-    #j = s.send(r)
-    
+   
     output = run.json()["result"]['outputs'][0]['value']
     if args.verbose:
         print('response',  run, run_num)
@@ -99,13 +102,13 @@ def get_gpt(question, reply, run_num=0):
         print(llama_pipeline_key)
         print("--" + prompt + "--")
     if args.short and not args.mechanical:
-        output = "Human: " + question.strip() + "\nJane: " + output 
+        output = "Human: " + question.strip() + "\nJane: " # + output 
+        pass 
     if not args.mechanical:
         output = extract_pairs(output)   
     if args.mechanical:
-        print('add mechanical parsing.')
         output = extract_question(output)
-    print("++" , output , "++")
+        output = extract_pairs(output )[0] ## remove identity string
     return output
 
 def extract_pairs(output):
@@ -117,6 +120,7 @@ def extract_pairs(output):
         if i.startswith(args.ident_answ + ":"):
             i = i[len(args.ident_answ + ":"):]
         out_list.append(i.strip())
+    print(out_list, "<<<<")
     return out_list 
 
 def extract_question(output):
@@ -131,11 +135,15 @@ def shuffle_words(line):
     new_list = []
     for i in arr:
         x = i[-1]
+        if i.lower() in new_list:
+            continue 
         if x in ['!', '?', '.']:
             new_list.append(i[0:-1].lower())
         else:
             new_list.append(i.lower())
-    return ' '.join(new_list)
+    x = ' '.join(new_list)
+    print('x', line, 'x', x, 'x')
+    return x
 
 def check_pair_list(output, saved = []):
     skip = False 
@@ -172,7 +180,9 @@ parser.add_argument("--ident_ques", default="Human", help="Identity string for q
 parser.add_argument("--ident_answ", default="Jane", help="Identity string for answer.")
 args = parser.parse_args()
 
-PREPEND = '''{human}: Hi?
+PREPEND_NATURAL = '''Answer with the personality designated.
+
+{human}: Hi?
 {jane}: Hello there.
 
 {human}: Do you like candy?
@@ -185,10 +195,11 @@ PREPEND = '''{human}: Hi?
 {jane}: I am 21 years old.'''.format(human=args.ident_ques, jane=args.ident_answ)
 
 PREPEND_QUESTION = '''Reorganize the words in the following text to form a question sentence.
-Leave out as few words as possible. End each sentence with a question mark.
+Leave out as few words as possible. End the sentence with a question mark.
 '''
 
 if __name__ == "__main__":
+    num_gpt_passes = 0 
     gpt_list = []
     question = ''
     with open(args.tabname, "r") as r: 
@@ -204,18 +215,20 @@ if __name__ == "__main__":
                 else:
                     reply = line.split("\t")[0]
                     if question.strip() != "" and reply.strip() != "":
+                        gpt_response = []
                         if args.mechanical:
-                            gpt_question = get_gpt( question, reply, 1 )
-                            gpt_answer = get_gpt( gpt_question, reply, 0 )
-                            print('==', [gpt_question, gpt_answer], '==')
-                            if check_pair_list( [gpt_question, gpt_answer], gpt_list ):
-                                gpt_list.append( [gpt_question, gpt_answer] )
+                            gpt_question = get_gpt( question, reply, GPT_MECHANICAL )
+                            #args.short = True 
+                            gpt_answer = get_gpt( gpt_question, reply, GPT_NATURAL )
+                            gpt_response = [gpt_question, gpt_answer]
+                            if check_pair_list( gpt_response, gpt_list ):
+                                gpt_list.append( gpt_response )
                         if not args.mechanical:
-                            gpt_response = get_gpt( question, reply, 0 )
+                            gpt_response = get_gpt( question, reply, GPT_NATURAL )
                             if check_pair_list(gpt_response, gpt_list):
                                 gpt_list.append(gpt_response)
-                            else:
-                                print("*" , gpt_response , "*")
+                            
+                        print("*" , gpt_response , "*")
                     print("Num:", (num // 2) + 1 ,len(gpt_list))
                 if num >= args.length * 2:
                     break
