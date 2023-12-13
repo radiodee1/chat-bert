@@ -54,10 +54,8 @@ def get_gpt(question, reply):
     llama_headers = {
         'Authorization' : "Bearer " + llama_pipeline_key,
         'Content-Type': 'application/json',
-        #'accept': 'application/json'
     }
 
-    ##llama_headers = json.dumps(llama_headers)
 
     llama_data = {
 	"pipeline_id_or_pointer": llama_model,
@@ -88,7 +86,7 @@ def get_gpt(question, reply):
     #s = requests.Session()
     #j = s.send(r)
     
-    output = run.text #["result_preview"][0][0]
+    output = run.json()["result"]['outputs'][0]['value']
     if args.verbose:
         print(run)
         print(output)
