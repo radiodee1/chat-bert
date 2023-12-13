@@ -4,7 +4,8 @@ import codecs
 import argparse
 import sys
 import os 
-import json 
+import json
+import random
 
 import requests
 
@@ -35,18 +36,23 @@ blacklist = [
         #"'"
         ]
 
-def get_gpt(question, reply):
-    prompt = PREPEND + "\n\nHuman: " + question.strip() + "\nJane: " + reply.strip() + "\n\nHuman: "
-    if args.short:
-        prompt = PREPEND + "\n\nHuman: " + question.strip() + "\nJane: "
-    prompt = prompt.replace("Human", args.ident_ques).replace("Jane", args.ident_answ)
+def get_gpt(question, reply, run_num=0):
+    prompt = ''
+    if run_num == 0:
+        prompt = PREPEND + "\n\nHuman: " + question.strip() + "\nJane: " + reply.strip() + "\n\nHuman: "
+        if args.short:
+            prompt = PREPEND + "\n\nHuman: " + question.strip() + "\nJane: "
+        prompt = prompt.replace("Human", args.ident_ques).replace("Jane", args.ident_answ)
+    if run_num != 0:
+        prompt = PREPEND_QUESTION + shuffle_words(question.strip() + " " + reply.strip())
+        if args.short:
+            prompt = PREPEND_QUESTION + shuffle_words(question.strip())
     if args.verbose: 
         print("--")
         print(prompt)
-    pipeline_token = os.environ['GPT_ETC_GPTJ_MODEL']
-    pipeline_key = os.environ['GPT_ETC_GPTJ_KEY']
 
-    llama_meta_key = os.environ['LLAMA_META']
+    #llama_meta_key = os.environ['LLAMA_META']
+
     llama_pipeline_key =  os.environ['LLAMA_PIPELINE']
     llama_model = 'meta/llama2-13B:v7'
     llama_url = 'https://www.mystic.ai/v3/runs'
@@ -88,13 +94,18 @@ def get_gpt(question, reply):
     
     output = run.json()["result"]['outputs'][0]['value']
     if args.verbose:
-        print(run)
+        print('response',  run, run_num)
         print(output)
         print(llama_pipeline_key)
         print("--" + prompt + "--")
-    if args.short:
+    if args.short and not args.mechanical:
         output = "Human: " + question.strip() + "\nJane: " + output 
-    output = extract_pairs(output)    
+    if not args.mechanical:
+        output = extract_pairs(output)   
+    if args.mechanical:
+        print('add mechanical parsing.')
+        output = extract_question(output)
+    print("++" , output , "++")
     return output
 
 def extract_pairs(output):
@@ -107,6 +118,24 @@ def extract_pairs(output):
             i = i[len(args.ident_answ + ":"):]
         out_list.append(i.strip())
     return out_list 
+
+def extract_question(output):
+    line = output.strip().split('\n')[0]
+    print(line)
+    return line
+
+def shuffle_words(line):
+    arr = line.strip().split(' ')
+    arr = list(arr)
+    random.shuffle(arr)
+    new_list = []
+    for i in arr:
+        x = i[-1]
+        if x in ['!', '?', '.']:
+            new_list.append(i[0:-1].lower())
+        else:
+            new_list.append(i.lower())
+    return ' '.join(new_list)
 
 def check_pair_list(output, saved = []):
     skip = False 
@@ -137,7 +166,8 @@ parser.add_argument("--room", default="2", help="room for entry.")
 parser.add_argument("--file", default="./../data/construct.txt.gpt", help="Default sentence output file.")
 parser.add_argument("--skip", default=0, help="Start processing at this point.")
 parser.add_argument("--short", action="store_true", help="Use shortened input prompt.")
-parser.add_argument("--temperature", default=0.2, help="Temperature for gpt-j call.")
+parser.add_argument("--temperature", default=0.2, help="Temperature for gpt call.")
+parser.add_argument('--mechanical', action='store_true', help="Build question mechanically using another gpt query.")
 parser.add_argument("--ident_ques", default="Human", help="Identity string for question.")
 parser.add_argument("--ident_answ", default="Jane", help="Identity string for answer.")
 args = parser.parse_args()
@@ -154,8 +184,13 @@ PREPEND = '''{human}: Hi?
 {human}: How old are you?
 {jane}: I am 21 years old.'''.format(human=args.ident_ques, jane=args.ident_answ)
 
+PREPEND_QUESTION = '''Reorganize the words in the following text to form a question sentence.
+Leave out as few words as possible. End each sentence with a question mark.
+'''
+
 if __name__ == "__main__":
     gpt_list = []
+    question = ''
     with open(args.tabname, "r") as r: 
         num = 0 
         lines = r.readlines()
@@ -169,11 +204,18 @@ if __name__ == "__main__":
                 else:
                     reply = line.split("\t")[0]
                     if question.strip() != "" and reply.strip() != "":
-                        gpt_response = get_gpt( question, reply )
-                        if check_pair_list(gpt_response, gpt_list):
-                            gpt_list.append(gpt_response)
-                        else:
-                            print(gpt_response)
+                        if args.mechanical:
+                            gpt_question = get_gpt( question, reply, 1 )
+                            gpt_answer = get_gpt( gpt_question, reply, 0 )
+                            print('==', [gpt_question, gpt_answer], '==')
+                            if check_pair_list( [gpt_question, gpt_answer], gpt_list ):
+                                gpt_list.append( [gpt_question, gpt_answer] )
+                        if not args.mechanical:
+                            gpt_response = get_gpt( question, reply, 0 )
+                            if check_pair_list(gpt_response, gpt_list):
+                                gpt_list.append(gpt_response)
+                            else:
+                                print("*" , gpt_response , "*")
                     print("Num:", (num // 2) + 1 ,len(gpt_list))
                 if num >= args.length * 2:
                     break
