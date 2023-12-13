@@ -54,8 +54,10 @@ def get_gpt(question, reply):
     llama_headers = {
         'Authorization' : "Bearer " + llama_pipeline_key,
         'Content-Type': 'application/json',
-        'accept': 'application/json'
+        #'accept': 'application/json'
     }
+
+    ##llama_headers = json.dumps(llama_headers)
 
     llama_data = {
 	"pipeline_id_or_pointer": llama_model,
@@ -64,7 +66,7 @@ def get_gpt(question, reply):
 		[
 			{
 				"type": "string",
-				"value": prompt
+				"value": prompt,
 			},
 			{
 				"type": "dictionary",
@@ -81,7 +83,7 @@ def get_gpt(question, reply):
 		]
 	} 
 
-    run = requests.request('POST', url=llama_url, headers=llama_headers, data=llama_data)
+    run = requests.request('POST', url=llama_url, headers=llama_headers, data=json.dumps(llama_data))
     #r = run.prepare()
     #s = requests.Session()
     #j = s.send(r)
@@ -90,6 +92,8 @@ def get_gpt(question, reply):
     if args.verbose:
         print(run)
         print(output)
+        print(llama_pipeline_key)
+        print("--" + prompt + "--")
     if args.short:
         output = "Human: " + question.strip() + "\nJane: " + output 
     output = extract_pairs(output)    
