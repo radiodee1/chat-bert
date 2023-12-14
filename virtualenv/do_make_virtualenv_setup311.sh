@@ -8,7 +8,5 @@ pip install -U pipeline-ai
 
 pipeline cluster login chatbert311 $LLAMA_PIPELINE -u https://mystic.ai -a 
 
-cd ..
 
-python3 setup.py install --user
 ## type `deactivate` to exit ##
