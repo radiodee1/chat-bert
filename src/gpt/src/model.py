@@ -39,7 +39,7 @@ blacklist = [
 GPT_NATURAL = 1 
 GPT_MECHANICAL = 0 
  
-def model(prompt, length=25):
+def model(prompt, length=25, temperature=0.001):
 
     llama_pipeline_key =  os.environ['LLAMA_PIPELINE']
     llama_model = 'meta/llama2-13B:latest'
@@ -65,7 +65,7 @@ def model(prompt, length=25):
 					"do_sample": False,
 					"max_new_tokens": length,
 					"presence_penalty": 1,
-					"temperature": args.temperature,
+					"temperature": temperature,
 					"top_k": 50,
 					"top_p": 0.9,
 					"use_cache": True
@@ -76,7 +76,7 @@ def model(prompt, length=25):
 
     run = requests.request('POST', url=llama_url, headers=llama_headers, data=json.dumps(llama_data))
    
-    output = run.json()["result"]['outputs'][0]['value']
+    output = run.json()  #["result"]['outputs'][0]['value']
 
     return output
 
@@ -98,7 +98,8 @@ def get_gpt(question, reply, run_num=0):
         print("--")
         print(prompt)
 
-    output = model(prompt, 25)
+    output = model(prompt, 25, args.temperature)["result"]['outputs'][0]['value']
+
 
     if args.verbose:
         print("--" + prompt + "--")
@@ -171,6 +172,8 @@ def check_pair_list(output, saved = []):
 IDENT_QUES = 'Human'
 IDENT_ANSW = 'Jane'
 
+
+
 PREPEND_NATURAL = '''Answer with the personality designated.
 
 {human}: Hi?
@@ -206,6 +209,7 @@ if __name__ == "__main__":
     
     IDENT_QUES = args.ident_ques
     IDENT_ANSW = args.ident_answ
+    
 
     #if __name__ == "__main__":
     if args.mechanical:

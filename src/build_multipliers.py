@@ -11,14 +11,15 @@ import os
 #from gpt.src.model import model
 import sys
 import pathlib
+import json
 
+'''
 PACKAGE_PARENT = pathlib.Path(__file__).parent
-#PACKAGE_PARENT = pathlib.Path.cwd().parent # if on jupyter notebook
 SCRIPT_DIR = PACKAGE_PARENT / "gpt/src/model.py"
 sys.path.append(str(SCRIPT_DIR))
 
 print(str(SCRIPT_DIR))
-
+'''
 load_dotenv()
 
 try:
@@ -48,7 +49,8 @@ if BERT_MODEL <=2:
     #import transformers
 
 if BERT_MODEL == 3:
-    from gpt.src.model import model
+    #from gpt.src.model import model
+    import requests
 
 try:
     NUMBER_ROOMS = int(os.environ['NUMBER_ROOMS'])
@@ -72,6 +74,47 @@ PROMPT_LLAMA = '''
 Return a number between 0 and 1 that shows the similarity of these two sentences, or the
 likelyhood that one would follow the other in writing or conversation.
 '''
+ 
+def model(prompt, length=25, temperature=0.001):
+
+    llama_pipeline_key =  os.environ['LLAMA_PIPELINE']
+    llama_model = 'meta/llama2-13B:latest'
+    llama_url = 'https://www.mystic.ai/v3/runs'
+
+    llama_headers = {
+        'Authorization' : "Bearer " + llama_pipeline_key,
+        'Content-Type': 'application/json',
+    }
+
+    llama_data = {
+	"pipeline_id_or_pointer": llama_model,
+	"async_run": False,
+	"input_data": 
+		[
+			{
+				"type": "string",
+				"value": prompt,
+			},
+			{
+				"type": "dictionary",
+				"value": {
+					"do_sample": False,
+					"max_new_tokens": length,
+					"presence_penalty": 1,
+					"temperature": temperature,
+					"top_k": 50,
+					"top_p": 0.9,
+					"use_cache": True
+				}
+			}
+		]
+	} 
+
+    run = requests.request('POST', url=llama_url, headers=llama_headers, data=json.dumps(llama_data))
+   
+    output = run.json()  #["result"]['outputs'][0]['value']
+
+    return output
 
 class Modify:
 
@@ -242,7 +285,12 @@ class Modify:
             #print(outputs, '< logits')
 
         if BERT_MODEL >= 3:
-            logits = model(PROMPT_LLAMA + ' ' + prompt1 + ' ' + prompt2, 25)
+            prompt_combined = []
+            for i in range(len(prompt1)):
+                prompt_combined.append(PROMPT_LLAMA + ' ' + prompt1[i] + ' ' + prompt2[i])
+            print(prompt_combined)
+            logits = model(prompt_combined, 25)
+            print(logits)
         return logits
 
     def read_phrases_file(self, name='phrases.txt'):
