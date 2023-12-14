@@ -1,0 +1,8 @@
+*corpus.zip 
+
+*MACOSX*
+*corpus 
+*.txt
+
+*.tsv
+construct.txt.* 
