@@ -42,7 +42,7 @@ GPT_MECHANICAL = 0
 def model(prompt, length=25):
 
     llama_pipeline_key =  os.environ['LLAMA_PIPELINE']
-    llama_model = 'meta/llama2-13B:v7'
+    llama_model = 'meta/llama2-13B:latest'
     llama_url = 'https://www.mystic.ai/v3/runs'
 
     llama_headers = {

@@ -1,13 +1,23 @@
-#!/usr/bin/env python3.10 
+#!/usr/bin/env python3 
 
 
-from re import S
-from transformers import BertTokenizer, BertForNextSentencePrediction
-import torch
+#from re import S
+#from transformers import BertTokenizer, BertForNextSentencePrediction
+#import torch
 from dotenv import load_dotenv
 import argparse
 import os 
-import transformers 
+#import transformers 
+#from gpt.src.model import model
+import sys
+import pathlib
+
+PACKAGE_PARENT = pathlib.Path(__file__).parent
+#PACKAGE_PARENT = pathlib.Path.cwd().parent # if on jupyter notebook
+SCRIPT_DIR = PACKAGE_PARENT / "gpt/src/model.py"
+sys.path.append(str(SCRIPT_DIR))
+
+print(str(SCRIPT_DIR))
 
 load_dotenv()
 
@@ -32,6 +42,14 @@ try:
 except:
     BERT_MODEL = 0
 
+if BERT_MODEL <=2:
+    import torch
+    from transformers import BertTokenizer, BertForNextSentencePrediction
+    #import transformers
+
+if BERT_MODEL == 3:
+    from gpt.src.model import model
+
 try:
     NUMBER_ROOMS = int(os.environ['NUMBER_ROOMS'])
 except:
@@ -50,7 +68,10 @@ ROOM_TEXT = '''
 Text will be saved until the end of the file.
 '''
 
-
+PROMPT_LLAMA = '''
+Return a number between 0 and 1 that shows the similarity of these two sentences, or the
+likelyhood that one would follow the other in writing or conversation.
+'''
 
 class Modify:
 
@@ -100,10 +121,11 @@ class Modify:
         self.write = self.args.write 
         self.batch = self.args.batch
 
-        name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8' ]
+        name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8','meta/llama2-13B:latest' ]
         index = BERT_MODEL
-        self.tokenizer = BertTokenizer.from_pretrained(name[index])
-        self.model = BertForNextSentencePrediction.from_pretrained(name[index])
+        if index <= 2:
+            self.tokenizer = BertTokenizer.from_pretrained(name[index])
+            self.model = BertForNextSentencePrediction.from_pretrained(name[index])
         
         num = 0 
         with open(self.args.folder + '/phrases.txt' , "r") as p:
@@ -205,17 +227,22 @@ class Modify:
         pass 
 
     def bert_batch_compare(self, prompt1, prompt2):
-        encoding = self.tokenizer(prompt1, prompt2, return_tensors='pt', padding=True, truncation=True, add_special_tokens=True, max_length=MAX_LENGTH)
-        #target = torch.LongTensor(self.target)
-        target = torch.ones((1,len(prompt1)), dtype=torch.long)
-        if CUDA == 1:
-            encoding = encoding.to('cuda')
-            target = target.to('cuda')
+        logits = [0,0]
+        if BERT_MODEL <= 2:
+            encoding = self.tokenizer(prompt1, prompt2, return_tensors='pt', padding=True, truncation=True, add_special_tokens=True, max_length=MAX_LENGTH)
+            #target = torch.LongTensor(self.target)
+            target = torch.ones((1,len(prompt1)), dtype=torch.long)
+            if CUDA == 1:
+                encoding = encoding.to('cuda')
+                target = target.to('cuda')
 
-        #outputs = self.model(**encoding, next_sentence_label=target)
-        outputs = self.model(**encoding, labels=target)
-        logits = outputs.logits.detach()
-        #print(outputs, '< logits')
+            #outputs = self.model(**encoding, next_sentence_label=target)
+            outputs = self.model(**encoding, labels=target)
+            logits = outputs.logits.detach()
+            #print(outputs, '< logits')
+
+        if BERT_MODEL >= 3:
+            logits = model(PROMPT_LLAMA + ' ' + prompt1 + ' ' + prompt2, 25)
         return logits
 
     def read_phrases_file(self, name='phrases.txt'):
