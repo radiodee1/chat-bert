@@ -39,26 +39,7 @@ blacklist = [
 GPT_NATURAL = 1 
 GPT_MECHANICAL = 0 
  
-
-def get_gpt(question, reply, run_num=0):
-    prompt = ''
-    if run_num == GPT_NATURAL:
-        prompt = PREPEND_NATURAL + "\n\nHuman: " + question.strip() + "\nJane: " + reply.strip() + "\n\nHuman: "
-    if run_num == GPT_NATURAL and (args.short or args.mechanical):
-        prompt = PREPEND_NATURAL + "\n\nHuman: " + question.strip() + "\nJane: "
-    
-    prompt = prompt.replace("Human", args.ident_ques).replace("Jane", args.ident_answ)
-    
-    if run_num == GPT_MECHANICAL:
-        prompt = PREPEND_QUESTION + shuffle_words(question.strip() + " " + reply.strip())
-        if args.short:
-            #prompt = PREPEND_QUESTION + shuffle_words(question.strip())
-            pass 
-    if args.verbose: 
-        print("--")
-        print(prompt)
-
-    #llama_meta_key = os.environ['LLAMA_META']
+def model(prompt, length=25):
 
     llama_pipeline_key =  os.environ['LLAMA_PIPELINE']
     llama_model = 'meta/llama2-13B:v7'
@@ -82,7 +63,7 @@ def get_gpt(question, reply, run_num=0):
 				"type": "dictionary",
 				"value": {
 					"do_sample": False,
-					"max_new_tokens": 25,
+					"max_new_tokens": length,
 					"presence_penalty": 1,
 					"temperature": args.temperature,
 					"top_k": 50,
@@ -96,11 +77,32 @@ def get_gpt(question, reply, run_num=0):
     run = requests.request('POST', url=llama_url, headers=llama_headers, data=json.dumps(llama_data))
    
     output = run.json()["result"]['outputs'][0]['value']
+
+    return output
+
+def get_gpt(question, reply, run_num=0):
+    prompt = ''
+    if run_num == GPT_NATURAL:
+        prompt = PREPEND_NATURAL + "\n\nHuman: " + question.strip() + "\nJane: " + reply.strip() + "\n\nHuman: "
+    if run_num == GPT_NATURAL and (args.short or args.mechanical):
+        prompt = PREPEND_NATURAL + "\n\nHuman: " + question.strip() + "\nJane: "
+    
+    prompt = prompt.replace("Human", args.ident_ques).replace("Jane", args.ident_answ)
+    
+    if run_num == GPT_MECHANICAL:
+        prompt = PREPEND_QUESTION + shuffle_words(question.strip() + " " + reply.strip())
+        if args.short:
+            #prompt = PREPEND_QUESTION + shuffle_words(question.strip())
+            pass 
+    if args.verbose: 
+        print("--")
+        print(prompt)
+
+    output = model(prompt, 25)
+
     if args.verbose:
-        print('response',  run, run_num)
-        print(output)
-        print(llama_pipeline_key)
         print("--" + prompt + "--")
+        print(output)
     if args.short and not args.mechanical:
         output = "Human: " + question.strip() + "\nJane: "  + output 
         pass 
