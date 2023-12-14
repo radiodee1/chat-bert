@@ -102,7 +102,7 @@ def get_gpt(question, reply, run_num=0):
         print(llama_pipeline_key)
         print("--" + prompt + "--")
     if args.short and not args.mechanical:
-        output = "Human: " + question.strip() + "\nJane: " # + output 
+        output = "Human: " + question.strip() + "\nJane: "  + output 
         pass 
     if not args.mechanical:
         output = extract_pairs(output)   
