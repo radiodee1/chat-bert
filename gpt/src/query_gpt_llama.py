@@ -82,7 +82,7 @@ def get_gpt(question, reply, run_num=0):
 				"type": "dictionary",
 				"value": {
 					"do_sample": False,
-					"max_new_tokens": 100,
+					"max_new_tokens": 25,
 					"presence_penalty": 1,
 					"temperature": args.temperature,
 					"top_k": 50,
@@ -142,6 +142,7 @@ def shuffle_words(line):
         else:
             new_list.append(i.lower())
     x = ' '.join(new_list)
+    #x = '"' + x + '"'
     print('x', line, 'x', x, 'x')
     return x
 
@@ -199,6 +200,8 @@ Leave out as few words as possible. End the sentence with a question mark.
 '''
 
 if __name__ == "__main__":
+    if args.mechanical:
+        args.short = True 
     num_gpt_passes = 0 
     gpt_list = []
     question = ''
