@@ -168,20 +168,8 @@ def check_pair_list(output, saved = []):
             skip = True 
     return not skip
 
-
-parser = argparse.ArgumentParser(description='Make file from the movie corpus file.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--verbose', action="store_true", help='Show verbose output.')
-parser.add_argument("--tabname", default="./../data/questions.tsv", type=str, help="tab file name.")
-parser.add_argument('--length', default=20, type=int, help="Length, in sentence pairs, of output file.")
-parser.add_argument("--room", default="2", help="room for entry.")
-parser.add_argument("--file", default="./../data/construct.txt.gpt", help="Default sentence output file.")
-parser.add_argument("--skip", default=0, help="Start processing at this point.")
-parser.add_argument("--short", action="store_true", help="Use shortened input prompt.")
-parser.add_argument("--temperature", default=0.2, help="Temperature for gpt call.")
-parser.add_argument('--mechanical', action='store_true', help="Build question mechanically using another gpt query.")
-parser.add_argument("--ident_ques", default="Human", help="Identity string for question.")
-parser.add_argument("--ident_answ", default="Jane", help="Identity string for answer.")
-args = parser.parse_args()
+IDENT_QUES = 'Human'
+IDENT_ANSW = 'Jane'
 
 PREPEND_NATURAL = '''Answer with the personality designated.
 
@@ -195,13 +183,31 @@ PREPEND_NATURAL = '''Answer with the personality designated.
 {jane}: My favorite color is blue.
 
 {human}: How old are you?
-{jane}: I am 21 years old.'''.format(human=args.ident_ques, jane=args.ident_answ)
+{jane}: I am 21 years old.'''.format(human=IDENT_QUES, jane=IDENT_ANSW)
 
 PREPEND_QUESTION = '''Reorganize the words in the following text to form a question sentence.
 Leave out as few words as possible. End the sentence with a question mark.
 '''
-
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description='Make file from the movie corpus file.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--verbose', action="store_true", help='Show verbose output.')
+    parser.add_argument("--tabname", default="./../data/questions.tsv", type=str, help="tab file name.")
+    parser.add_argument('--length', default=20, type=int, help="Length, in sentence pairs, of output file.")
+    parser.add_argument("--room", default="2", help="room for entry.")
+    parser.add_argument("--file", default="./../data/construct.txt.gpt", help="Default sentence output file.")
+    parser.add_argument("--skip", default=0, help="Start processing at this point.")
+    parser.add_argument("--short", action="store_true", help="Use shortened input prompt.")
+    parser.add_argument("--temperature", default=0.2, help="Temperature for gpt call.")
+    parser.add_argument('--mechanical', action='store_true', help="Build question mechanically using another gpt query.")
+    parser.add_argument("--ident_ques", default="Human", help="Identity string for question.")
+    parser.add_argument("--ident_answ", default="Jane", help="Identity string for answer.")
+    args = parser.parse_args()
+    
+    IDENT_QUES = args.ident_ques
+    IDENT_ANSW = args.ident_answ
+
+    #if __name__ == "__main__":
     if args.mechanical:
         args.short = True 
     num_gpt_passes = 0 
