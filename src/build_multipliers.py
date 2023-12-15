@@ -22,6 +22,17 @@ print(str(SCRIPT_DIR))
 '''
 load_dotenv()
 
+BERT_MODEL_NAME = [
+    'bert-base-uncased', 
+    'bert-large-uncased', 
+    'google/bert_uncased_L-8_H-512_A-8',
+    'meta/llama2-13B:latest;single',
+    'meta/llama2-13B:latest;batch',
+    'meta/llama2-7B:latest;batch',
+    'meta/llama2-7B:latest;single'
+]
+
+
 try:
     BATCH_SIZE=int(os.environ['BATCH_SIZE']) 
 except:
@@ -48,7 +59,7 @@ if BERT_MODEL <=2:
     from transformers import BertTokenizer, BertForNextSentencePrediction
     #import transformers
 
-if BERT_MODEL == 3 or BERT_MODEL == 4:
+if BERT_MODEL >= 3: 
     #from gpt.src.model import model
     import requests
 
@@ -70,15 +81,19 @@ ROOM_TEXT = '''
 Text will be saved until the end of the file.
 '''
 
-PROMPT_LLAMA = '''
-Return a number between 0 and 1 that shows the similarity of these two sentences, or the
+PROMPT_LLAMA = '''Return a number between 0 and 1 that shows the similarity of these two sentences, or the
 likelyhood that one would follow the other in writing or conversation.
 '''
- 
-def model(prompt, length=25, temperature=0.001):
 
+def strip_model_name(name, num, part=0):
+    x = name[num].split(';')[part]
+    print(x)
+    return x 
+
+def model(prompt, length=25, temperature=0.001):
+    print("***", *prompt, "***")
     llama_pipeline_key =  os.environ['LLAMA_PIPELINE']
-    llama_model = 'meta/llama2-13B:latest'
+    llama_model = strip_model_name(BERT_MODEL_NAME, BERT_MODEL) #'meta/llama2-13B:latest'
     llama_url = 'https://www.mystic.ai/v3/runs'
 
     llama_headers = {
@@ -162,13 +177,7 @@ class Modify:
         self.write = self.args.write 
         self.batch = self.args.batch
 
-        name = [ 
-                'bert-base-uncased', 
-                'bert-large-uncased', 
-                'google/bert_uncased_L-8_H-512_A-8',
-                'meta/llama2-13B:latest',
-                'meta/llama2-13B:latest:batch'
-                ]
+        name = BERT_MODEL_NAME
 
         index = BERT_MODEL
         if index <= 2:
@@ -289,12 +298,12 @@ class Modify:
             logits = outputs.logits.detach()
             #print(outputs, '< logits')
 
-        if BERT_MODEL == 3:
+        if BERT_MODEL >= 3 and strip_model_name(BERT_MODEL_NAME, BERT_MODEL, 1) == 'single':
             length = 25
             temperature = 0.001
             logits = []
             for i in range(len(prompt1)):
-                prompt = PROMPT_LLAMA  + prompt1[i] + '\n' + prompt2[i]
+                prompt = PROMPT_LLAMA + 'sentence 1: ' + prompt1[i] + '\nsentence 2: ' + prompt2[i]
                 prompt_combined = []
                 prompt_combined.append(
                     {
@@ -306,11 +315,11 @@ class Modify:
                 print(prompt_combined)
                 logits_individual = model(prompt_combined, length)
                 print(logits_individual)
-                logits.append(logits_individual)
+                logits.append(logits_individual['result']['outputs'][0]['value'])
             print(logits)
 
 
-        if BERT_MODEL == 4:
+        if BERT_MODEL >= 3 and strip_model_name(BERT_MODEL_NAME, BERT_MODEL, 1) == 'batch':
             length = 25
             temperature = 0.001
             logits = []
