@@ -238,6 +238,8 @@ class Modify:
             print("min", self.min[self.room])
         if highest != -1: 
             for i in range(len(logits)):
+                if float(m1[i]) == 0.0:
+                    m1[i] = 0.00001
                 if not self.args.lowest: 
                     mult[i]['multiplier'] = average / float(m1[i]) 
                 else:
@@ -320,7 +322,7 @@ class Modify:
                 print(float_value, '<<<<')
                 # Convert the float string to a float number
                 float_value = float(float_value)
-                logits.append([float_value, 0])
+                logits.append([float_value, - float_value])
 
             print(logits)
 
