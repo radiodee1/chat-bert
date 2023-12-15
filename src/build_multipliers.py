@@ -10,7 +10,7 @@ import os
 #import transformers 
 #from gpt.src.model import model
 import sys
-import pathlib
+import re 
 import json
 
 '''
@@ -315,7 +315,13 @@ class Modify:
                 print(prompt_combined)
                 logits_individual = model(prompt_combined, length)
                 print(logits_individual)
-                logits.append(logits_individual['result']['outputs'][0]['value'])
+                logits_out = logits_individual['result']['outputs'][0]['value']
+                float_value = re.findall(r"[-+]?\d*\.?\d+", logits_out)[0]
+                print(float_value, '<<<<')
+                # Convert the float string to a float number
+                float_value = float(float_value)
+                logits.append([float_value, 0])
+
             print(logits)
 
 
