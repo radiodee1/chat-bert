@@ -98,8 +98,9 @@ def get_gpt(question, reply, run_num=0):
         print("--")
         print(prompt)
 
-    output = model(prompt, 25, args.temperature)["result"]['outputs'][0]['value']
-
+    output = model(prompt, 25, args.temperature) #["result"]['outputs'][0]['value']
+    print(output)
+    output = output["result"]['outputs'][0]['value']
 
     if args.verbose:
         print("--" + prompt + "--")

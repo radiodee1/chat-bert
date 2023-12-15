@@ -48,7 +48,7 @@ if BERT_MODEL <=2:
     from transformers import BertTokenizer, BertForNextSentencePrediction
     #import transformers
 
-if BERT_MODEL == 3:
+if BERT_MODEL == 3 or BERT_MODEL == 4:
     #from gpt.src.model import model
     import requests
 
@@ -91,10 +91,7 @@ def model(prompt, length=25, temperature=0.001):
 	"async_run": False,
 	"input_data": 
 		[
-			{
-				"type": "string",
-				"value": prompt,
-			},
+		    *prompt,
 			{
 				"type": "dictionary",
 				"value": {
@@ -104,7 +101,8 @@ def model(prompt, length=25, temperature=0.001):
 					"temperature": temperature,
 					"top_k": 50,
 					"top_p": 0.9,
-					"use_cache": True
+					"use_cache": True,
+                    #"CUDA_LAUNCH_BLOCKING":"1"
 				}
 			}
 		]
@@ -164,7 +162,14 @@ class Modify:
         self.write = self.args.write 
         self.batch = self.args.batch
 
-        name = [ 'bert-base-uncased', 'bert-large-uncased', 'google/bert_uncased_L-8_H-512_A-8','meta/llama2-13B:latest' ]
+        name = [ 
+                'bert-base-uncased', 
+                'bert-large-uncased', 
+                'google/bert_uncased_L-8_H-512_A-8',
+                'meta/llama2-13B:latest',
+                'meta/llama2-13B:latest:batch'
+                ]
+
         index = BERT_MODEL
         if index <= 2:
             self.tokenizer = BertTokenizer.from_pretrained(name[index])
@@ -284,13 +289,48 @@ class Modify:
             logits = outputs.logits.detach()
             #print(outputs, '< logits')
 
-        if BERT_MODEL >= 3:
+        if BERT_MODEL == 3:
+            length = 25
+            temperature = 0.001
+            logits = []
+            for i in range(len(prompt1)):
+                prompt = PROMPT_LLAMA  + prompt1[i] + '\n' + prompt2[i]
+                prompt_combined = []
+                prompt_combined.append(
+                    {
+                        "type": "string",
+                        "value": prompt,
+                    }
+                )
+                #PROMPT_LLAMA + ' ' + prompt1[i] + ' ' + prompt2[i])
+                print(prompt_combined)
+                logits_individual = model(prompt_combined, length)
+                print(logits_individual)
+                logits.append(logits_individual)
+            print(logits)
+
+
+        if BERT_MODEL == 4:
+            length = 25
+            temperature = 0.001
+            logits = []
             prompt_combined = []
             for i in range(len(prompt1)):
-                prompt_combined.append(PROMPT_LLAMA + ' ' + prompt1[i] + ' ' + prompt2[i])
+                prompt = PROMPT_LLAMA  + prompt1[i] + '\n' + prompt2[i]
+                
+                prompt_combined.append(
+                    {
+                        "type": "string",
+                        "value": prompt,
+                    }
+                )
+                #PROMPT_LLAMA + ' ' + prompt1[i] + ' ' + prompt2[i])
             print(prompt_combined)
-            logits = model(prompt_combined, 25)
+            logits_individual = model(prompt_combined, length)
+            print(logits_individual)
+            logits = logits_individual
             print(logits)
+
         return logits
 
     def read_phrases_file(self, name='phrases.txt'):
