@@ -2,7 +2,7 @@ cd ./src/
 
 ./build_files.py --write 
 
-./build_multipliers.py --write --batch
+BERT_MODEL=6 ./build_multipliers.py --write --batch
 #./build_multipliers.py --write --room 1 --list  
 #./build_multipliers.py --write --room 2 --list 
 #./build_multipliers.py --write --room 3 --list 

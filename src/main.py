@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.10 
+#!/usr/bin/env python3 
 
 #from re import S
 from transformers import BertTokenizer, BertForNextSentencePrediction
