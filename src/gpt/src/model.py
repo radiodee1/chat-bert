@@ -11,6 +11,18 @@ import requests
 
 #from pipeline import PipelineCloud
 
+BERT_MODEL_NAME = [
+    'unused', 
+    'unused', 
+    'unused',
+    'meta/llama2-13B:latest',
+    'meta/llama2-13B:latest',
+    'meta/llama2-7B:latest',
+    'meta/llama2-7B:latest'
+]
+
+BERT_MODEL = 6
+
 blacklist = [
         "_",
         "-",
@@ -42,7 +54,7 @@ GPT_MECHANICAL = 0
 def model(prompt, length=25, temperature=0.001):
 
     llama_pipeline_key =  os.environ['LLAMA_PIPELINE']
-    llama_model = 'meta/llama2-13B:latest'
+    llama_model = BERT_MODEL_NAME[BERT_MODEL] #'meta/llama2-13B:latest'
     llama_url = 'https://www.mystic.ai/v3/runs'
 
     llama_headers = {
@@ -105,6 +117,7 @@ def get_gpt(question, reply, run_num=0):
     if args.verbose:
         print("--" + prompt + "--")
         print(output)
+        print(BERT_MODEL_NAME[BERT_MODEL])
     if args.short and not args.mechanical:
         output = "Human: " + question.strip() + "\nJane: "  + output 
         pass 
