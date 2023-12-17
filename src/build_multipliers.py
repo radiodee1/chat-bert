@@ -13,13 +13,6 @@ import sys
 import re 
 import json
 
-'''
-PACKAGE_PARENT = pathlib.Path(__file__).parent
-SCRIPT_DIR = PACKAGE_PARENT / "gpt/src/model.py"
-sys.path.append(str(SCRIPT_DIR))
-
-print(str(SCRIPT_DIR))
-'''
 load_dotenv()
 
 BERT_MODEL_NAME = [
@@ -305,7 +298,7 @@ class Modify:
             temperature = 0.001
             logits = []
             for i in range(len(prompt1)):
-                prompt = PROMPT_LLAMA + 'sentence 1: ' + prompt1[i] + '\nsentence 2: ' + prompt2[i]
+                prompt = PROMPT_LLAMA + 'sentence 1: ' + prompt1[i] + '\nsentence 2: ' + prompt2[i] + '\nSimilarity: '
                 prompt_combined = []
                 prompt_combined.append(
                     {
@@ -318,11 +311,15 @@ class Modify:
                 logits_individual = model(prompt_combined, length)
                 print(logits_individual)
                 logits_out = logits_individual['result']['outputs'][0]['value']
-                float_value = re.findall(r"[-+]?\d*\.?\d+", logits_out)[0]
+                float_list = re.findall(r"[-+]?\d*\.?\d+", logits_out)
+                if len(float_list) > 0:
+                    float_value = float_list[0]
+                else:
+                    float_value = 0 
                 print(float_value, '<<<<')
                 # Convert the float string to a float number
                 float_value = float(float_value)
-                logits.append([float_value, - float_value])
+                logits.append([float_value, -1.0 + float_value])
 
             print(logits)
 
