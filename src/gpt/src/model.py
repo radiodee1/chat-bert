@@ -97,23 +97,25 @@ def get_gpt(question, reply, run_num=0):
     if run_num == GPT_NATURAL:
         prompt = PREPEND_NATURAL + "\n\nHuman: " + question.strip() + "\nJane: " + reply.strip() + "\n\nHuman: "
     if run_num == GPT_NATURAL and (args.short or args.mechanical):
-        prompt = PREPEND_NATURAL + "\n\nHuman: " + question.strip() + "\nJane: "
+        prompt = PREPEND_SIMPLE + "\n" + question.strip() + "\n"
     
     prompt = prompt.replace("Human", args.ident_ques).replace("Jane", args.ident_answ)
     
     if run_num == GPT_MECHANICAL:
-        prompt = PREPEND_QUESTION + shuffle_words(question.strip() + " " + reply.strip())
+        prompt = PREPEND_QUESTION + shuffle_words(question.strip() + " " + reply.strip()) + "."
         if args.short:
             #prompt = PREPEND_QUESTION + shuffle_words(question.strip())
             pass 
     if args.verbose: 
         print("--")
         print(prompt)
+    prompt = prompt.strip()
 
     output = model(prompt, 25, args.temperature) #["result"]['outputs'][0]['value']
     print(output)
     output = output["result"]['outputs'][0]['value']
 
+    output = output.strip()
     if args.verbose:
         print("--" + prompt + "--")
         print(output)
@@ -155,9 +157,15 @@ def shuffle_words(line):
         if i.lower() in new_list:
             continue 
         if x in ['!', '?', '.']:
-            new_list.append(i[0:-1].lower())
-        else:
-            new_list.append(i.lower())
+            i = i[0:-1].lower()
+            x = i[-1]
+            #do this twice 
+        if x in ['!', '?', '.']:
+            i = i[0:-1].lower()
+            x = i[-1]
+            #do this twice
+        #else:
+        new_list.append(i.lower())
     x = ' '.join(new_list)
     #x = '"' + x + '"'
     print('x', line, 'x', x, 'x')
@@ -205,6 +213,20 @@ PREPEND_NATURAL = '''Answer with the personality designated.
 PREPEND_QUESTION = '''Reorganize the words in the following text to form a question sentence.
 Leave out as few words as possible. End the sentence with a question mark.
 '''
+
+PREPEND_SIMPLE = '''
+Hi?
+Hello there.
+
+Do you like candy?
+Yes I like candy.
+
+What is your favorite color?
+My favorite color is blue.
+
+How old are you?
+I am 21 years old.'''
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Make file from the movie corpus file.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -215,7 +237,7 @@ if __name__ == "__main__":
     parser.add_argument("--file", default="./../data/construct.txt.gpt", help="Default sentence output file.")
     parser.add_argument("--skip", default=0, help="Start processing at this point.")
     parser.add_argument("--short", action="store_true", help="Use shortened input prompt.")
-    parser.add_argument("--temperature", default=0.2, help="Temperature for gpt call.")
+    parser.add_argument("--temperature", default=0.001, help="Temperature for gpt call.")
     parser.add_argument('--mechanical', action='store_true', help="Build question mechanically using another gpt query.")
     parser.add_argument("--ident_ques", default="Human", help="Identity string for question.")
     parser.add_argument("--ident_answ", default="Jane", help="Identity string for answer.")
